@@ -1,12 +1,17 @@
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React, { useEffect } from "react"
+import axios from "axios"
 
 const Header = ({ siteTitle }) => {
-  // useEffect(async () => {
-  //   const response = await axios.get("./netlify/functions/hello");
-  //   console.log(response);
-  // }, [])
+  useEffect(() => {
+    async function getSudokuBoard() {
+      const response = await axios.get("/.netlify/functions/get-sudoku-board")
+      console.log(response);
+    }
+
+    getSudokuBoard();
+  }, [])
 
   return (
     <header
