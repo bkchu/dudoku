@@ -1,22 +1,11 @@
 import { Link } from "gatsby"
-import { InitialState } from "../governor/initialState"
-import { selectBoard } from "../governor/selectors"
-import React, { FC, useEffect } from "react"
-import { connect } from "react-redux"
-import { Dispatch } from "redux"
-import { createBoardFetchAction } from "../governor/actions"
+import React, { FC } from "react"
 
 export interface HeaderProps {
-  fetchBoard: () => {}
-  board: string
   siteTitle: string
 }
 
-const Header: FC<HeaderProps> = ({ fetchBoard, board, siteTitle }) => {
-  useEffect(() => {
-    fetchBoard()
-  }, [])
-
+const Header: FC<HeaderProps> = ({ siteTitle }) => {
   return (
     <header
       style={{
@@ -40,7 +29,6 @@ const Header: FC<HeaderProps> = ({ fetchBoard, board, siteTitle }) => {
             }}
           >
             {siteTitle}
-            {JSON.stringify(board)}
           </Link>
         </h1>
       </div>
@@ -48,18 +36,4 @@ const Header: FC<HeaderProps> = ({ fetchBoard, board, siteTitle }) => {
   )
 }
 
-function mapStateToProps(state: InitialState) {
-  return {
-    board: selectBoard(state),
-  }
-}
-
-function mapDispatchToProps(dispatch: Dispatch) {
-  return {
-    fetchBoard: () => {
-      dispatch(createBoardFetchAction())
-    },
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default Header

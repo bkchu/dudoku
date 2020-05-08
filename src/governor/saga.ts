@@ -1,6 +1,7 @@
-import { all, takeLeading, call, put } from 'redux-saga/effects';
-import { BoardActions, createBoardSetAction } from './actions';
+import { all, call, put, takeLeading } from 'redux-saga/effects';
+import { ServerBoardResponse } from '../models/board';
 import { makeRequest } from '../utils/api';
+import { BoardActions, createBoardSetAction } from './actions';
 
 export function* rootSaga(): Generator {
   yield all([board()])
@@ -13,7 +14,6 @@ export function* board(): Generator {
 }
 
 export function* fetchBoardSaga(): Generator {
-  const response = (yield call(makeRequest, 'get-sudoku-board')) as string;
-  console.log(response);
-  yield put(createBoardSetAction(response));
+  const response = (yield call(makeRequest, 'get-sudoku-board')) as ServerBoardResponse;
+  yield put(createBoardSetAction(response.board));
 }

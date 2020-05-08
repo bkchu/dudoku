@@ -1,4 +1,5 @@
 import { Action } from "redux";
+import { Board } from "models/board";
 
 export enum BoardActions {
   FETCH_BOARD = 'BOARD/FETCH_BOARD',
@@ -11,7 +12,7 @@ export interface BoardFetchAction extends Action {
 
 export interface BoardSetAction extends Action {
   type: BoardActions.SET_BOARD,
-  payload: string;
+  payload: Board;
 }
 
 export function createBoardFetchAction(): BoardFetchAction {
@@ -20,7 +21,7 @@ export function createBoardFetchAction(): BoardFetchAction {
   }
 }
 
-export function createBoardSetAction(board: string): BoardSetAction {
+export function createBoardSetAction(board: Board): BoardSetAction {
   return {
     type: BoardActions.SET_BOARD,
     payload: board
