@@ -4,6 +4,8 @@ import { selectBoard } from "../../governor/selectors"
 import { Dispatch } from "redux"
 import { createBoardFetchAction } from "../../governor/actions"
 import { Board } from "../../models/board"
+import "./GameBoard.scss"
+import ParsedBoard from "./ParsedBoard/ParsedBoard"
 
 export interface BoardProps {
   board: Board
@@ -15,7 +17,11 @@ const GameBoard: FC<BoardProps> = ({ board, fetchBoard }) => {
     fetchBoard()
   }, [])
 
-  return <div className="board">{board}</div>
+  return (
+    <div className="game-board">
+      <ParsedBoard board={board}></ParsedBoard>
+    </div>
+  )
 }
 
 const mapStateToProps = state => ({

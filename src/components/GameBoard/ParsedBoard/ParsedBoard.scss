@@ -1,0 +1,19 @@
+.parsed-board {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: repeat(9, 1fr);
+  grid-template-columns: repeat(9, 1fr);
+  grid-gap: 5px;
+
+  &__num {
+    border: 1px solid rgb(98, 106, 122);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #373f51;
+    color: #D8DBE2;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+}

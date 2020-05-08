@@ -1,12 +1,12 @@
 import React from "react"
-import Board from "../components/Board/Board"
+import GameBoard from "../components/GameBoard/GameBoard"
 import Layout from "../components/Layout"
 import SEO from "../components/Seo"
 
 const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
-    <Board />
+    <GameBoard />
   </Layout>
 )
 
