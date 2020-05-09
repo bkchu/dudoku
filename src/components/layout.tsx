@@ -11,6 +11,7 @@ import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./Header"
 import "./Layout.css"
+import '../theme/index.scss';
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -29,11 +30,11 @@ const Layout = ({ children }) => {
       <div
         style={{
           margin: `0 auto`,
-          maxWidth: 960,
-          padding: `0 1.0875rem 1.45rem`,
+          // maxWidth: 960,
+          // padding: `0 1.0875rem 1.45rem`,
         }}
       >
-        <main>{children}</main>
+        <main style={{ textAlign: "center" }}>{children}</main>
         <footer>
           © {new Date().getFullYear()}, Built with
           {` `}

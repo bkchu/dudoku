@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { Board } from "models/board";
+import { Board } from "../models/client/board";
 
 export enum BoardActions {
   FETCH_BOARD = 'BOARD/FETCH_BOARD',

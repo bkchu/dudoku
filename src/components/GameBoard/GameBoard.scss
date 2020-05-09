@@ -1,5 +1,9 @@
 .game-board {
-  width: 750px;
-  height: 750px;
-  background-color: #373F51;
+  $side: 90vw;
+  width: $side;
+  height: $side;
+  margin: 0 auto;
+
+  background-color: transparent;
+  position: relative;
 }

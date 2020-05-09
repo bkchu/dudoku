@@ -1,6 +1,7 @@
 import React, { FC } from "react"
-import { Board } from "../../../models/board"
 import "./ParsedBoard.scss"
+import Piece from "../Piece/Piece"
+import { Board } from "../../../models/client/board"
 
 export interface ParsedBoardProps {
   board: Board
@@ -9,13 +10,9 @@ export interface ParsedBoardProps {
 const ParsedBoard: FC<ParsedBoardProps> = ({ board }) => {
   return (
     <div className="parsed-board">
-      {board
-        .reduce((acc, row) => [...acc, ...row], [])
-        .map((num, index) => (
-          <div key={index} className="parsed-board__num">
-            {num === 0 ? "" : num}
-          </div>
-        ))}
+      {board.map((num, index) => (
+        <Piece number={num} key={index} index={index}/>
+      ))}
     </div>
   )
 }

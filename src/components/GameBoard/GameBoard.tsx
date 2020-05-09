@@ -1,9 +1,10 @@
 import React, { FC, useEffect } from "react"
 import { connect } from "react-redux"
-import { selectBoard } from "../../governor/selectors"
 import { Dispatch } from "redux"
 import { createBoardFetchAction } from "../../governor/actions"
-import { Board } from "../../models/board"
+import { selectBoard } from "../../governor/selectors"
+import { Board } from "../../models/client/board"
+import BoardLines from "./BoardLines/BoardLines"
 import "./GameBoard.scss"
 import ParsedBoard from "./ParsedBoard/ParsedBoard"
 
@@ -19,6 +20,7 @@ const GameBoard: FC<BoardProps> = ({ board, fetchBoard }) => {
 
   return (
     <div className="game-board">
+      <BoardLines></BoardLines>
       <ParsedBoard board={board}></ParsedBoard>
     </div>
   )
