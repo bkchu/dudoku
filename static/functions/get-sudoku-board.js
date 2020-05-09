@@ -1,4 +1,4 @@
-import axios from "axios"
+const axios = require("axios");
 
 export async function handler(event, context, callback) {
   console.log("queryStringParameters", event.queryStringParameters)
