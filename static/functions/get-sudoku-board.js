@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-export async function handler(event, context, callback) {
+exports.handler = function(event, context, callback) {
   console.log("queryStringParameters", event.queryStringParameters)
   try {
     const { data } = await axios.get(
