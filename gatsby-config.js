@@ -43,6 +43,13 @@ module.exports = {
     "gatsby-plugin-typescript",
     "gatsby-plugin-typescript-checker",
     `gatsby-plugin-sass`,
+    {
+      resolve: `gatsby-plugin-netlify-functions`,
+      options: {
+        functionsSrc: `${__dirname}/functions`,
+        functionsOutput: `${__dirname}/public/functions`,
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
