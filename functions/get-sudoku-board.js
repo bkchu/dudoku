@@ -1,17 +1,20 @@
-const axios = require("axios");
+import axios from "axios"
 
-exports.handler = async function(event, context, callback) {
+export async function handler(event, context) {
   console.log("queryStringParameters", event.queryStringParameters)
   try {
     const { data } = await axios.get(
       "https://sugoku.herokuapp.com/board?difficulty=easy"
     )
-    callback(null, {
-      // return null to show no errors
+    return {
       statusCode: 200, // http status code
       body: JSON.stringify(data),
-    })
-  } catch(err) {
-    callback(Error(err))
+    }
+    // callback(null, {
+    //   // return null to show no errors
+    // })
+  } catch (err) {
+    // callback(Error(err))
+    throw new Error(err)
   }
 }
