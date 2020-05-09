@@ -52,8 +52,8 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "build-server": "netlify-lambda build functions/src",
-    "start-server": "netlify-lambda serve functions/src",
+    "build-server": "netlify-lambda build static/functions",
+    "start-server": "netlify-lambda serve static/functions",
     "lint": "eslint . --ext ts --ext tsx'",
     "test": "npm run type-check && npm run lint",
     "type-check": "tsc --pretty --noEmit"
