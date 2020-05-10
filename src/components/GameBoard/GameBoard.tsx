@@ -1,18 +1,23 @@
+import classnames from "classnames"
 import React, { FC, useEffect } from "react"
-import KeyboardEventHandler from "react-keyboard-event-handler"
 import { connect } from "react-redux"
 import { Dispatch } from "redux"
 import {
   createBoardFetchAction,
   createBoardSetPaintNumberAction,
 } from "../../governor/actions"
-import { selectActivePiece, selectBoard, selectBoardValidationStatus } from "../../governor/selectors"
+import {
+  selectActivePiece,
+  selectBoard,
+  selectBoardValidationStatus,
+} from "../../governor/selectors"
 import { Board } from "../../models/client/board"
 import { ServerBoardValidationStatus } from "../../models/server/board"
 import BoardLines from "./BoardLines/BoardLines"
 import "./GameBoard.scss"
 import ParsedBoard from "./ParsedBoard/ParsedBoard"
-import classnames from 'classnames';
+const KeyboardEventHandler =
+  typeof window !== `undefined` ? require("react-keyboard-event-handler") : null
 
 export interface BoardProps {
   board: Board
@@ -34,8 +39,9 @@ const GameBoard: FC<BoardProps> = ({
     fetchBoard()
   }, [])
 
-  const constructedClasses = classnames('game-board', {
-    'game-board--solved': validationStatus === ServerBoardValidationStatus.SOLVED
+  const constructedClasses = classnames("game-board", {
+    "game-board--solved":
+      validationStatus === ServerBoardValidationStatus.SOLVED,
   })
 
   return (
@@ -64,7 +70,7 @@ const GameBoard: FC<BoardProps> = ({
 const mapStateToProps = state => ({
   board: selectBoard(state),
   activePieceIndex: selectActivePiece(state),
-  validationStatus: selectBoardValidationStatus(state)
+  validationStatus: selectBoardValidationStatus(state),
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
