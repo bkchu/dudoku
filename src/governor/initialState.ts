@@ -1,12 +1,15 @@
 import { Board } from "../models/client/board";
+import { ServerBoardValidationStatus } from "../models/server/board";
 
 export interface InitialState {
-  board: Board
+  board: Board,
+  activePieceIndex: number,
+  validationStatus: ServerBoardValidationStatus
 }
 
 export const initialState: InitialState = {
-  board: [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-  ]
+  board: null,
+  activePieceIndex: null,
+  validationStatus: null,
 };
 
