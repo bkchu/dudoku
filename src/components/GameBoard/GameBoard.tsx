@@ -1,5 +1,6 @@
 import classnames from "classnames"
 import React, { FC, useEffect } from "react"
+import KeyboardEventHandler from "react-keyboard-event-handler"
 import { connect } from "react-redux"
 import { Dispatch } from "redux"
 import {
@@ -16,8 +17,6 @@ import { ServerBoardValidationStatus } from "../../models/server/board"
 import BoardLines from "./BoardLines/BoardLines"
 import "./GameBoard.scss"
 import ParsedBoard from "./ParsedBoard/ParsedBoard"
-const KeyboardEventHandler =
-  typeof window !== `undefined` ? require("react-keyboard-event-handler") : null
 
 export interface BoardProps {
   board: Board
