@@ -3,7 +3,7 @@ import { Board } from '../models/client/board';
 import { ServerBoardResponse, ServerBoardSolverResponse, ServerBoardValidationResponse } from '../models/server/board';
 import { makeRequest } from '../utils/api';
 import { transformClientToServerSudokuBoard, transformServerToClientSudokuBoard } from '../utils/board';
-import { BoardActions, BoardSetPaintNumberAction, createBoardSetAction, createBoardSetValidationStatusAction, createBoardSetSolutionBoardAction } from './actions';
+import { BoardActions, BoardSetPaintNumberAction, createBoardSetAction, createBoardSetValidationStatusAction, createBoardSetSolutionBoardAction, createBoardToggleActivePieceAction } from './actions';
 import { selectActivePiece, selectBoard, selectSolutionBoard } from './selectors';
 
 export function* rootSaga(): Generator {
@@ -36,7 +36,7 @@ export function* setNumberInPieceSaga(action: BoardSetPaintNumberAction): Genera
   const newBoard: Board = currentBoard.map((piece, index) => ({
     ...piece,
     number: currentlyActivePieceIndex === index ? action.payload : piece.number,
-    isWrong: false
+    isWrong: currentlyActivePieceIndex === index ? false : piece.isWrong
   }))
 
   yield put(createBoardSetAction(newBoard));
@@ -62,6 +62,8 @@ export function* checkBoard(): Generator {
       isWrong: currentPiece.number != 0 && currentPiece.number != solvedBoard[index].number
     }
   })
+
+  yield put(createBoardToggleActivePieceAction(null));
 
   yield put(createBoardSetAction(checkedBoard));
 }
