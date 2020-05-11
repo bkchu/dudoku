@@ -7,5 +7,7 @@ export interface Piece {
 
   // is the piece actionable
   isActionable: boolean;
+
+  isWrong: boolean;
 }
 

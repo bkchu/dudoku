@@ -9,7 +9,8 @@ export interface PieceProps {
   number: number
   index: number
   isActionable: boolean
-  isActive: boolean;
+  isActive: boolean
+  isWrong: boolean
   toggleActive: (num?: number) => {}
 }
 
@@ -18,11 +19,13 @@ const Piece: FC<PieceProps> = ({
   index,
   toggleActive,
   isActionable,
-  isActive
+  isActive,
+  isWrong
 }) => {
   const constructedClasses = classnames("piece", {
     "piece--active": isActive,
     "piece--not-actionable": !isActionable,
+    "piece--is-wrong": isWrong
   })
 
   return (

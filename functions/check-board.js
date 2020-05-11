@@ -19,12 +19,11 @@ exports.handler = async function (event, context, callback) {
       .join("&")
 
   try {
-    const boardToValidate = JSON.parse(event.body);
-    console.log(boardToValidate)
-    const encodedBoard = encodeParams(boardToValidate);
+    const boardToValidate = JSON.parse(event.body)
+    const encodedBoard = encodeParams(boardToValidate)
 
     const { data } = await axios.post(
-      "https://sugoku.herokuapp.com/validate",
+      "https://sugoku.herokuapp.com/solve",
       encodedBoard
     )
     callback(null, {

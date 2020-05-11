@@ -18,6 +18,12 @@ export const reducer = (state: InitialState = initialState, action: AnyAction) =
         ...state,
         validationStatus: action.payload
       }
+    
+    case BoardActions.SET_SOLUTION_BOARD:
+      return {
+        ...state,
+        solutionBoard: action.payload
+      }
 
     default:
       return state;

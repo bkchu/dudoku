@@ -13,7 +13,12 @@
   z-index: 10;
 
   &--active {
-    background-color: #DAF0EE;
+    background-color: #daf0ee;
     color: #3b413c;
+  }
+
+  &--is-wrong {
+    background-color: rgb(238, 37, 104);
+    color: #1a1a1a;
   }
 }

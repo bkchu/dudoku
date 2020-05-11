@@ -11,13 +11,14 @@ export interface ParsedBoardProps {
 const ParsedBoard: FC<ParsedBoardProps> = ({ board, activePieceIndex }) => {
   return (
     <div className="parsed-board">
-      {board?.map(({ number, index, isActionable }) => (
+      {board?.map(({ number, index, isActionable, isWrong }) => (
         <Piece
           number={number}
           key={index}
           index={index}
           isActionable={isActionable}
           isActive={index === activePieceIndex}
+          isWrong={isWrong}
         />
       ))}
     </div>
