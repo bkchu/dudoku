@@ -1,6 +1,5 @@
 import classnames from "classnames"
 import React, { FC, useEffect } from "react"
-import KeyboardEventHandler from "react-keyboard-event-handler"
 import { connect } from "react-redux"
 import { Dispatch } from "redux"
 import {
@@ -12,6 +11,7 @@ import {
   selectBoard,
   selectBoardValidationStatus,
 } from "../../governor/selectors"
+import { useKeyPress } from "../../hooks/useKeyPress"
 import { Board } from "../../models/client/board"
 import { ServerBoardValidationStatus } from "../../models/server/board"
 import BoardLines from "./BoardLines/BoardLines"
@@ -38,6 +38,25 @@ const GameBoard: FC<BoardProps> = ({
     fetchBoard()
   }, [])
 
+  const pressedKey = useKeyPress([
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+  ])
+
+  useEffect(() => {
+    if (pressedKey && activePieceIndex != null) {
+      setPaintNumber(+pressedKey)
+    }
+  }, [pressedKey])
+
   const constructedClasses = classnames("game-board", {
     "game-board--solved":
       validationStatus === ServerBoardValidationStatus.SOLVED,
@@ -46,13 +65,6 @@ const GameBoard: FC<BoardProps> = ({
   return (
     <>
       <div className={constructedClasses}>
-        <KeyboardEventHandler
-          handleKeys={["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]}
-          onKeyEvent={(key: string) =>
-            activePieceIndex != null && setPaintNumber(+key)
-          }
-          handleFocusableElements={true}
-        />
         <BoardLines></BoardLines>
         <ParsedBoard
           board={board}
