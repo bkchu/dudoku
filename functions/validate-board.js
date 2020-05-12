@@ -20,7 +20,6 @@ exports.handler = async function (event, context, callback) {
 
   try {
     const boardToValidate = JSON.parse(event.body);
-    console.log(boardToValidate)
     const encodedBoard = encodeParams(boardToValidate);
 
     const { data } = await axios.post(

@@ -5,10 +5,15 @@ import "./ParsedBoard.scss"
 
 export interface ParsedBoardProps {
   board: Board
-  activePieceIndex: number;
+  activePieceIndex: number
+  highlightedNumber: number
 }
 
-const ParsedBoard: FC<ParsedBoardProps> = ({ board, activePieceIndex }) => {
+const ParsedBoard: FC<ParsedBoardProps> = ({
+  board,
+  activePieceIndex,
+  highlightedNumber,
+}) => {
   return (
     <div className="parsed-board">
       {board?.map(({ number, index, isActionable, isWrong }) => (
@@ -19,6 +24,7 @@ const ParsedBoard: FC<ParsedBoardProps> = ({ board, activePieceIndex }) => {
           isActionable={isActionable}
           isActive={index === activePieceIndex}
           isWrong={isWrong}
+          isHighlighted={highlightedNumber === number}
         />
       ))}
     </div>

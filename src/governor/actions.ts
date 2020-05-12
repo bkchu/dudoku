@@ -5,11 +5,17 @@ import { ServerBoardValidationStatus } from "../models/server/board";
 export enum BoardActions {
   FETCH_BOARD = 'BOARD/FETCH_BOARD',
   SET_BOARD = 'BOARD/SET_BOARD',
+
   TOGGLE_ACTIVE_PIECE = 'BOARD/TOGGLE_ACTIVE_PIECE',
+  SET_ACTIVE_PIECE = 'BOARD/SET_ACTIVE_PIECE',
   SET_PAINT_NUMBER = 'BOARD/SET_PAINT_NUMBER',
+
   SET_VALIDATION_STATUS = 'BOARD/SET_VALIDATION_STATUS',
   CHECK_BOARD = 'BOARD/CHECK_BOARD',
-  SET_SOLUTION_BOARD = 'BOARD/SET_SOLUTION_BOARD'
+  SET_SOLUTION_BOARD = 'BOARD/SET_SOLUTION_BOARD',
+
+  HIGHLIGHT_ALL_MATCHING_PIECES = 'BOARD/HIGHLIGHT_ALL_MATCHING_PIECES',
+  SET_HIGHLIGHTED_NUMBER = 'BOARD/SET_HIGHLIGHTED_NUMBER'
 }
 
 export interface BoardFetchAction extends Action {
@@ -23,6 +29,11 @@ export interface BoardSetAction extends Action {
 
 export interface BoardToggleActivePieceAction extends Action {
   type: BoardActions.TOGGLE_ACTIVE_PIECE
+  payload: number
+}
+
+export interface BoardSetActivePieceAction extends Action {
+  type: BoardActions.SET_ACTIVE_PIECE
   payload: number
 }
 
@@ -45,6 +56,16 @@ export interface BoardSetSolutionBoardAction extends Action {
   payload: Board
 }
 
+export interface BoardHighlightAllMatchingPiecesAction extends Action {
+  type: BoardActions.HIGHLIGHT_ALL_MATCHING_PIECES
+  payload: number
+}
+
+export interface BoardSetHighlightedNumber extends Action {
+  type: BoardActions.SET_HIGHLIGHTED_NUMBER,
+  payload: number
+}
+
 export function createBoardFetchAction(): BoardFetchAction {
   return {
     type: BoardActions.FETCH_BOARD,
@@ -61,6 +82,13 @@ export function createBoardSetAction(board: Board): BoardSetAction {
 export function createBoardToggleActivePieceAction(index: number): BoardToggleActivePieceAction {
   return {
     type: BoardActions.TOGGLE_ACTIVE_PIECE,
+    payload: index
+  }
+}
+
+export function createBoardSetActivePieceAction(index: number): BoardSetActivePieceAction {
+  return {
+    type: BoardActions.SET_ACTIVE_PIECE,
     payload: index
   }
 }
@@ -90,4 +118,18 @@ export function createBoardSetSolutionBoardAction(board: Board): BoardSetSolutio
     type: BoardActions.SET_SOLUTION_BOARD,
     payload: board
   }
-} 
+}
+
+export function createBoardHighlightAllMatchingPiecesAction(number: number): BoardHighlightAllMatchingPiecesAction {
+  return {
+    type: BoardActions.HIGHLIGHT_ALL_MATCHING_PIECES,
+    payload: number
+  }
+}
+
+export function createBoardSetHighlightedNumber(number: number): BoardSetHighlightedNumber {
+  return {
+    type: BoardActions.SET_HIGHLIGHTED_NUMBER,
+    payload: number
+  }
+}

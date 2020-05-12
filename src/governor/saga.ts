@@ -1,10 +1,10 @@
 import { all, call, put, select, takeLatest, takeLeading } from 'redux-saga/effects';
-import { Board } from '../models/client/board';
+import { Board, Piece } from '../models/client/board';
 import { ServerBoardResponse, ServerBoardSolverResponse, ServerBoardValidationResponse } from '../models/server/board';
 import { makeRequest } from '../utils/api';
 import { transformClientToServerSudokuBoard, transformServerToClientSudokuBoard } from '../utils/board';
-import { BoardActions, BoardSetPaintNumberAction, createBoardSetAction, createBoardSetValidationStatusAction, createBoardSetSolutionBoardAction, createBoardToggleActivePieceAction } from './actions';
-import { selectActivePiece, selectBoard, selectSolutionBoard } from './selectors';
+import { BoardActions, BoardSetPaintNumberAction, BoardToggleActivePieceAction, createBoardSetAction, createBoardSetActivePieceAction, createBoardSetHighlightedNumber, createBoardSetSolutionBoardAction, createBoardSetValidationStatusAction } from './actions';
+import { selectActivePiece, selectActivePieceIndex, selectBoard, selectSolutionBoard } from './selectors';
 
 export function* rootSaga(): Generator {
   yield all([board()])
@@ -15,6 +15,7 @@ export function* board(): Generator {
     takeLeading(BoardActions.FETCH_BOARD, fetchBoardSaga),
     takeLatest(BoardActions.SET_PAINT_NUMBER, setNumberInPieceSaga),
     takeLatest(BoardActions.CHECK_BOARD, checkBoard),
+    takeLatest(BoardActions.TOGGLE_ACTIVE_PIECE, handlePieceClick)
   ])
 }
 
@@ -31,7 +32,7 @@ export function* fetchBoardSaga(): Generator {
 
 export function* setNumberInPieceSaga(action: BoardSetPaintNumberAction): Generator {
   const currentBoard = (yield select(selectBoard)) as Board;
-  const currentlyActivePieceIndex = (yield select(selectActivePiece)) as number;
+  const currentlyActivePieceIndex = (yield select(selectActivePieceIndex)) as number;
 
   const newBoard: Board = currentBoard.map((piece, index) => ({
     ...piece,
@@ -39,10 +40,44 @@ export function* setNumberInPieceSaga(action: BoardSetPaintNumberAction): Genera
     isWrong: currentlyActivePieceIndex === index ? false : piece.isWrong
   }))
 
+  if (action.payload != 0) {
+    yield put(createBoardSetHighlightedNumber(action.payload));
+  } else {
+    yield put(createBoardSetHighlightedNumber(null));
+  }
+
   yield put(createBoardSetAction(newBoard));
+
 
   if (newBoard.every(piece => piece.number !== 0)) {
     yield* validateBoard(newBoard)
+  }
+}
+
+export function* handlePieceClick(action: BoardToggleActivePieceAction): Generator {
+  const board = (yield select(selectBoard)) as Board;
+  const clickedIndex = action.payload;
+  const { isActionable, number } = board[clickedIndex];
+  const activePiece = (yield select(selectActivePiece)) as Piece;
+
+  if (isActionable) {
+    if (activePiece == null) {
+      yield put(createBoardSetActivePieceAction(clickedIndex));
+      if (number !== 0) {
+        yield put(createBoardSetHighlightedNumber(number));
+      } else {
+        yield put(createBoardSetHighlightedNumber(null));
+      }
+    } else if (activePiece != null) {
+      if (activePiece.index != clickedIndex) {
+        yield put(createBoardSetActivePieceAction(clickedIndex));
+      } else {
+        yield put(createBoardSetActivePieceAction(null));
+        yield put(createBoardSetHighlightedNumber(null));
+      }
+    }
+  } else if (!isActionable && number != 0) {
+    yield put(createBoardSetActivePieceAction(null));
   }
 }
 
@@ -63,7 +98,7 @@ export function* checkBoard(): Generator {
     }
   })
 
-  yield put(createBoardToggleActivePieceAction(null));
+  yield put(createBoardSetActivePieceAction(null));
 
   yield put(createBoardSetAction(checkedBoard));
 }

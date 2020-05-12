@@ -11,12 +11,20 @@ export function useKeyPress(targetKeys: string[]) {
     }
   }
 
+  function upHandler({ key }) {
+    if (targetKeys.includes(key)) {
+      setKeyPressed(null)
+    }
+  }
+
   // Add event listeners
   useEffect(() => {
     document.addEventListener("keydown", downHandler)
+    document.addEventListener("keyup", upHandler)
     // Remove event listeners on cleanup
     return () => {
       document.removeEventListener("keydown", downHandler)
+      document.removeEventListener("keyup", upHandler)
     }
   }, []) // Empty array ensures that effect is only run on mount and unmount
 

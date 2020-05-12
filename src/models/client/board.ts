@@ -9,5 +9,7 @@ export interface Piece {
   isActionable: boolean;
 
   isWrong: boolean;
+
+  isHighlighted: boolean;
 }
 

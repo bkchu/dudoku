@@ -7,10 +7,10 @@ export const reducer = (state: InitialState = initialState, action: AnyAction) =
     case BoardActions.SET_BOARD:
       return { ...state, board: action.payload }
 
-    case BoardActions.TOGGLE_ACTIVE_PIECE:
+    case BoardActions.SET_ACTIVE_PIECE:
       return {
         ...state,
-        activePieceIndex: action.payload === state.activePieceIndex ? null : action.payload,
+        activePieceIndex: action.payload
       }
 
     case BoardActions.SET_VALIDATION_STATUS:
@@ -23,6 +23,12 @@ export const reducer = (state: InitialState = initialState, action: AnyAction) =
       return {
         ...state,
         solutionBoard: action.payload
+      }
+
+    case BoardActions.SET_HIGHLIGHTED_NUMBER:
+      return {
+        ...state,
+        highlightedNumber: action.payload
       }
 
     default:
