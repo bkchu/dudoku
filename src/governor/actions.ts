@@ -6,7 +6,7 @@ export enum BoardActions {
   FETCH_BOARD = 'BOARD/FETCH_BOARD',
   SET_BOARD = 'BOARD/SET_BOARD',
 
-  TOGGLE_ACTIVE_PIECE = 'BOARD/TOGGLE_ACTIVE_PIECE',
+  SELECT_PIECE = 'BOARD/SELECT_PIECE',
   SET_ACTIVE_PIECE = 'BOARD/SET_ACTIVE_PIECE',
   SET_PAINT_NUMBER = 'BOARD/SET_PAINT_NUMBER',
 
@@ -27,8 +27,8 @@ export interface BoardSetAction extends Action {
   payload: Board
 }
 
-export interface BoardToggleActivePieceAction extends Action {
-  type: BoardActions.TOGGLE_ACTIVE_PIECE
+export interface BoardSelectPieceAction extends Action {
+  type: BoardActions.SELECT_PIECE
   payload: number
 }
 
@@ -79,9 +79,9 @@ export function createBoardSetAction(board: Board): BoardSetAction {
   }
 }
 
-export function createBoardToggleActivePieceAction(index: number): BoardToggleActivePieceAction {
+export function createBoardSelectPieceAction(index: number): BoardSelectPieceAction {
   return {
-    type: BoardActions.TOGGLE_ACTIVE_PIECE,
+    type: BoardActions.SELECT_PIECE,
     payload: index
   }
 }

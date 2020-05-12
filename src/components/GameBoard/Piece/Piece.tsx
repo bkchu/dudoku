@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 import { Dispatch } from "redux"
 import {
   createBoardSetHighlightedNumber,
-  createBoardToggleActivePieceAction,
+  createBoardSelectPieceAction,
 } from "../../../governor/actions"
 import "./Piece.scss"
 
@@ -16,7 +16,7 @@ export interface PieceProps {
   isWrong: boolean
   isHighlighted: boolean
 
-  toggleActive: (num?: number) => {}
+  onPieceClick: (num?: number) => {}
   setHighlightedNumber: (num?: number) => {}
 }
 
@@ -27,7 +27,7 @@ const Piece: FC<PieceProps> = ({
   isActive,
   isWrong,
   isHighlighted,
-  toggleActive,
+  onPieceClick,
   setHighlightedNumber,
 }) => {
   const constructedClasses = classnames("piece", {
@@ -45,7 +45,7 @@ const Piece: FC<PieceProps> = ({
     } else if(!isHighlighted && number === 0) {
       setHighlightedNumber(null);
     }
-    toggleActive(index)
+    onPieceClick(index)
   }
 
   return (
@@ -56,7 +56,7 @@ const Piece: FC<PieceProps> = ({
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  toggleActive: index => dispatch(createBoardToggleActivePieceAction(index)),
+  onPieceClick: index => dispatch(createBoardSelectPieceAction(index)),
   setHighlightedNumber: number =>
     dispatch(createBoardSetHighlightedNumber(number)),
 })

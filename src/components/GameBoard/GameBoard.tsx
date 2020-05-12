@@ -52,11 +52,12 @@ const GameBoard: FC<GameBoardProps> = ({
     "7",
     "8",
     "9",
+    "backspace"
   ])
 
   useEffect(() => {
     if (pressedKey != null && activePieceIndex != null) {
-      setPaintNumber(+pressedKey)
+      setPaintNumber(pressedKey === 'backspace' ? 0 : +pressedKey)
     }
   }, [pressedKey])
 

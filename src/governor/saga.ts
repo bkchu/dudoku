@@ -3,7 +3,16 @@ import { Board, Piece } from '../models/client/board';
 import { ServerBoardResponse, ServerBoardSolverResponse, ServerBoardValidationResponse } from '../models/server/board';
 import { makeRequest } from '../utils/api';
 import { transformClientToServerSudokuBoard, transformServerToClientSudokuBoard } from '../utils/board';
-import { BoardActions, BoardSetPaintNumberAction, BoardToggleActivePieceAction, createBoardSetAction, createBoardSetActivePieceAction, createBoardSetHighlightedNumber, createBoardSetSolutionBoardAction, createBoardSetValidationStatusAction } from './actions';
+import {
+  BoardActions,
+  BoardSelectPieceAction,
+  BoardSetPaintNumberAction,
+  createBoardSetAction,
+  createBoardSetActivePieceAction,
+  createBoardSetHighlightedNumber,
+  createBoardSetSolutionBoardAction,
+  createBoardSetValidationStatusAction
+} from './actions';
 import { selectActivePiece, selectActivePieceIndex, selectBoard, selectSolutionBoard } from './selectors';
 
 export function* rootSaga(): Generator {
@@ -15,7 +24,7 @@ export function* board(): Generator {
     takeLeading(BoardActions.FETCH_BOARD, fetchBoardSaga),
     takeLatest(BoardActions.SET_PAINT_NUMBER, setNumberInPieceSaga),
     takeLatest(BoardActions.CHECK_BOARD, checkBoard),
-    takeLatest(BoardActions.TOGGLE_ACTIVE_PIECE, handlePieceClick)
+    takeLatest(BoardActions.SELECT_PIECE, handlePieceSelection)
   ])
 }
 
@@ -54,7 +63,7 @@ export function* setNumberInPieceSaga(action: BoardSetPaintNumberAction): Genera
   }
 }
 
-export function* handlePieceClick(action: BoardToggleActivePieceAction): Generator {
+export function* handlePieceSelection(action: BoardSelectPieceAction): Generator {
   const board = (yield select(selectBoard)) as Board;
   const clickedIndex = action.payload;
   const { isActionable, number } = board[clickedIndex];
