@@ -1,0 +1,19 @@
+.number-buttons {
+  display: grid;
+  margin: 0 auto;
+  grid-template-columns: repeat(5, 50px);
+  grid-template-rows: repeat(2, 50px);
+  grid-gap: 5px;
+  justify-items: center;
+  width: 100%;
+
+  &__button {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 9999px;
+    background: none;
+  }
+}

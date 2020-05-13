@@ -1,0 +1,14 @@
+:root {
+  /* theme colors */
+  --color-primary-main: #94d1beff;
+  --color-neutral-100: #daf0eeff;
+  --color-neutral-300: #9db5b2ff;
+  --color-neutral-900: #3b413cff;
+
+  /* the size of one side of the sudoku board */
+  --side: 90vw;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

@@ -1,46 +1,46 @@
 .board-lines {
-  $side: 90vw;
-  $thickness: $side * 0.01;
+  $side: var(--side);
+  $thickness: calc(#{$side} * 0.01);
 
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 10;
+  @apply w-full;
+  @apply h-full;
+  @apply absolute;
+  @apply top-0;
+  @apply left-0;
+  @apply z-10;
 
   &__lines {
-    background: #94D1BE;
-    position: absolute;
+    @apply bg-primary-main;
+    @apply absolute;
 
     &--1 {
-      height: 100%;
+      @apply h-full;
+      @apply top-0;
       width: $thickness;
-      top: 0;
       left: calc(100% / 3);
       transform: translateX(-66%);
     }
 
     &--2 {
-      height: 100%;
+      @apply h-full;
+      @apply top-0;
       width: $thickness;
-      top: 0;
       left: calc(100% * 2 / 3);
       transform: translateX(-33%);
     }
 
     &--3 {
+      @apply w-full;
+      @apply left-0;
       height: $thickness;
-      width: 100%;
-      left: 0;
       top: calc(100% / 3);
       transform: translateY(-66%);
     }
 
     &--4 {
+      @apply w-full;
+      @apply left-0;
       height: $thickness;
-      width: 100%;
-      left: 0;
       top: calc(100% * 2 / 3);
       transform: translateY(-33%);
     }
