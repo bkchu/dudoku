@@ -11,4 +11,5 @@
 
   /* the size of one side of the sudoku board */
   --side: 50vw;
+  --thickness: 0.005;
 }

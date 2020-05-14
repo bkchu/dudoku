@@ -13,7 +13,7 @@
     &--1 {
       @apply h-full;
       @apply top-0;
-      width: calc(var(--side) * 0.005);;
+      width: calc(var(--side) * var(--thickness));
       left: calc(100% / 3);
       transform: translateX(-66%);
     }
@@ -21,7 +21,7 @@
     &--2 {
       @apply h-full;
       @apply top-0;
-      width: calc(var(--side) * 0.005);;
+      width: calc(var(--side) * var(--thickness));
       left: calc(100% * 2 / 3);
       transform: translateX(-33%);
     }
@@ -29,7 +29,7 @@
     &--3 {
       @apply w-full;
       @apply left-0;
-      height: calc(var(--side) * 0.005);;
+      height: calc(var(--side) * var(--thickness));
       top: calc(100% / 3);
       transform: translateY(-66%);
     }
@@ -37,7 +37,7 @@
     &--4 {
       @apply w-full;
       @apply left-0;
-      height: calc(var(--side) * 0.005);;
+      height: calc(var(--side) * var(--thickness));
       top: calc(100% * 2 / 3);
       transform: translateY(-33%);
     }

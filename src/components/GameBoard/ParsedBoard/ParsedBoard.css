@@ -7,5 +7,5 @@
 
   grid-template-columns: repeat(9, 1fr);
   grid-template-rows: repeat(9, 1fr);
-  gap: calc(var(--side) * 0.005);
+  gap: calc(var(--side) * var(--thickness));
 }
