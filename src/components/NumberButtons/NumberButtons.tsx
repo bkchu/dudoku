@@ -5,7 +5,7 @@ import { createBoardSetPaintNumberAction } from "../../governor/actions"
 import { InitialState } from "../../governor/initialState"
 import { selectActivePieceIndex } from "../../governor/selectors"
 
-import './NumberButtons.scss';
+import './NumberButtons.css';
 
 export interface NumberButtonsProps {
   onNumberButtonPress: Function

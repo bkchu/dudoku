@@ -1,7 +1,4 @@
 .board-lines {
-  $side: var(--side);
-  $thickness: calc(#{$side} * 0.01);
-
   @apply w-full;
   @apply h-full;
   @apply absolute;
@@ -16,7 +13,7 @@
     &--1 {
       @apply h-full;
       @apply top-0;
-      width: $thickness;
+      width: calc(var(--side) * 0.005);;
       left: calc(100% / 3);
       transform: translateX(-66%);
     }
@@ -24,7 +21,7 @@
     &--2 {
       @apply h-full;
       @apply top-0;
-      width: $thickness;
+      width: calc(var(--side) * 0.005);;
       left: calc(100% * 2 / 3);
       transform: translateX(-33%);
     }
@@ -32,7 +29,7 @@
     &--3 {
       @apply w-full;
       @apply left-0;
-      height: $thickness;
+      height: calc(var(--side) * 0.005);;
       top: calc(100% / 3);
       transform: translateY(-66%);
     }
@@ -40,7 +37,7 @@
     &--4 {
       @apply w-full;
       @apply left-0;
-      height: $thickness;
+      height: calc(var(--side) * 0.005);;
       top: calc(100% * 2 / 3);
       transform: translateY(-33%);
     }

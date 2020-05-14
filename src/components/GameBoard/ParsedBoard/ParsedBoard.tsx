@@ -1,7 +1,7 @@
 import React, { FC } from "react"
 import { Board } from "../../../models/client/board"
 import Piece from "../Piece/Piece"
-import "./ParsedBoard.scss"
+import "./ParsedBoard.css"
 
 export interface ParsedBoardProps {
   board: Board

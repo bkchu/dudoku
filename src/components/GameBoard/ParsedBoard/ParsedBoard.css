@@ -1,0 +1,11 @@
+.parsed-board {
+  @apply bg-gray-800;
+  @apply h-full;
+  @apply w-full;
+  @apply grid;
+  @apply z-10;
+
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  gap: calc(var(--side) * 0.005);
+}

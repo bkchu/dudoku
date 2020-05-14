@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import './BoardLines.scss';
+import './BoardLines.css';
 
 const BoardLines: FC = () => (
   <div className="board-lines">

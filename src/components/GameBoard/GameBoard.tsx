@@ -16,7 +16,7 @@ import { useKeyPress } from "../../hooks/useKeyPress"
 import { Board } from "../../models/client/board"
 import { ServerBoardValidationStatus } from "../../models/server/board"
 import BoardLines from "./BoardLines/BoardLines"
-import "./GameBoard.scss"
+import "./GameBoard.css"
 import ParsedBoard from "./ParsedBoard/ParsedBoard"
 
 export interface GameBoardProps {

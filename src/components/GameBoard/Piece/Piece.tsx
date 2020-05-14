@@ -6,7 +6,7 @@ import {
   createBoardSetHighlightedNumber,
   createBoardSelectPieceAction,
 } from "../../../governor/actions"
-import "./Piece.scss"
+import "./Piece.css"
 
 export interface PieceProps {
   number: number

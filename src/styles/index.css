@@ -1,3 +1,7 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 :root {
   /* theme colors */
   --color-primary-main: #94d1beff;
@@ -6,9 +10,5 @@
   --color-neutral-900: #3b413cff;
 
   /* the size of one side of the sudoku board */
-  --side: 90vw;
+  --side: 50vw;
 }
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;

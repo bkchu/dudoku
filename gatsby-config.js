@@ -1,17 +1,4 @@
-const { createProxyMiddleware } = require("http-proxy-middleware") //v1.x.x
-
 module.exports = {
-  // developMiddleware: app => {
-  //   app.use(
-  //     "/.netlify/functions/",
-  //     createProxyMiddleware({
-  //       target: "http://localhost:9000",
-  //       pathRewrite: {
-  //         "/.netlify/functions/": "",
-  //       },
-  //     })
-  //   )
-  // },
   siteMetadata: {
     title: `DUDOKU`,
     description: `Play sudoku. Duel your friends. Du-doku.`,
@@ -42,15 +29,6 @@ module.exports = {
     },
     "gatsby-plugin-typescript",
     "gatsby-plugin-typescript-checker",
-    {
-      resolve: `gatsby-plugin-sass`,
-      options: {
-        postCssPlugins: [
-          require("tailwindcss"),
-          require("./tailwind.config.js"), // Optional: Load custom Tailwind CSS configuration
-        ],
-      },
-    },
     `gatsby-plugin-postcss`,
     {
       resolve: `gatsby-plugin-typography`,
@@ -58,13 +36,6 @@ module.exports = {
         pathToConfigModule: `src/utils/typography`,
       },
     },
-    // {
-    //   resolve: `gatsby-plugin-netlify-functions`,
-    //   options: {
-    //     functionsSrc: `${__dirname}/functions`,
-    //     functionsOutput: `${__dirname}/public/functions`,
-    //   },
-    // },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
