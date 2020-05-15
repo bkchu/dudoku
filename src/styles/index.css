@@ -10,6 +10,18 @@
   --color-neutral-900: #3b413cff;
 
   /* the size of one side of the sudoku board */
-  --side: 50vw;
+  --side: 100vw;
   --thickness: 0.005;
+
+  @screen sm {
+    --side: 100vw;
+  }
+
+  @screen md {
+    --side: 75vw;
+  }
+
+  @screen lg {
+    --side: 50vw;
+  }
 }

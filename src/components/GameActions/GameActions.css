@@ -2,6 +2,7 @@
   @apply flex;
   @apply justify-center;
   @apply mt-5;
+
   &__btn {
     @apply w-32;
     @apply bg-primary-main;

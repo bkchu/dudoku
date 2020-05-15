@@ -5,16 +5,16 @@
   &__container {
     @apply grid;
     @apply mt-2;
-    grid-template-columns: repeat(5, theme(spacing.16));
-    grid-template-rows: repeat(2, theme(spacing.16));
+    grid-template-columns: repeat(5, calc(var(--side) * .12) );
+    grid-template-rows: repeat(2, calc(var(--side) * .12));
     @apply gap-2;
     @apply content-center;
     @apply text-center;
   }
 
   &__button {
-    @apply w-16;
-    @apply h-16;
+    @apply w-full;
+    @apply h-full;
     @apply flex;
     @apply justify-center;
     @apply items-center;
@@ -22,6 +22,7 @@
     @apply bg-gray-900;
     @apply text-gray-200;
     @apply font-bold;
-    @apply text-3xl;
+
+    font-size: calc(var(--side) * .06);
   }
 }
