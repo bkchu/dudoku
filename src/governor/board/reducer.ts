@@ -1,8 +1,8 @@
-import { initialState, InitialState } from './initialState';
-import { BoardActions } from './actions';
 import { AnyAction } from 'redux';
+import { BoardActions } from './actions';
+import { BoardInitialState, boardInitialState } from './initialState';
 
-export const reducer = (state: InitialState = initialState, action: AnyAction) => {
+export const boardReducer = (state: BoardInitialState = boardInitialState, action: AnyAction) => {
   switch (action.type) {
     case BoardActions.SET_BOARD:
       return { ...state, board: action.payload }
@@ -18,7 +18,7 @@ export const reducer = (state: InitialState = initialState, action: AnyAction) =
         ...state,
         validationStatus: action.payload
       }
-    
+
     case BoardActions.SET_SOLUTION_BOARD:
       return {
         ...state,

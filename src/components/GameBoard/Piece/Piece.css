@@ -9,6 +9,7 @@
   @apply select-none;
   @apply z-10;
   @apply bg-gray-900;
+  @apply relative;
 
   font-size: calc(var(--side) * 0.06);
 

@@ -1,19 +1,7 @@
-import { Board } from "../models/client/board";
-import { ServerBoardValidationStatus } from "../models/server/board";
+import { BoardInitialState } from "./board";
+import { PencilMarkBoardInitialState } from "./pencilMarkBoard";
 
 export interface InitialState {
-  board: Board
-  activePieceIndex: number
-  validationStatus: ServerBoardValidationStatus
-  solutionBoard: Board
-  highlightedNumber: number
+  board: BoardInitialState,
+  pencilMarkBoard: PencilMarkBoardInitialState
 }
-
-export const initialState: InitialState = {
-  board: null,
-  activePieceIndex: null,
-  validationStatus: null,
-  solutionBoard: null,
-  highlightedNumber: null
-};
-

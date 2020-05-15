@@ -1,6 +1,6 @@
 import { Action } from "redux";
-import { Board } from "../models/client/board";
-import { ServerBoardValidationStatus } from "../models/server/board";
+import { Board } from "../../models/client/board";
+import { ServerBoardValidationStatus } from "../../models/server/board";
 
 export enum BoardActions {
   FETCH_BOARD = 'BOARD/FETCH_BOARD',

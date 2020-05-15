@@ -4,7 +4,7 @@
   @apply absolute;
   @apply top-0;
   @apply left-0;
-  @apply z-10;
+  /* @apply z-1; */
 
   &__lines {
     @apply bg-primary-main;

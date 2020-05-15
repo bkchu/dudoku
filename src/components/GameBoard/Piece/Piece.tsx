@@ -2,10 +2,8 @@ import classnames from "classnames"
 import React, { FC } from "react"
 import { connect } from "react-redux"
 import { Dispatch } from "redux"
-import {
-  createBoardSetHighlightedNumber,
-  createBoardSelectPieceAction,
-} from "../../../governor/actions"
+import { createBoardSelectPieceAction, createBoardSetHighlightedNumber } from "../../../governor/board"
+import PencilGrid from "./PencilGrid/PencilGrid"
 import "./Piece.css"
 
 export interface PieceProps {
@@ -15,6 +13,7 @@ export interface PieceProps {
   isActive: boolean
   isWrong: boolean
   isHighlighted: boolean
+  pencilMarks: number[]
 
   onPieceClick: (num?: number) => {}
   setHighlightedNumber: (num?: number) => {}
@@ -29,8 +28,9 @@ const Piece: FC<PieceProps> = ({
   isHighlighted,
   onPieceClick,
   setHighlightedNumber,
+  pencilMarks,
 }) => {
-  const constructedClasses = classnames("piece", {
+  const _classNames = classnames("piece", {
     "piece--active": isActive,
     "piece--is-actionable": isActionable,
     "piece--is-wrong": isWrong,
@@ -42,16 +42,25 @@ const Piece: FC<PieceProps> = ({
       setHighlightedNumber(null)
     } else if (!isHighlighted && number !== 0) {
       setHighlightedNumber(number)
-    } else if(!isHighlighted && number === 0) {
-      setHighlightedNumber(null);
+    } else if (!isHighlighted && number === 0) {
+      setHighlightedNumber(null)
     }
     onPieceClick(index)
   }
 
   return (
-    <div className={constructedClasses} onClick={onClick}>
-      {number === 0 ? "" : `${number}`}
-    </div>
+    <>
+      <div className={_classNames} onClick={onClick}>
+        {number === 0 && (
+          <PencilGrid
+            pencilMarks={pencilMarks}
+            isActive={isActive}
+            isVisible={number === 0}
+          ></PencilGrid>
+        )}
+        {number === 0 ? "" : `${number}`}
+      </div>
+    </>
   )
 }
 

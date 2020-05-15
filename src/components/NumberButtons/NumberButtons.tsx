@@ -1,11 +1,11 @@
 import React, { FC } from "react"
 import { connect } from "react-redux"
 import { Dispatch } from "redux"
-import { createBoardSetPaintNumberAction } from "../../governor/actions"
-import { InitialState } from "../../governor/initialState"
-import { selectActivePieceIndex } from "../../governor/selectors"
+import { createBoardSetPaintNumberAction } from "../../governor/board/actions"
+import { selectActivePieceIndex } from "../../governor/board/selectors"
 
 import "./NumberButtons.css"
+import { InitialState } from "../../governor/initialState"
 
 export interface NumberButtonsProps {
   onNumberButtonPress: Function

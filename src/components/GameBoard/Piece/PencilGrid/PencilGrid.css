@@ -1,0 +1,27 @@
+.pencil-grid {
+  @apply text-neutral-100;
+  @apply absolute;
+  @apply w-full;
+  @apply h-full;
+  @apply grid;
+  z-index: -1;
+  /* @apply p-1; */
+
+  padding: calc(var(--side) * 0.009);
+  font-size: calc(var(--side) * var(--thickness) * 3.5);
+
+  /* grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+
+  @apply content-center;
+  @apply items-center; */
+  @apply flex flex-wrap-reverse items-center justify-center;
+
+  &__mark {
+    @apply w-1/3;
+  }
+
+  &--is-active {
+    @apply text-gray-900;
+  }
+}

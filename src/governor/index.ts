@@ -1,11 +1,22 @@
-import { applyMiddleware, createStore } from "redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from "redux-saga";
-import { initialState } from "./initialState";
-import { reducer } from "./reducer";
+import { all } from "redux-saga/effects";
+import { board, boardReducer } from "./board";
+import { pencilMarkBoard, pencilMarkBoardReducer } from "./pencilMarkBoard";
 
 export const sagaMiddleware = createSagaMiddleware();
 
 export const createReduxStore = () => {
-  return createStore(reducer, initialState, composeWithDevTools(applyMiddleware(sagaMiddleware)))
+  return createStore(combineReducers({
+    board: boardReducer,
+    pencilMarkBoard: pencilMarkBoardReducer
+  }), composeWithDevTools(applyMiddleware(sagaMiddleware)))
+}
+
+export function* rootSaga(): Generator {
+  yield all([
+    board(),
+    pencilMarkBoard()
+  ])
 }

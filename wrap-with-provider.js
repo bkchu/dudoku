@@ -1,7 +1,6 @@
 import React from "react"
 import { Provider } from "react-redux"
-import { createReduxStore, sagaMiddleware } from "./src/governor"
-import { rootSaga } from "./src/governor/saga"
+import { createReduxStore, rootSaga, sagaMiddleware } from "./src/governor"
 
 // eslint-disable-next-line react/display-name,react/prop-types
 export default ({ element }) => {

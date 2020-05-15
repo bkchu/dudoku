@@ -5,25 +5,26 @@ import { Dispatch } from "redux"
 import {
   createBoardFetchAction,
   createBoardSetPaintNumberAction,
-} from "../../governor/actions"
-import {
   selectActivePieceIndex,
   selectBoard,
   selectBoardValidationStatus,
   selectHighlightedNumber,
-} from "../../governor/selectors"
+} from "../../governor/board"
+import { InitialState } from "../../governor/initialState"
+import { selectPencilMarkBoard } from "../../governor/pencilMarkBoard"
 import { useKeyPress } from "../../hooks/useKeyPress"
 import { Board } from "../../models/client/board"
+import { PencilMarkBoard } from "../../models/client/pencilMarkBoard"
 import { ServerBoardValidationStatus } from "../../models/server/board"
 import BoardLines from "./BoardLines/BoardLines"
 import "./GameBoard.css"
 import ParsedBoard from "./ParsedBoard/ParsedBoard"
-
 export interface GameBoardProps {
   board: Board
   validationStatus: ServerBoardValidationStatus
   activePieceIndex: number
   highlightedNumber: number
+  pencilMarkBoard: PencilMarkBoard
 
   fetchBoard: () => {}
   setPaintNumber: (num: number) => {}
@@ -36,6 +37,7 @@ const GameBoard: FC<GameBoardProps> = ({
   setPaintNumber,
   validationStatus,
   highlightedNumber,
+  pencilMarkBoard,
 }) => {
   useEffect(() => {
     fetchBoard()
@@ -52,28 +54,29 @@ const GameBoard: FC<GameBoardProps> = ({
     "7",
     "8",
     "9",
-    "backspace"
+    "backspace",
   ])
 
   useEffect(() => {
     if (pressedKey != null && activePieceIndex != null) {
-      setPaintNumber(pressedKey === 'backspace' ? 0 : +pressedKey)
+      setPaintNumber(pressedKey === "backspace" ? 0 : +pressedKey)
     }
   }, [pressedKey])
 
-  const constructedClasses = classnames("game-board", {
+  const _classNames = classnames("game-board", {
     "game-board--solved":
       validationStatus === ServerBoardValidationStatus.SOLVED,
   })
 
   return (
     <>
-      <div className={constructedClasses}>
+      <div className={_classNames}>
         <BoardLines></BoardLines>
         <ParsedBoard
           board={board}
           activePieceIndex={activePieceIndex}
           highlightedNumber={highlightedNumber}
+          pencilMarkBoard={pencilMarkBoard}
         ></ParsedBoard>
       </div>
       {validationStatus === ServerBoardValidationStatus.SOLVED && (
@@ -83,11 +86,12 @@ const GameBoard: FC<GameBoardProps> = ({
   )
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: InitialState) => ({
   board: selectBoard(state),
   activePieceIndex: selectActivePieceIndex(state),
   validationStatus: selectBoardValidationStatus(state),
   highlightedNumber: selectHighlightedNumber(state),
+  pencilMarkBoard: selectPencilMarkBoard(state),
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
