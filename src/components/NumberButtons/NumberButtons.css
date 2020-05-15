@@ -5,8 +5,8 @@
   &__container {
     @apply grid;
     @apply mt-2;
-    grid-template-columns: repeat(5, calc(var(--side) * .12) );
-    grid-template-rows: repeat(2, calc(var(--side) * .12));
+    grid-template-columns: repeat(5, calc(var(--side) * 0.12));
+    grid-template-rows: repeat(2, calc(var(--side) * 0.12));
     @apply gap-2;
     @apply content-center;
     @apply text-center;
@@ -23,6 +23,6 @@
     @apply text-gray-200;
     @apply font-bold;
 
-    font-size: calc(var(--side) * .06);
+    font-size: calc(var(--side) * 0.06);
   }
 }
