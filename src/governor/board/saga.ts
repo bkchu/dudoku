@@ -3,16 +3,7 @@ import { Board, Piece } from '../../models/client/board';
 import { ServerBoardResponse, ServerBoardSolverResponse, ServerBoardValidationResponse } from '../../models/server/board';
 import { makeRequest } from '../../utils/api';
 import { transformClientToServerSudokuBoard, transformServerToClientSudokuBoard } from '../../utils/board';
-import {
-  BoardActions,
-  BoardSelectPieceAction,
-  BoardSetPaintNumberAction,
-  createBoardSetAction,
-  createBoardSetActivePieceAction,
-  createBoardSetHighlightedNumber,
-  createBoardSetSolutionBoardAction,
-  createBoardSetValidationStatusAction
-} from './actions';
+import { BoardActions, BoardSelectPieceAction, BoardSetPaintNumberAction, createBoardSetAction, createBoardSetActivePieceAction, createBoardSetHighlightedNumber, createBoardSetSolutionBoardAction, createBoardSetValidationStatusAction } from './actions';
 import { selectActivePiece, selectActivePieceIndex, selectBoard, selectSolutionBoard } from './selectors';
 
 
@@ -28,7 +19,7 @@ export function* board(): Generator {
 export function* fetchBoardSaga(): Generator {
   // gets a new board
   // const response = (yield call(makeRequest, 'get-sudoku-board')) as ServerBoardResponse;
-  const response = {"board":[[0,6,2,0,0,0,0,0,8],[0,3,0,0,0,0,0,0,0],[0,7,8,4,0,9,0,0,0],[2,0,3,0,4,0,8,0,7],[0,0,6,8,9,0,0,0,1],[7,0,9,0,0,0,0,0,6],[3,0,0,6,7,4,9,8,5],[0,0,0,0,8,0,0,1,0],[0,9,5,0,1,0,0,6,4]]} as ServerBoardResponse;
+  const response = { "board": [[0, 6, 2, 0, 0, 0, 0, 0, 8], [0, 3, 0, 0, 0, 0, 0, 0, 0], [0, 7, 8, 4, 0, 9, 0, 0, 0], [2, 0, 3, 0, 4, 0, 8, 0, 7], [0, 0, 6, 8, 9, 0, 0, 0, 1], [7, 0, 9, 0, 0, 0, 0, 0, 6], [3, 0, 0, 6, 7, 4, 9, 8, 5], [0, 0, 0, 0, 8, 0, 0, 1, 0], [0, 9, 5, 0, 1, 0, 0, 6, 4]] } as ServerBoardResponse;
 
   // gets the solved board using the new board
   const solutionBoard = (yield call(makeRequest, 'check-board', { board: response.board })) as ServerBoardSolverResponse;

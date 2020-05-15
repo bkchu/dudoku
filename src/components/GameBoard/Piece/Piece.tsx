@@ -2,7 +2,10 @@ import classnames from "classnames"
 import React, { FC } from "react"
 import { connect } from "react-redux"
 import { Dispatch } from "redux"
-import { createBoardSelectPieceAction, createBoardSetHighlightedNumber } from "../../../governor/board"
+import {
+  createBoardSelectPieceAction,
+  createBoardSetHighlightedNumber,
+} from "../../../governor/board"
 import PencilGrid from "./PencilGrid/PencilGrid"
 import "./Piece.css"
 

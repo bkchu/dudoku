@@ -1,48 +1,56 @@
 import classnames from "classnames"
-import React, { FC } from "react"
+import React, { FC, useEffect } from "react"
 import { connect } from "react-redux"
 import { Dispatch } from "redux"
 import { createBoardCheckBoardAction } from "../../governor/board/actions"
 import { InitialState } from "../../governor/initialState"
 import {
-  createPencilMarkBoardDisablePencilModeAction,
-  createPencilMarkBoardEnablePencilModeAction,
+  createPencilMarkBoardTogglePencilModeAction,
   selectIsPencilMode,
 } from "../../governor/pencilMarkBoard"
+import { useKeyPress } from "../../hooks/useKeyPress"
+import "./GameActions.css"
 
 export interface GameActionsProps {
   isPencilMode: boolean
   checkBoard: () => {}
-  enablePencilMode: Function
-  disablePencilMode: Function
+  togglePencilMode: Function
 }
 
 const GameActions: FC<GameActionsProps> = ({
   checkBoard,
   isPencilMode,
-  enablePencilMode,
-  disablePencilMode,
+  togglePencilMode,
 }) => {
-  const pencilModeButtonClassNames = classnames(
-    "game-actions__pencil-mode-btn",
-    {
-      "game-actions__pencil-mode-btn--is-active": isPencilMode,
-    }
-  )
+  const classes = {
+    checkBtn: "game-actions__btn",
+    pencilModeBtn: classnames("game-actions__btn", {
+      "game-actions__btn--is-active": isPencilMode,
+    }),
+  }
 
-  const pencilModeButtonOnClick = () =>
-    isPencilMode ? disablePencilMode() : enablePencilMode()
+  const pressedKey = useKeyPress(["p"])
+
+  useEffect(() => {
+    if (pressedKey === "p") {
+      togglePencilMode()
+    }
+  }, [pressedKey])
+
+  const pencilModeButtonOnClick = () => togglePencilMode()
 
   return (
-    <>
-      <button onClick={checkBoard}>Check Board</button>
+    <div className="game-actions">
+      <button className={classes.checkBtn} onClick={checkBoard}>
+        Check Board
+      </button>
       <button
-        className={pencilModeButtonClassNames}
+        className={classes.pencilModeBtn}
         onClick={pencilModeButtonOnClick}
       >
-        Pencil Mode
+        ✏️ {isPencilMode ? "ON" : "OFF"}
       </button>
-    </>
+    </div>
   )
 }
 
@@ -52,10 +60,8 @@ const mapStateToProps = (state: InitialState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   checkBoard: () => dispatch(createBoardCheckBoardAction()),
-  enablePencilMode: () =>
-    dispatch(createPencilMarkBoardEnablePencilModeAction()),
-  disablePencilMode: () =>
-    dispatch(createPencilMarkBoardDisablePencilModeAction()),
+  togglePencilMode: () =>
+    dispatch(createPencilMarkBoardTogglePencilModeAction()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameActions)

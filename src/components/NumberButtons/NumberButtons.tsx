@@ -3,9 +3,8 @@ import { connect } from "react-redux"
 import { Dispatch } from "redux"
 import { createBoardSetPaintNumberAction } from "../../governor/board/actions"
 import { selectActivePieceIndex } from "../../governor/board/selectors"
-
-import "./NumberButtons.css"
 import { InitialState } from "../../governor/initialState"
+import "./NumberButtons.css"
 
 export interface NumberButtonsProps {
   onNumberButtonPress: Function

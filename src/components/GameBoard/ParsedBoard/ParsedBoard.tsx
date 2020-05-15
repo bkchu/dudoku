@@ -1,8 +1,8 @@
 import React, { FC } from "react"
 import { Board } from "../../../models/client/board"
+import { PencilMarkBoard } from "../../../models/client/pencilMarkBoard"
 import Piece from "../Piece/Piece"
 import "./ParsedBoard.css"
-import { PencilMarkBoard } from "../../../models/client/pencilMarkBoard"
 
 export interface ParsedBoardProps {
   board: Board
@@ -15,7 +15,7 @@ const ParsedBoard: FC<ParsedBoardProps> = ({
   board,
   activePieceIndex,
   highlightedNumber,
-  pencilMarkBoard
+  pencilMarkBoard,
 }) => {
   return (
     <div className="parsed-board">
