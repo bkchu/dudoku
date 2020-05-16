@@ -11,7 +11,11 @@ import {
   selectHighlightedNumber,
 } from "../../governor/board"
 import { InitialState } from "../../governor/initialState"
-import { selectPencilMarkBoard } from "../../governor/pencilMarkBoard"
+import {
+  createPencilMarkingSetAction,
+  selectIsPencilMode,
+  selectPencilMarkBoard,
+} from "../../governor/pencilMarkBoard"
 import { useKeyPress } from "../../hooks/useKeyPress"
 import { Board } from "../../models/client/board"
 import { PencilMarkBoard } from "../../models/client/pencilMarkBoard"
@@ -25,9 +29,11 @@ export interface GameBoardProps {
   activePieceIndex: number
   highlightedNumber: number
   pencilMarkBoard: PencilMarkBoard
+  isPencilMode: boolean
 
   fetchBoard: () => {}
-  setPaintNumber: (num: number) => {}
+  setPaintNumber: Function
+  setPencilMark: Function
 }
 
 const GameBoard: FC<GameBoardProps> = ({
@@ -38,6 +44,8 @@ const GameBoard: FC<GameBoardProps> = ({
   validationStatus,
   highlightedNumber,
   pencilMarkBoard,
+  isPencilMode,
+  setPencilMark,
 }) => {
   useEffect(() => {
     fetchBoard()
@@ -70,11 +78,14 @@ const GameBoard: FC<GameBoardProps> = ({
         case "8":
         case "9":
         case "0":
-          setPaintNumber(+pressedKey)
+          isPencilMode
+            ? setPencilMark(+pressedKey)
+            : setPaintNumber(+pressedKey)
           break
 
         case "backspace":
           setPaintNumber(0)
+          setPencilMark(0)
           break
 
         default:
@@ -112,12 +123,15 @@ const mapStateToProps = (state: InitialState) => ({
   validationStatus: selectBoardValidationStatus(state),
   highlightedNumber: selectHighlightedNumber(state),
   pencilMarkBoard: selectPencilMarkBoard(state),
+  isPencilMode: selectIsPencilMode(state),
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchBoard: () => dispatch(createBoardFetchAction()),
   setPaintNumber: (number: number) =>
     dispatch(createBoardSetPaintNumberAction(number)),
+  setPencilMark: (number: number) =>
+    dispatch(createPencilMarkingSetAction(number)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameBoard)

@@ -10,6 +10,9 @@ export const pencilMarkBoardReducer = (state: PencilMarkBoardInitialState = penc
     case PencilMarkBoardActions.DISABLE_PENCIL_MODE:
       return { ...state, pencilMode: false }
 
+    case PencilMarkBoardActions.SET_BOARD:
+      return { ...state, pencilMarkBoard: action.payload }
+
     default:
       return state;
   }
