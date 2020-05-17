@@ -1,12 +1,12 @@
 import { all, call, put, select, takeEvery, takeLatest, takeLeading } from 'redux-saga/effects';
 import { Direction } from '../../governor/models/board';
-import { createPencilMarkBoardClearPencilMarksAction, selectPencilMarkBoard } from '../../governor/pencilMarkBoard';
+import { createPencilMarkBoardClearMatchingMarksAction, createPencilMarkBoardClearPencilMarksAction, createPencilMarkingSetAction, selectIsPencilMode, selectPencilMarkBoard } from '../../governor/pencilMarkBoard';
 import { Board, Piece } from '../../models/client/board';
 import { PencilMarkBoard } from '../../models/client/pencilMarkBoard';
 import { ServerBoardResponse, ServerBoardSolverResponse, ServerBoardValidationResponse } from '../../models/server/board';
 import { makeRequest } from '../../utils/api';
 import { transformClientToServerSudokuBoard, transformServerToClientSudokuBoard } from '../../utils/board';
-import { BoardActions, BoardMoveInDirectionAction, BoardSelectPieceAction, BoardSetPaintNumberAction, createBoardSelectPieceAction, createBoardSetAction, createBoardSetActivePieceAction, createBoardSetCursorIndexAction, createBoardSetHighlightedNumber, createBoardSetSolutionBoardAction, createBoardSetValidationStatusAction } from './actions';
+import { BoardActions, BoardMoveInDirectionAction, BoardSelectPieceAction, BoardSetPaintNumberAction, BoardSetUserPressedAction, createBoardSelectPieceAction, createBoardSetAction, createBoardSetActivePieceAction, createBoardSetCursorIndexAction, createBoardSetHighlightedNumber, createBoardSetPaintNumberAction, createBoardSetSolutionBoardAction, createBoardSetValidationStatusAction } from './actions';
 import { selectActivePiece, selectActivePieceIndex, selectBoard, selectCurrentCursorIndex, selectSolutionBoard } from './selectors';
 
 
@@ -16,26 +16,14 @@ export function* board(): Generator {
     takeLatest(BoardActions.SET_PAINT_NUMBER, setNumberInPieceSaga),
     takeLatest(BoardActions.CHECK_BOARD, checkBoard),
     takeEvery(BoardActions.SELECT_PIECE, handlePieceSelection),
-    takeLatest(BoardActions.MOVE_IN_DIRECTION, moveActivePieceInDirection)
+    takeLatest(BoardActions.MOVE_IN_DIRECTION, moveActivePieceInDirection),
+    takeEvery(BoardActions.SET_USER_PRESSED, setUserPressed)
   ])
 }
 
 export function* fetchBoardSaga(): Generator {
   // gets a new board
-  // const response = (yield call(makeRequest, 'get-sudoku-board')) as ServerBoardResponse;
-  const response = {
-    "board": [
-      [0, 6, 2, 0, 0, 0, 0, 0, 8],
-      [0, 3, 0, 0, 0, 0, 0, 0, 0],
-      [0, 7, 8, 4, 0, 9, 0, 0, 0],
-      [2, 0, 3, 0, 4, 0, 8, 0, 7],
-      [0, 0, 6, 8, 9, 0, 0, 0, 1],
-      [7, 0, 9, 0, 0, 0, 0, 0, 6],
-      [3, 0, 0, 6, 7, 4, 9, 8, 5],
-      [0, 0, 0, 0, 8, 0, 0, 1, 0],
-      [0, 9, 5, 0, 1, 0, 0, 6, 4]
-    ]
-  } as ServerBoardResponse;
+  const response = (yield call(makeRequest, 'get-sudoku-board')) as ServerBoardResponse;
 
   // gets the solved board using the new board
   const solutionBoard = (yield call(makeRequest, 'check-board', { board: response.board })) as ServerBoardSolverResponse;
@@ -57,18 +45,23 @@ export function* setNumberInPieceSaga(action: BoardSetPaintNumberAction): Genera
     isWrong: false
   }
 
+
   // check if there are pencil markings in that piece first and remove them
-  if (currentPencilMarkBoard[activePieceIndex].length > 0) {
+  if (currentPencilMarkBoard[activePieceIndex]?.length > 0) {
     yield put(createPencilMarkBoardClearPencilMarksAction());
   }
 
-  if (desiredNumber != 0) {
+  if (desiredNumber !== 0) {
     yield put(createBoardSetHighlightedNumber(desiredNumber));
   } else {
     yield put(createBoardSetHighlightedNumber(null));
   }
 
   yield put(createBoardSetAction(currentBoard));
+
+  if (desiredNumber !== 0) {
+    yield put(createPencilMarkBoardClearMatchingMarksAction(activePieceIndex));
+  }
 
   if (currentBoard.every(piece => piece.number !== 0)) {
     yield* validateBoard(currentBoard)
@@ -180,4 +173,27 @@ export function* moveActivePieceInDirection(action: BoardMoveInDirectionAction):
     yield put(createBoardSetHighlightedNumber(null))
   }
   yield (put(createBoardSelectPieceAction(newIndex)));
+}
+
+export function* setUserPressed(action: BoardSetUserPressedAction) {
+  const isPencilMode = (yield select(selectIsPencilMode)) as boolean;
+  switch (action.payload) {
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 0:
+      isPencilMode
+        ? yield put(createPencilMarkingSetAction(action.payload))
+        : yield put(createBoardSetPaintNumberAction(action.payload))
+      break
+
+    default:
+      break
+  }
 }

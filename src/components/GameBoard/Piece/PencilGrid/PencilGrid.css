@@ -4,24 +4,23 @@
   @apply w-full;
   @apply h-full;
   @apply grid;
+
   z-index: -1;
-  /* @apply p-1; */
+  padding: calc(var(--side) * 0.003);
 
-  padding: calc(var(--side) * 0.009);
-  font-size: calc(var(--side) * var(--thickness) * 3.5);
-
-  /* grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-
-  @apply content-center;
-  @apply items-center; */
   @apply flex flex-wrap-reverse items-center justify-center;
 
   &__mark {
-    @apply w-1/3;
+    flex-basis: 33.33%;
+    font-size: calc(var(--side) * 0.022);
+    @apply font-bold;
   }
 
   &--is-active {
     @apply text-gray-900;
+  }
+
+  &--is-highlighted {
+    @apply text-neutral-900;
   }
 }

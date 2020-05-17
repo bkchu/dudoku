@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 import { Dispatch } from "redux"
 import {
   createBoardFetchAction,
-  createBoardSetPaintNumberAction,
+  createBoardSetUserPressedAction,
   selectActivePieceIndex,
   selectBoard,
   selectBoardValidationStatus,
@@ -12,7 +12,6 @@ import {
 } from "../../governor/board"
 import { InitialState } from "../../governor/initialState"
 import {
-  createPencilMarkingSetAction,
   selectIsPencilMode,
   selectPencilMarkBoard,
 } from "../../governor/pencilMarkBoard"
@@ -32,20 +31,17 @@ export interface GameBoardProps {
   isPencilMode: boolean
 
   fetchBoard: () => {}
-  setPaintNumber: Function
-  setPencilMark: Function
+  setUserPressed: Function
 }
 
 const GameBoard: FC<GameBoardProps> = ({
   board,
   fetchBoard,
   activePieceIndex,
-  setPaintNumber,
   validationStatus,
   highlightedNumber,
   pencilMarkBoard,
-  isPencilMode,
-  setPencilMark,
+  setUserPressed,
 }) => {
   useEffect(() => {
     fetchBoard()
@@ -67,30 +63,7 @@ const GameBoard: FC<GameBoardProps> = ({
 
   useEffect(() => {
     if (pressedKey != null && activePieceIndex != null) {
-      switch (pressedKey) {
-        case "1":
-        case "2":
-        case "3":
-        case "4":
-        case "5":
-        case "6":
-        case "7":
-        case "8":
-        case "9":
-        case "0":
-          isPencilMode
-            ? setPencilMark(+pressedKey)
-            : setPaintNumber(+pressedKey)
-          break
-
-        case "backspace":
-          setPaintNumber(0)
-          setPencilMark(0)
-          break
-
-        default:
-          break
-      }
+      setUserPressed(pressedKey === "backspace" ? 0 : +pressedKey)
     }
   }, [pressedKey])
 
@@ -128,10 +101,7 @@ const mapStateToProps = (state: InitialState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchBoard: () => dispatch(createBoardFetchAction()),
-  setPaintNumber: (number: number) =>
-    dispatch(createBoardSetPaintNumberAction(number)),
-  setPencilMark: (number: number) =>
-    dispatch(createPencilMarkingSetAction(number)),
+  setUserPressed: number => dispatch(createBoardSetUserPressedAction(number)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameBoard)

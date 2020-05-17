@@ -27,7 +27,7 @@ const ParsedBoard: FC<ParsedBoardProps> = ({
           isActionable={isActionable}
           isActive={index === activePieceIndex}
           isWrong={isWrong}
-          isHighlighted={highlightedNumber === number}
+          isHighlighted={highlightedNumber === number || pencilMarkBoard[index]?.includes(highlightedNumber)}
           pencilMarks={pencilMarkBoard[index]}
         />
       ))}

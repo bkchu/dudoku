@@ -1,0 +1,23 @@
+.header {
+  @apply bg-primary-main;
+  @apply mb-5;
+
+  &__title-container {
+    /* @apply mx-auto; */
+    @apply h-full;
+    @apply w-full;
+    @apply p-5;
+    @apply flex;
+    @apply items-center;
+    /* @apply max-w-6xl; */
+  }
+
+  &__title {
+    @apply text-neutral-900;
+    @apply text-4xl;
+  }
+
+  &__title-link {
+    @apply no-underline;
+  }
+}

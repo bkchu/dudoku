@@ -56,9 +56,9 @@ const Piece: FC<PieceProps> = ({
       <div className={_classNames} onClick={onClick}>
         {number === 0 && (
           <PencilGrid
+            isHighlighted={isHighlighted}
             pencilMarks={pencilMarks}
             isActive={isActive}
-            isVisible={number === 0}
           ></PencilGrid>
         )}
         {number === 0 ? "" : `${number}`}

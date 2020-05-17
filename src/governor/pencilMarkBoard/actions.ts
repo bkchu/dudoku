@@ -7,7 +7,8 @@ export enum PencilMarkBoardActions {
   DISABLE_PENCIL_MODE = "PENCIL/DISABLE_PENCIL_MODE",
   SET_BOARD = "PENCIL/SET_BOARD",
   SET_PENCIL_MARKING = 'PENCIL/SET_PENCIL_MARKING',
-  CLEAR_PENCIL_MARKS = 'PENCIL/CLEAR_PENCIL_MARKS'
+  CLEAR_PENCIL_MARKS = 'PENCIL/CLEAR_PENCIL_MARKS',
+  CLEAR_MATCHING_MARKS = 'PENCIL/CLEAR_MATCHING_MARKS'
 }
 
 export interface PencilMarkBoardTogglePencilModeAction extends Action {
@@ -32,6 +33,11 @@ export interface PencilMarkBoardSetPencilMarkingAction extends Action {
 
 export interface PencilMarkBoardClearPencilMarksAction extends Action {
   type: PencilMarkBoardActions.CLEAR_PENCIL_MARKS
+}
+
+export interface PencilMarkBoardClearMatchingMarksAction extends Action {
+  type: PencilMarkBoardActions.CLEAR_MATCHING_MARKS,
+  payload: number
 }
 
 export function createPencilMarkBoardTogglePencilModeAction(): PencilMarkBoardTogglePencilModeAction {
@@ -69,5 +75,13 @@ export function createPencilMarkingSetAction(number: number): PencilMarkBoardSet
 export function createPencilMarkBoardClearPencilMarksAction(): PencilMarkBoardClearPencilMarksAction {
   return {
     type: PencilMarkBoardActions.CLEAR_PENCIL_MARKS
+  }
+}
+
+
+export function createPencilMarkBoardClearMatchingMarksAction(index: number): PencilMarkBoardClearMatchingMarksAction {
+  return {
+    type: PencilMarkBoardActions.CLEAR_MATCHING_MARKS,
+    payload: index
   }
 }

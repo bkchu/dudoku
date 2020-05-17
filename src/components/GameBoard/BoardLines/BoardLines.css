@@ -15,7 +15,7 @@
       @apply top-0;
       width: calc(var(--side) * var(--thickness));
       left: calc(100% / 3);
-      transform: translateX(-66%);
+      transform: translateX(calc(-66%));
     }
 
     &--2 {

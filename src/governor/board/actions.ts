@@ -10,6 +10,7 @@ export enum BoardActions {
   SELECT_PIECE = 'BOARD/SELECT_PIECE',
   SET_ACTIVE_PIECE = 'BOARD/SET_ACTIVE_PIECE',
   SET_PAINT_NUMBER = 'BOARD/SET_PAINT_NUMBER',
+  SET_USER_PRESSED = 'BOARD/SET_USER_PRESSED',
 
   SET_VALIDATION_STATUS = 'BOARD/SET_VALIDATION_STATUS',
   CHECK_BOARD = 'BOARD/CHECK_BOARD',
@@ -77,6 +78,11 @@ export interface BoardMoveInDirectionAction extends Action {
 
 export interface BoardSetCursorIndexAction extends Action {
   type: BoardActions.SET_CURSOR_INDEX,
+  payload: number
+}
+
+export interface BoardSetUserPressedAction extends Action {
+  type: BoardActions.SET_USER_PRESSED,
   payload: number
 }
 
@@ -159,5 +165,12 @@ export function createBoardSetCursorIndexAction(index: number): BoardSetCursorIn
   return {
     type: BoardActions.SET_CURSOR_INDEX,
     payload: index
+  }
+}
+
+export function createBoardSetUserPressedAction(number: number): BoardSetUserPressedAction {
+  return {
+    type: BoardActions.SET_USER_PRESSED,
+    payload: number
   }
 }

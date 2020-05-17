@@ -1,7 +1,7 @@
 import React, { FC } from "react"
 import { connect } from "react-redux"
 import { Dispatch } from "redux"
-import { createBoardSetPaintNumberAction } from "../../governor/board/actions"
+import { createBoardSetUserPressedAction } from "../../governor/board/actions"
 import { selectActivePieceIndex } from "../../governor/board/selectors"
 import { InitialState } from "../../governor/initialState"
 import "./NumberButtons.css"
@@ -41,6 +41,6 @@ const mapStateToProps = (state: InitialState) => ({
 })
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onNumberButtonPress: (number: number) =>
-    dispatch(createBoardSetPaintNumberAction(number)),
+    dispatch(createBoardSetUserPressedAction(number)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(NumberButtons)

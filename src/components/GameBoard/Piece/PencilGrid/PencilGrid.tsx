@@ -7,19 +7,19 @@ interface PencilGridProps {
   pencilMarks: number[]
 
   // to determine if the pencil grid is able to be seen
-  isVisible: boolean
+  isHighlighted: boolean
 
   // to determine if the colors of the numbers should be inverted while the piece is selected
   isActive: boolean
 }
 
 const PencilGrid: FC<PencilGridProps> = ({
-  isVisible,
+  isHighlighted,
   isActive,
   pencilMarks,
 }) => {
   const _classNames = classnames("pencil-grid", {
-    "pencil-grid--is-visible": isVisible,
+    "pencil-grid--is-highlighted": isHighlighted,
     "pencil-grid--is-active": isActive,
   })
   return (
