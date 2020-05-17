@@ -9,6 +9,7 @@ export interface BoardInitialState {
   validationStatus: ServerBoardValidationStatus
   solutionBoard: Board
   highlightedNumber: number
+  cursorIndex: number
 }
 
 export const boardInitialState: BoardInitialState = {
@@ -17,5 +18,6 @@ export const boardInitialState: BoardInitialState = {
   validationStatus: null,
   solutionBoard: null,
   highlightedNumber: null,
+  cursorIndex: null
 };
 

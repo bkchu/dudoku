@@ -1,4 +1,5 @@
 import { Action } from "redux";
+import { Direction } from "../../governor/models/board";
 import { Board } from "../../models/client/board";
 import { ServerBoardValidationStatus } from "../../models/server/board";
 
@@ -15,7 +16,10 @@ export enum BoardActions {
   SET_SOLUTION_BOARD = 'BOARD/SET_SOLUTION_BOARD',
 
   HIGHLIGHT_ALL_MATCHING_PIECES = 'BOARD/HIGHLIGHT_ALL_MATCHING_PIECES',
-  SET_HIGHLIGHTED_NUMBER = 'BOARD/SET_HIGHLIGHTED_NUMBER'
+  SET_HIGHLIGHTED_NUMBER = 'BOARD/SET_HIGHLIGHTED_NUMBER',
+
+  MOVE_IN_DIRECTION = 'BOARD/MOVE_IN_DIRECTION',
+  SET_CURSOR_INDEX = 'BOARD/SET_CURSOR_INDEX'
 }
 
 export interface BoardFetchAction extends Action {
@@ -63,6 +67,16 @@ export interface BoardHighlightAllMatchingPiecesAction extends Action {
 
 export interface BoardSetHighlightedNumber extends Action {
   type: BoardActions.SET_HIGHLIGHTED_NUMBER,
+  payload: number
+}
+
+export interface BoardMoveInDirectionAction extends Action {
+  type: BoardActions.MOVE_IN_DIRECTION,
+  payload: Direction
+}
+
+export interface BoardSetCursorIndexAction extends Action {
+  type: BoardActions.SET_CURSOR_INDEX,
   payload: number
 }
 
@@ -131,5 +145,19 @@ export function createBoardSetHighlightedNumber(number: number): BoardSetHighlig
   return {
     type: BoardActions.SET_HIGHLIGHTED_NUMBER,
     payload: number
+  }
+}
+
+export function createBoardMoveInDirectionAction(direction: Direction): BoardMoveInDirectionAction {
+  return {
+    type: BoardActions.MOVE_IN_DIRECTION,
+    payload: direction
+  }
+}
+
+export function createBoardSetCursorIndexAction(index: number): BoardSetCursorIndexAction {
+  return {
+    type: BoardActions.SET_CURSOR_INDEX,
+    payload: index
   }
 }

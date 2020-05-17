@@ -31,6 +31,12 @@ export const boardReducer = (state: BoardInitialState = boardInitialState, actio
         highlightedNumber: action.payload
       }
 
+    case BoardActions.SET_CURSOR_INDEX:
+      return {
+        ...state,
+        cursorIndex: action.payload
+      }
+
     default:
       return state;
   }

@@ -8,4 +8,5 @@ export const selectBoardValidationStatus = createSelector(selectBoardSlice, (boa
 export const selectSolutionBoard = createSelector(selectBoardSlice, (boardSlice => boardSlice.solutionBoard));
 export const selectHighlightedNumber = createSelector(selectBoardSlice, (boardSlice => boardSlice.highlightedNumber));
 export const selectActivePiece = createSelector(selectBoard, selectActivePieceIndex, (board, index) => board[index]);
+export const selectCurrentCursorIndex = createSelector(selectBoardSlice, (boardSlice => boardSlice.cursorIndex));
 

@@ -1,12 +1,13 @@
-import { all, call, put, select, takeLatest, takeLeading } from 'redux-saga/effects';
+import { all, call, put, select, takeEvery, takeLatest, takeLeading } from 'redux-saga/effects';
+import { Direction } from '../../governor/models/board';
 import { createPencilMarkBoardClearPencilMarksAction, selectPencilMarkBoard } from '../../governor/pencilMarkBoard';
 import { Board, Piece } from '../../models/client/board';
 import { PencilMarkBoard } from '../../models/client/pencilMarkBoard';
 import { ServerBoardResponse, ServerBoardSolverResponse, ServerBoardValidationResponse } from '../../models/server/board';
 import { makeRequest } from '../../utils/api';
 import { transformClientToServerSudokuBoard, transformServerToClientSudokuBoard } from '../../utils/board';
-import { BoardActions, BoardSelectPieceAction, BoardSetPaintNumberAction, createBoardSetAction, createBoardSetActivePieceAction, createBoardSetHighlightedNumber, createBoardSetSolutionBoardAction, createBoardSetValidationStatusAction } from './actions';
-import { selectActivePiece, selectActivePieceIndex, selectBoard, selectSolutionBoard } from './selectors';
+import { BoardActions, BoardMoveInDirectionAction, BoardSelectPieceAction, BoardSetPaintNumberAction, createBoardSelectPieceAction, createBoardSetAction, createBoardSetActivePieceAction, createBoardSetCursorIndexAction, createBoardSetHighlightedNumber, createBoardSetSolutionBoardAction, createBoardSetValidationStatusAction } from './actions';
+import { selectActivePiece, selectActivePieceIndex, selectBoard, selectCurrentCursorIndex, selectSolutionBoard } from './selectors';
 
 
 export function* board(): Generator {
@@ -14,26 +15,27 @@ export function* board(): Generator {
     takeLeading(BoardActions.FETCH_BOARD, fetchBoardSaga),
     takeLatest(BoardActions.SET_PAINT_NUMBER, setNumberInPieceSaga),
     takeLatest(BoardActions.CHECK_BOARD, checkBoard),
-    takeLatest(BoardActions.SELECT_PIECE, handlePieceSelection)
+    takeEvery(BoardActions.SELECT_PIECE, handlePieceSelection),
+    takeLatest(BoardActions.MOVE_IN_DIRECTION, moveActivePieceInDirection)
   ])
 }
 
 export function* fetchBoardSaga(): Generator {
   // gets a new board
-  const response = (yield call(makeRequest, 'get-sudoku-board')) as ServerBoardResponse;
-  // const response = {
-  //   "board": [
-  //     [0, 6, 2, 0, 0, 0, 0, 0, 8],
-  //     [0, 3, 0, 0, 0, 0, 0, 0, 0],
-  //     [0, 7, 8, 4, 0, 9, 0, 0, 0],
-  //     [2, 0, 3, 0, 4, 0, 8, 0, 7],
-  //     [0, 0, 6, 8, 9, 0, 0, 0, 1],
-  //     [7, 0, 9, 0, 0, 0, 0, 0, 6],
-  //     [3, 0, 0, 6, 7, 4, 9, 8, 5],
-  //     [0, 0, 0, 0, 8, 0, 0, 1, 0],
-  //     [0, 9, 5, 0, 1, 0, 0, 6, 4]
-  //   ]
-  // } as ServerBoardResponse;
+  // const response = (yield call(makeRequest, 'get-sudoku-board')) as ServerBoardResponse;
+  const response = {
+    "board": [
+      [0, 6, 2, 0, 0, 0, 0, 0, 8],
+      [0, 3, 0, 0, 0, 0, 0, 0, 0],
+      [0, 7, 8, 4, 0, 9, 0, 0, 0],
+      [2, 0, 3, 0, 4, 0, 8, 0, 7],
+      [0, 0, 6, 8, 9, 0, 0, 0, 1],
+      [7, 0, 9, 0, 0, 0, 0, 0, 6],
+      [3, 0, 0, 6, 7, 4, 9, 8, 5],
+      [0, 0, 0, 0, 8, 0, 0, 1, 0],
+      [0, 9, 5, 0, 1, 0, 0, 6, 4]
+    ]
+  } as ServerBoardResponse;
 
   // gets the solved board using the new board
   const solutionBoard = (yield call(makeRequest, 'check-board', { board: response.board })) as ServerBoardSolverResponse;
@@ -76,8 +78,11 @@ export function* setNumberInPieceSaga(action: BoardSetPaintNumberAction): Genera
 export function* handlePieceSelection(action: BoardSelectPieceAction): Generator {
   const board = (yield select(selectBoard)) as Board;
   const clickedIndex = action.payload;
-  const { isActionable, number } = board[clickedIndex];
+  const isActionable = board[clickedIndex]?.isActionable;
+  const number = board[clickedIndex]?.number;
   const activePiece = (yield select(selectActivePiece)) as Piece;
+
+  yield put(createBoardSetCursorIndexAction(action.payload));
 
   if (isActionable) {
     if (activePiece == null) {
@@ -120,4 +125,59 @@ export function* checkBoard(): Generator {
   yield put(createBoardSetActivePieceAction(null));
 
   yield put(createBoardSetAction(checkedBoard));
+}
+
+export function* moveActivePieceInDirection(action: BoardMoveInDirectionAction): Generator {
+  const currentBoard = (yield select(selectBoard)) as Board;
+  const currentCursorIndex = (yield select(selectCurrentCursorIndex)) as number;
+
+  let newIndex = currentCursorIndex;
+  if (currentCursorIndex != null && currentCursorIndex > -1) {
+    switch (action.payload) {
+      case Direction.UP:
+        newIndex -= 9;
+        if (newIndex < 0) {
+          newIndex = 81 + newIndex;
+        }
+        break;
+
+      case Direction.DOWN:
+        newIndex += 9;
+        if (newIndex > 80) {
+          newIndex = newIndex % 9;
+        }
+        break;
+
+      case Direction.LEFT:
+        newIndex -= 1;
+        if (newIndex < 0) {
+          newIndex = 80;
+        }
+        break;
+
+      case Direction.RIGHT:
+        newIndex += 1;
+        if (newIndex > 80) {
+          newIndex = 0;
+        }
+        break;
+
+      default:
+        return;
+    }
+  } else {
+    newIndex = 0;
+  }
+
+  yield put(createBoardSetCursorIndexAction(newIndex));
+
+  const isHighlighted = currentBoard[newIndex]?.isHighlighted;
+  const number = currentBoard[newIndex]?.number;
+
+  if (!isHighlighted && number !== 0) {
+    yield put(createBoardSetHighlightedNumber(number))
+  } else if (!isHighlighted && number === 0) {
+    yield put(createBoardSetHighlightedNumber(null))
+  }
+  yield (put(createBoardSelectPieceAction(newIndex)));
 }

@@ -32,14 +32,14 @@ export function* setPencilMarkAtActiveIndex(action: PencilMarkBoardSetPencilMark
   let markingsAtIndex = currentPencilMarkBoard[activePieceIndex];
 
   if (desiredMark !== 0) {
-    markingsAtIndex = getResultingMarks(markingsAtIndex, desiredMark);
-    currentPencilMarkBoard[activePieceIndex] = markingsAtIndex;
-    yield put(createPencilMarkBoardSetBoardAction(currentPencilMarkBoard));
-
     // if there is already a number in a piece, remove it
     if (activePiece.number !== 0) {
       yield put(createBoardSetPaintNumberAction(0));
     }
+    markingsAtIndex = getResultingMarks(markingsAtIndex, desiredMark);
+    currentPencilMarkBoard[activePieceIndex] = markingsAtIndex;
+    yield put(createPencilMarkBoardSetBoardAction(currentPencilMarkBoard));
+
   }
 }
 
