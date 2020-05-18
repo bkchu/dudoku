@@ -34,6 +34,8 @@
   }
 
   &__number {
+    @apply absolute;
+    @apply top-0;
   }
 
   &__remaining-count {
@@ -41,6 +43,6 @@
     @apply font-normal;
     @apply bottom-0;
 
-    font-size: calc(var(--side) * 0.02);
+    font-size: calc(var(--side) * 0.025);
   }
 }
