@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `DUDOKU`,
+    title: `dudoku`,
     description: `Play sudoku. Duel your friends. Du-doku.`,
     author: `@bkchu`,
   },

@@ -7,7 +7,7 @@ import NumberButtons from "../components/NumberButtons/NumberButtons"
 
 const IndexPage = () => (
   <Layout>
-    <SEO title="Home" />
+    <SEO title="Welcome to Dudoku"/>
     <GameBoard />
     <NumberButtons />
     <GameActions />
