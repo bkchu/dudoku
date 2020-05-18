@@ -16,13 +16,26 @@
     @apply w-full;
     @apply h-full;
     @apply flex;
+    @apply flex-col;
     @apply justify-center;
     @apply items-center;
     @apply rounded-full;
     @apply bg-gray-900;
     @apply text-gray-200;
     @apply font-bold;
+    @apply relative;
 
-    font-size: calc(var(--side) * 0.06);
+    font-size: calc(var(--side) * 0.07);
+  }
+
+  &__number {
+  }
+
+  &__remaining-count {
+    @apply absolute;
+    @apply font-normal;
+    @apply bottom-0;
+
+    font-size: calc(var(--side) * 0.02);
   }
 }
