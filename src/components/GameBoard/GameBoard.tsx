@@ -62,7 +62,7 @@ const GameBoard: FC<GameBoardProps> = ({
   ])
 
   useEffect(() => {
-    if (pressedKey != null && activePieceIndex != null) {
+    if (pressedKey != null) {
       setUserPressed(pressedKey === "backspace" ? 0 : +pressedKey)
     }
   }, [pressedKey])

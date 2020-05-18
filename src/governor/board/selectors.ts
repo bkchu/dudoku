@@ -9,4 +9,4 @@ export const selectSolutionBoard = createSelector(selectBoardSlice, (boardSlice 
 export const selectHighlightedNumber = createSelector(selectBoardSlice, (boardSlice => boardSlice.highlightedNumber));
 export const selectActivePiece = createSelector(selectBoard, selectActivePieceIndex, (board, index) => board[index]);
 export const selectCurrentCursorIndex = createSelector(selectBoardSlice, (boardSlice => boardSlice.cursorIndex));
-
+export const selectActivePaintNumber = createSelector(selectBoardSlice, (boardSlice => boardSlice.paintNumber))

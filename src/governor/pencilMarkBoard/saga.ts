@@ -1,9 +1,9 @@
 import { all, put, select, takeEvery } from "redux-saga/effects";
-import { createBoardSetPaintNumberAction, selectActivePiece, selectActivePieceIndex } from "../../governor/board";
-import { Piece } from "../../models/client/board";
+import { createBoardSetActivePieceAction, createBoardSetHighlightedNumber, createBoardSetPaintNumberAction, selectActivePaintNumber, selectActivePiece, selectActivePieceIndex, selectBoard } from "../../governor/board";
+import { Board, Piece } from "../../models/client/board";
 import { PencilMarkBoard } from "../../models/client/pencilMarkBoard";
 import { getResultingMarks } from "../../utils/pencilMarkings";
-import { createPencilMarkBoardDisablePencilModeAction, createPencilMarkBoardEnablePencilModeAction, createPencilMarkBoardSetBoardAction, PencilMarkBoardActions, PencilMarkBoardClearMatchingMarksAction, PencilMarkBoardSetPencilMarkingAction } from "./actions";
+import { createPencilMarkBoardDisablePencilModeAction, createPencilMarkBoardEnablePencilModeAction, createPencilMarkBoardSetBoardAction, PencilMarkBoardActions, PencilMarkBoardClearMatchingMarksAction, PencilMarkBoardClearPencilMarksAction, PencilMarkBoardSetPencilMarkingAction } from "./actions";
 import { selectIsPencilMode, selectPencilMarkBoard } from "./selectors";
 
 export function* pencilMarkBoard(): Generator {
@@ -30,6 +30,7 @@ export function* setPencilMarkAtActiveIndex(action: PencilMarkBoardSetPencilMark
   const activePiece = (yield select(selectActivePiece)) as Piece;
   const activePieceIndex = (yield select(selectActivePieceIndex)) as number;
   const currentPencilMarkBoard = [...(yield select(selectPencilMarkBoard)) as PencilMarkBoard]
+  const activePaintNumber = (yield select(selectActivePaintNumber)) as number;
   let markingsAtIndex = currentPencilMarkBoard[activePieceIndex];
 
   if (desiredMark !== 0) {
@@ -42,13 +43,19 @@ export function* setPencilMarkAtActiveIndex(action: PencilMarkBoardSetPencilMark
     yield put(createPencilMarkBoardSetBoardAction(currentPencilMarkBoard));
 
   }
+
+  if (activePaintNumber != null) {
+    yield put(createBoardSetActivePieceAction(null));
+    if (activePaintNumber !== 0) {
+      yield put(createBoardSetHighlightedNumber(activePaintNumber));
+    }
+  }
 }
 
-export function* clearPencilMarksAtActiveIndex(): Generator {
-  const activePieceIndex = (yield select(selectActivePieceIndex)) as number;
+export function* clearPencilMarksAtActiveIndex(action: PencilMarkBoardClearPencilMarksAction): Generator {
   const currentPencilMarkBoard = [...(yield select(selectPencilMarkBoard)) as PencilMarkBoard]
 
-  currentPencilMarkBoard[activePieceIndex] = [];
+  currentPencilMarkBoard[action.payload] = [];
   yield put(createPencilMarkBoardSetBoardAction(currentPencilMarkBoard));
 }
 
@@ -90,7 +97,7 @@ export function* clearMatchingPencilMarks(action: PencilMarkBoardClearMatchingMa
     [8, 17, 26, 35, 44, 53, 62, 71, 80]
   ]
 
-  const activePiece = (yield select(selectActivePiece)) as Piece;
+  const currentBoard = (yield select(selectBoard)) as Board;
   const currentPencilMarkBoard = (yield select(selectPencilMarkBoard)) as PencilMarkBoard;
   const rowIndexesToCheck = rows.find(row => row.includes(index));
   const subgridIndexesToCheck = subgrids.find(subgrid => subgrid.includes(index));
@@ -98,8 +105,8 @@ export function* clearMatchingPencilMarks(action: PencilMarkBoardClearMatchingMa
   const allIndexesToCheck = [...new Set([...rowIndexesToCheck, ...subgridIndexesToCheck, ...columnIndexesToCheck])].filter(num => num !== index)
   const newCurrentPencilMarkBoard = currentPencilMarkBoard.map((piece, i) => {
     if (allIndexesToCheck?.includes(i)) {
-      if (piece?.includes(activePiece.number)) {
-        return piece.filter(num => num !== activePiece.number);
+      if (piece?.includes(currentBoard[action.payload]?.number)) {
+        return piece.filter(num => num !== currentBoard[action.payload].number);
       }
     }
     return piece

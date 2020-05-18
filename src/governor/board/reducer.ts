@@ -37,6 +37,12 @@ export const boardReducer = (state: BoardInitialState = boardInitialState, actio
         cursorIndex: action.payload
       }
 
+    case BoardActions.SET_ACTIVE_PAINT_NUMBER:
+      return {
+        ...state,
+        paintNumber: action.payload
+      }
+      
     default:
       return state;
   }

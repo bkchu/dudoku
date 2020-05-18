@@ -1,9 +1,10 @@
+import classnames from "classnames"
 import React, { FC } from "react"
 import { connect } from "react-redux"
 import { Dispatch } from "redux"
 import { createBoardSetUserPressedAction } from "../../governor/board/actions"
 import {
-  selectActivePieceIndex,
+  selectActivePaintNumber,
   selectBoard,
 } from "../../governor/board/selectors"
 import { InitialState } from "../../governor/initialState"
@@ -13,33 +14,38 @@ import "./NumberButtons.css"
 
 export interface NumberButtonsProps {
   onNumberButtonPress: Function
-  activePieceIndex: number
   board: Board
+  selectedPaintNumber: number
 }
 
 const NumberButtons: FC<NumberButtonsProps> = ({
   onNumberButtonPress,
-  activePieceIndex,
   board,
+  selectedPaintNumber,
 }) => {
   const buttons = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "X"].map(
-    key => (
-      <button
-        className="number-buttons__button"
-        key={key}
-        onClick={() =>
-          activePieceIndex != null &&
-          onNumberButtonPress(key === "X" ? 0 : +key)
-        }
-      >
-        <p className="number-buttons__number">{key}</p>
-        {key !== "X" && (
-          <p className="number-buttons__remaining-count">
-            {countRemainingNumbers(board, +key)}
-          </p>
-        )}
-      </button>
-    )
+    key => {
+      const countRemaining = countRemainingNumbers(board, +key)
+      const _classNames = classnames("number-buttons__button", {
+        "number-buttons__button--selected":
+          selectedPaintNumber === +key ||
+          (selectedPaintNumber === 0 && key === "X"),
+      })
+      return (
+        <button
+          className={_classNames}
+          key={key}
+          onClick={() => onNumberButtonPress(key === "X" ? 0 : +key)}
+        >
+          <p className="number-buttons__number">{key}</p>
+          {key !== "X" && (
+            <p className="number-buttons__remaining-count">
+              {countRemaining !== 0 ? countRemaining : null}
+            </p>
+          )}
+        </button>
+      )
+    }
   )
 
   return (
@@ -50,7 +56,7 @@ const NumberButtons: FC<NumberButtonsProps> = ({
 }
 const mapStateToProps = (state: InitialState) => ({
   board: selectBoard(state),
-  activePieceIndex: selectActivePieceIndex(state),
+  selectedPaintNumber: selectActivePaintNumber(state),
 })
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onNumberButtonPress: (number: number) =>

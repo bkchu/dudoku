@@ -32,7 +32,8 @@ export interface PencilMarkBoardSetPencilMarkingAction extends Action {
 }
 
 export interface PencilMarkBoardClearPencilMarksAction extends Action {
-  type: PencilMarkBoardActions.CLEAR_PENCIL_MARKS
+  type: PencilMarkBoardActions.CLEAR_PENCIL_MARKS,
+  payload: number
 }
 
 export interface PencilMarkBoardClearMatchingMarksAction extends Action {
@@ -72,9 +73,10 @@ export function createPencilMarkingSetAction(number: number): PencilMarkBoardSet
   }
 }
 
-export function createPencilMarkBoardClearPencilMarksAction(): PencilMarkBoardClearPencilMarksAction {
+export function createPencilMarkBoardClearPencilMarksAction(index: number): PencilMarkBoardClearPencilMarksAction {
   return {
-    type: PencilMarkBoardActions.CLEAR_PENCIL_MARKS
+    type: PencilMarkBoardActions.CLEAR_PENCIL_MARKS,
+    payload: index
   }
 }
 

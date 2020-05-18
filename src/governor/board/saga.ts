@@ -6,8 +6,8 @@ import { PencilMarkBoard } from '../../models/client/pencilMarkBoard';
 import { ServerBoardResponse, ServerBoardSolverResponse, ServerBoardValidationResponse } from '../../models/server/board';
 import { makeRequest } from '../../utils/api';
 import { transformClientToServerSudokuBoard, transformServerToClientSudokuBoard } from '../../utils/board';
-import { BoardActions, BoardMoveInDirectionAction, BoardSelectPieceAction, BoardSetPaintNumberAction, BoardSetUserPressedAction, createBoardSelectPieceAction, createBoardSetAction, createBoardSetActivePieceAction, createBoardSetCursorIndexAction, createBoardSetHighlightedNumber, createBoardSetPaintNumberAction, createBoardSetSolutionBoardAction, createBoardSetValidationStatusAction } from './actions';
-import { selectActivePiece, selectActivePieceIndex, selectBoard, selectCurrentCursorIndex, selectSolutionBoard } from './selectors';
+import { BoardActions, BoardMoveInDirectionAction, BoardSelectPieceAction, BoardSetPaintNumberAction, BoardSetUserPressedAction, createBoardSelectPieceAction, createBoardSetAction, createBoardSetActivePaintNumber, createBoardSetActivePieceAction, createBoardSetCursorIndexAction, createBoardSetHighlightedNumber, createBoardSetPaintNumberAction, createBoardSetSolutionBoardAction, createBoardSetValidationStatusAction } from './actions';
+import { selectActivePaintNumber, selectActivePiece, selectActivePieceIndex, selectBoard, selectCurrentCursorIndex, selectSolutionBoard } from './selectors';
 
 
 export function* board(): Generator {
@@ -17,7 +17,7 @@ export function* board(): Generator {
     takeLatest(BoardActions.CHECK_BOARD, checkBoard),
     takeEvery(BoardActions.SELECT_PIECE, handlePieceSelection),
     takeLatest(BoardActions.MOVE_IN_DIRECTION, moveActivePieceInDirection),
-    takeEvery(BoardActions.SET_USER_PRESSED, setUserPressed)
+    takeEvery(BoardActions.SET_USER_PRESSED, setUserPressed),
   ])
 }
 
@@ -38,17 +38,25 @@ export function* setNumberInPieceSaga(action: BoardSetPaintNumberAction): Genera
   const activePiece = (yield select(selectActivePiece)) as Piece;
   const currentBoard = [...(yield select(selectBoard)) as Board]
   const currentPencilMarkBoard = [...(yield select(selectPencilMarkBoard)) as PencilMarkBoard];
+  const activePaintNumber = (yield select(selectActivePaintNumber)) as number;
 
   currentBoard[activePieceIndex] = {
     ...activePiece,
     number: currentBoard[activePieceIndex].number === desiredNumber ? 0 : desiredNumber,
     isWrong: false
   }
-
-
+  
   // check if there are pencil markings in that piece first and remove them
   if (currentPencilMarkBoard[activePieceIndex]?.length > 0) {
-    yield put(createPencilMarkBoardClearPencilMarksAction());
+    yield put(createPencilMarkBoardClearPencilMarksAction(activePieceIndex));
+  }
+
+  if (activePaintNumber != null) {
+    yield put(createBoardSetActivePieceAction(null));
+    if (activePaintNumber !== 0) {
+      yield put(createBoardSetHighlightedNumber(activePaintNumber));
+    }
+    yield put(createPencilMarkBoardClearMatchingMarksAction(activePieceIndex));
   }
 
   if (desiredNumber !== 0) {
@@ -72,16 +80,20 @@ export function* handlePieceSelection(action: BoardSelectPieceAction): Generator
   const board = (yield select(selectBoard)) as Board;
   const clickedIndex = action.payload;
   const isActionable = board[clickedIndex]?.isActionable;
-  const number = board[clickedIndex]?.number;
+  const numberAtClickedIndex = board[clickedIndex]?.number;
   const activePiece = (yield select(selectActivePiece)) as Piece;
+  const activePaintNumber = (yield select(selectActivePaintNumber)) as number;
+  const isPencilMode = (yield select(selectIsPencilMode)) as boolean;
 
   yield put(createBoardSetCursorIndexAction(action.payload));
 
   if (isActionable) {
+
     if (activePiece == null) {
       yield put(createBoardSetActivePieceAction(clickedIndex));
-      if (number !== 0) {
-        yield put(createBoardSetHighlightedNumber(number));
+
+      if (numberAtClickedIndex !== 0) {
+        yield put(createBoardSetHighlightedNumber(numberAtClickedIndex));
       } else {
         yield put(createBoardSetHighlightedNumber(null));
       }
@@ -93,7 +105,23 @@ export function* handlePieceSelection(action: BoardSelectPieceAction): Generator
         yield put(createBoardSetHighlightedNumber(null));
       }
     }
-  } else if (!isActionable && number != 0) {
+
+    if (activePaintNumber != null) {
+      // the user has chosen a number to paint with
+      if (activePaintNumber !== 0) {
+        yield put(createBoardSetHighlightedNumber(activePaintNumber));
+      }
+      yield put(createBoardSetActivePieceAction(clickedIndex));
+
+      if (isPencilMode) {
+        // the user is in pencil mode
+        yield put(createPencilMarkingSetAction(activePaintNumber))
+      } else {
+        // the user is not in pencil mode
+        yield put(createBoardSetPaintNumberAction(activePaintNumber))
+      }
+    }
+  } else if (!isActionable && numberAtClickedIndex != 0) {
     yield put(createBoardSetActivePieceAction(null));
   }
 }
@@ -116,6 +144,7 @@ export function* checkBoard(): Generator {
   })
 
   yield put(createBoardSetActivePieceAction(null));
+  yield put(createBoardSetHighlightedNumber(null));
 
   yield put(createBoardSetAction(checkedBoard));
 }
@@ -176,24 +205,40 @@ export function* moveActivePieceInDirection(action: BoardMoveInDirectionAction):
 }
 
 export function* setUserPressed(action: BoardSetUserPressedAction) {
+  const activePieceIndex = (yield select(selectActivePieceIndex)) as number;
   const isPencilMode = (yield select(selectIsPencilMode)) as boolean;
-  switch (action.payload) {
-    case 1:
-    case 2:
-    case 3:
-    case 4:
-    case 5:
-    case 6:
-    case 7:
-    case 8:
-    case 9:
-    case 0:
-      isPencilMode
-        ? yield put(createPencilMarkingSetAction(action.payload))
-        : yield put(createBoardSetPaintNumberAction(action.payload))
-      break
+  const activePaintNumber = (yield select(selectActivePaintNumber)) as number;
+  if (activePieceIndex != null) {
+    // there is an active piece selected by the user
+    switch (action.payload) {
+      case 1:
+      case 2:
+      case 3:
+      case 4:
+      case 5:
+      case 6:
+      case 7:
+      case 8:
+      case 9:
+      case 0:
+        isPencilMode
+          ? yield put(createPencilMarkingSetAction(action.payload))
+          : yield put(createBoardSetPaintNumberAction(action.payload))
+        break
 
-    default:
-      break
+      default:
+        break
+    }
+  } else {
+    // there no active piece, so turning on paint mode    
+    if (activePaintNumber === action.payload) {
+      yield put(createBoardSetActivePaintNumber(null));
+    } else {
+      yield put(createBoardSetActivePaintNumber(action.payload));
+    }
+    if (action.payload !== 0) {
+      yield put(createBoardSetHighlightedNumber(action.payload));
+    }
   }
+
 }

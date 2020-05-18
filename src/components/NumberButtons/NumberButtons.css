@@ -26,6 +26,11 @@
     @apply relative;
 
     font-size: calc(var(--side) * 0.07);
+
+    &--selected {
+      @apply bg-primary-main;
+      @apply text-gray-800;
+    }
   }
 
   &__number {

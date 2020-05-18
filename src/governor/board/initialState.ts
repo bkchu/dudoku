@@ -10,6 +10,7 @@ export interface BoardInitialState {
   solutionBoard: Board
   highlightedNumber: number
   cursorIndex: number
+  paintNumber: number
 }
 
 export const boardInitialState: BoardInitialState = {
@@ -18,6 +19,7 @@ export const boardInitialState: BoardInitialState = {
   validationStatus: null,
   solutionBoard: null,
   highlightedNumber: null,
-  cursorIndex: null
+  cursorIndex: null,
+  paintNumber: null
 };
 
