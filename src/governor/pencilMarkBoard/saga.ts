@@ -3,7 +3,7 @@ import { createBoardSetActivePieceAction, createBoardSetHighlightedNumber, creat
 import { Board, Piece } from "../../models/client/board";
 import { PencilMarkBoard } from "../../models/client/pencilMarkBoard";
 import { getResultingMarks } from "../../utils/pencilMarkings";
-import { createPencilMarkBoardDisablePencilModeAction, createPencilMarkBoardEnablePencilModeAction, createPencilMarkBoardSetBoardAction, PencilMarkBoardActions, PencilMarkBoardClearMatchingMarksAction, PencilMarkBoardClearPencilMarksAction, PencilMarkBoardSetPencilMarkingAction } from "./actions";
+import { createPencilMarkBoardClearPencilMarksAction, createPencilMarkBoardDisablePencilModeAction, createPencilMarkBoardEnablePencilModeAction, createPencilMarkBoardSetBoardAction, PencilMarkBoardActions, PencilMarkBoardClearMatchingMarksAction, PencilMarkBoardClearPencilMarksAction, PencilMarkBoardSetPencilMarkingAction } from "./actions";
 import { selectIsPencilMode, selectPencilMarkBoard } from "./selectors";
 
 export function* pencilMarkBoard(): Generator {
@@ -41,7 +41,10 @@ export function* setPencilMarkAtActiveIndex(action: PencilMarkBoardSetPencilMark
     markingsAtIndex = getResultingMarks(markingsAtIndex, desiredMark);
     currentPencilMarkBoard[activePieceIndex] = markingsAtIndex;
     yield put(createPencilMarkBoardSetBoardAction(currentPencilMarkBoard));
+  }
 
+  if (desiredMark === 0) {
+    yield put(createPencilMarkBoardClearPencilMarksAction(activePieceIndex));
   }
 
   if (activePaintNumber != null) {

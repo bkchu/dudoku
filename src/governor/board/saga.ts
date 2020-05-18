@@ -45,7 +45,7 @@ export function* setNumberInPieceSaga(action: BoardSetPaintNumberAction): Genera
     number: currentBoard[activePieceIndex].number === desiredNumber ? 0 : desiredNumber,
     isWrong: false
   }
-  
+
   // check if there are pencil markings in that piece first and remove them
   if (currentPencilMarkBoard[activePieceIndex]?.length > 0) {
     yield put(createPencilMarkBoardClearPencilMarksAction(activePieceIndex));
@@ -150,58 +150,63 @@ export function* checkBoard(): Generator {
 }
 
 export function* moveActivePieceInDirection(action: BoardMoveInDirectionAction): Generator {
+  const activePaintNumber = (yield select(selectActivePaintNumber)) as number;
   const currentBoard = (yield select(selectBoard)) as Board;
   const currentCursorIndex = (yield select(selectCurrentCursorIndex)) as number;
 
-  let newIndex = currentCursorIndex;
-  if (currentCursorIndex != null && currentCursorIndex > -1) {
-    switch (action.payload) {
-      case Direction.UP:
-        newIndex -= 9;
-        if (newIndex < 0) {
-          newIndex = 81 + newIndex;
-        }
-        break;
+  if (activePaintNumber === null) {
 
-      case Direction.DOWN:
-        newIndex += 9;
-        if (newIndex > 80) {
-          newIndex = newIndex % 9;
-        }
-        break;
+    let newIndex = currentCursorIndex;
+    if (currentCursorIndex != null && currentCursorIndex > -1) {
+      switch (action.payload) {
+        case Direction.UP:
+          newIndex -= 9;
+          if (newIndex < 0) {
+            newIndex = 81 + newIndex;
+          }
+          break;
 
-      case Direction.LEFT:
-        newIndex -= 1;
-        if (newIndex < 0) {
-          newIndex = 80;
-        }
-        break;
+        case Direction.DOWN:
+          newIndex += 9;
+          if (newIndex > 80) {
+            newIndex = newIndex % 9;
+          }
+          break;
 
-      case Direction.RIGHT:
-        newIndex += 1;
-        if (newIndex > 80) {
-          newIndex = 0;
-        }
-        break;
+        case Direction.LEFT:
+          newIndex -= 1;
+          if (newIndex < 0) {
+            newIndex = 80;
+          }
+          break;
 
-      default:
-        return;
+        case Direction.RIGHT:
+          newIndex += 1;
+          if (newIndex > 80) {
+            newIndex = 0;
+          }
+          break;
+
+        default:
+          return;
+      }
+    } else {
+      newIndex = 0;
     }
-  } else {
-    newIndex = 0;
+
+    yield put(createBoardSetCursorIndexAction(newIndex));
+
+    const isHighlighted = currentBoard[newIndex]?.isHighlighted;
+    const number = currentBoard[newIndex]?.number;
+
+    if (!isHighlighted && number !== 0) {
+      yield put(createBoardSetHighlightedNumber(number))
+    } else if (!isHighlighted && number === 0) {
+      yield put(createBoardSetHighlightedNumber(null))
+    }
+    yield (put(createBoardSelectPieceAction(newIndex)));
   }
 
-  yield put(createBoardSetCursorIndexAction(newIndex));
-
-  const isHighlighted = currentBoard[newIndex]?.isHighlighted;
-  const number = currentBoard[newIndex]?.number;
-
-  if (!isHighlighted && number !== 0) {
-    yield put(createBoardSetHighlightedNumber(number))
-  } else if (!isHighlighted && number === 0) {
-    yield put(createBoardSetHighlightedNumber(null))
-  }
-  yield (put(createBoardSelectPieceAction(newIndex)));
 }
 
 export function* setUserPressed(action: BoardSetUserPressedAction) {
