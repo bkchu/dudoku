@@ -24,6 +24,7 @@
     @apply text-gray-200;
     @apply font-bold;
     @apply relative;
+    @apply transition-all ease-in-out duration-100;
 
     font-size: calc(var(--side) * 0.07);
 
@@ -34,8 +35,6 @@
   }
 
   &__number {
-    @apply absolute;
-    @apply top-0;
   }
 
   &__remaining-count {

@@ -10,7 +10,7 @@
   @apply z-10;
   @apply bg-gray-900;
   @apply relative;
-
+  @apply transition-colors ease-out duration-75;
   font-size: calc(var(--side) * 0.06);
 
   &--active {

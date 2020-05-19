@@ -44,7 +44,9 @@ const GameBoard: FC<GameBoardProps> = ({
   setUserPressed,
 }) => {
   useEffect(() => {
-    fetchBoard()
+    if (board == null || board.length === 0) {
+      fetchBoard()
+    }
   }, [])
 
   const pressedKey = useKeyPress([
