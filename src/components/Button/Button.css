@@ -1,0 +1,36 @@
+.button {
+  @apply inline-block;
+  @apply my-1;
+  @apply mt-4;
+  @apply relative;
+  @apply block;
+  @apply w-48;
+  @apply h-12;
+  @apply border;
+  @apply border-transparent;
+  @apply px-6;
+  @apply py-3;
+  @apply text-base;
+  @apply leading-6;
+  @apply font-semibold;
+  @apply leading-snug;
+  @apply bg-gray-900;
+  @apply text-white;
+  @apply rounded-md;
+  @apply shadow-md;
+  @apply transition;
+  @apply ease-in-out;
+  @apply duration-150;
+  @apply mt-0;
+  @apply mx-auto;
+
+   &:hover {
+      @apply bg-primary-main;
+      @apply bg-gray-600;
+    }
+
+    &:focus {
+      @apply outline-none;
+      @apply bg-gray-800;
+    }
+}

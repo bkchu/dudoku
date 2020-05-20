@@ -1,5 +1,6 @@
 import { navigate } from 'gatsby';
 import { all, call, put, select, takeEvery, takeLatest, takeLeading } from 'redux-saga/effects';
+import { createGameSetLoadingBoardAction } from '../../governor/game/actions';
 import { Direction } from '../../governor/models/board';
 import { createPencilMarkBoardClearMatchingMarksAction, createPencilMarkBoardClearPencilMarksAction, createPencilMarkBoardResetBoardAction, createPencilMarkingSetAction, selectIsPencilMode, selectPencilMarkBoard } from '../../governor/pencilMarkBoard';
 import { Board, Difficulty, Piece } from '../../models/client/board';
@@ -252,9 +253,11 @@ export function* setUserPressed(action: BoardSetUserPressedAction) {
 }
 
 export function* loadBoardAndNavigate() {
+  yield put(createGameSetLoadingBoardAction(true))
   yield put(createPencilMarkBoardResetBoardAction());
   yield call(fetchBoardSaga);
   yield put(createBoardResetBoardAction());
 
   navigate('/play');
+  yield put(createGameSetLoadingBoardAction(false));
 }

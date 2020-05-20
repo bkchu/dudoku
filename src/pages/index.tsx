@@ -1,23 +1,26 @@
-import { Link } from "gatsby"
 import React, { FC } from "react"
 import { connect } from "react-redux"
 import { Dispatch } from "redux"
+import Button from "../components/Button/Button"
 import DifficultySwitcher from "../components/DifficultySwitcher/DifficultySwitcher"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 import { createBoardLoadBoardAndNavigateAction } from "../governor/board/actions"
 import { selectIsGameInProgress } from "../governor/board/selectors"
+import { selectGameIsBoardLoading } from "../governor/game/selectors"
 import { InitialState } from "../governor/initialState"
 import "./index.css"
 
 interface IndexPageProps {
   isGameInProgress: boolean
+  isBoardLoading: boolean
   loadBoardAndNavigate: Function
 }
 
 const IndexPage: FC<IndexPageProps> = ({
   loadBoardAndNavigate,
   isGameInProgress,
+  isBoardLoading,
 }) => (
   <Layout>
     <Seo title="Welcome" />
@@ -27,20 +30,14 @@ const IndexPage: FC<IndexPageProps> = ({
         <DifficultySwitcher />
       </div>
       <div className="home-page__buttons-container">
+        <div>{isGameInProgress && <Button to="/play">Resume</Button>}</div>
         <div>
-          {isGameInProgress && (
-            <Link to="/play" className="home-page__play-button">
-              Resume
-            </Link>
-          )}
-        </div>
-        <div>
-          <a
+          <Button
             onClick={() => loadBoardAndNavigate()}
-            className="home-page__play-button"
+            loading={isBoardLoading}
           >
             New Game
-          </a>
+          </Button>
         </div>
       </div>
     </div>
@@ -49,6 +46,7 @@ const IndexPage: FC<IndexPageProps> = ({
 
 const mapStateToProps = (state: InitialState) => ({
   isGameInProgress: selectIsGameInProgress(state),
+  isBoardLoading: selectGameIsBoardLoading(state),
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

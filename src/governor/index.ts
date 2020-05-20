@@ -1,11 +1,12 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from "redux-saga";
 import { all } from "redux-saga/effects";
 import { board, boardReducer } from "./board";
+import { gameReducer } from "./game";
 import { pencilMarkBoard, pencilMarkBoardReducer } from "./pencilMarkBoard";
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 
 const persistConfig = {
   key: 'root',
@@ -14,7 +15,8 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, combineReducers({
   board: boardReducer,
-  pencilMarkBoard: pencilMarkBoardReducer
+  pencilMarkBoard: pencilMarkBoardReducer,
+  game: gameReducer
 }))
 
 export const sagaMiddleware = createSagaMiddleware();
