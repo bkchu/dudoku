@@ -1,3 +1,23 @@
+.layout {
+  &__container {
+    @apply mx-auto;
+    @apply p-0;
+    @apply pb-6;
+
+    @screen md {
+      @apply pt-0;
+      @apply px-4;
+    }
+  }
+
+  &__footer {
+  }
+
+  &__footer-personal-link {
+    @apply text-primary-main;
+  }
+}
+
 footer {
   @apply fixed;
   @apply bottom-0;

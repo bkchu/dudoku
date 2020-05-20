@@ -25,32 +25,29 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header siteTitle={data.site.siteMetadata.title} />
-      <div
-        style={{
-          margin: `0 auto`,
-          // maxWidth: 960,
-          padding: `0 1.0875rem 1.45rem`,
-        }}
-      >
+      <div className="layout__container">
         <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://www.gatsbyjs.org"
-          >
-            Gatsby
-          </a>{" "}
-          by{" "}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://www.bkchu.dev"
-          >
-            bkchu
-          </a>
+        <footer className="layout__footer">
+          <h1>
+            © {new Date().getFullYear()}, Built with
+            {` `}
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.gatsbyjs.org"
+            >
+              Gatsby
+            </a>{" "}
+            by{" "}
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.bkchu.dev"
+              className="layout__footer-personal-link"
+            >
+              bkchu
+            </a>
+          </h1>
         </footer>
       </div>
     </>
