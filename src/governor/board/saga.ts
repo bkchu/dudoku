@@ -1,13 +1,14 @@
+import { navigate } from 'gatsby';
 import { all, call, put, select, takeEvery, takeLatest, takeLeading } from 'redux-saga/effects';
 import { Direction } from '../../governor/models/board';
 import { createPencilMarkBoardClearMatchingMarksAction, createPencilMarkBoardClearPencilMarksAction, createPencilMarkingSetAction, selectIsPencilMode, selectPencilMarkBoard } from '../../governor/pencilMarkBoard';
-import { Board, Piece } from '../../models/client/board';
+import { Board, Piece, Difficulty } from '../../models/client/board';
 import { PencilMarkBoard } from '../../models/client/pencilMarkBoard';
 import { ServerBoardResponse, ServerBoardSolverResponse, ServerBoardValidationResponse } from '../../models/server/board';
 import { makeRequest } from '../../utils/api';
 import { transformClientToServerSudokuBoard, transformServerToClientSudokuBoard } from '../../utils/board';
 import { BoardActions, BoardMoveInDirectionAction, BoardSelectPieceAction, BoardSetPaintNumberAction, BoardSetUserPressedAction, createBoardSelectPieceAction, createBoardSetAction, createBoardSetActivePaintNumber, createBoardSetActivePieceAction, createBoardSetCursorIndexAction, createBoardSetHighlightedNumber, createBoardSetPaintNumberAction, createBoardSetSolutionBoardAction, createBoardSetValidationStatusAction } from './actions';
-import { selectActivePaintNumber, selectActivePiece, selectActivePieceIndex, selectBoard, selectCurrentCursorIndex, selectSolutionBoard } from './selectors';
+import { selectActivePaintNumber, selectActivePiece, selectActivePieceIndex, selectBoard, selectCurrentCursorIndex, selectSolutionBoard, selectDifficulty } from './selectors';
 
 
 export function* board(): Generator {
@@ -18,12 +19,14 @@ export function* board(): Generator {
     takeEvery(BoardActions.SELECT_PIECE, handlePieceSelection),
     takeLatest(BoardActions.MOVE_IN_DIRECTION, moveActivePieceInDirection),
     takeEvery(BoardActions.SET_USER_PRESSED, setUserPressed),
+    takeLatest(BoardActions.LOAD_BOARD_AND_NAVIGATE, loadBoardAndNavigate)
   ])
 }
 
 export function* fetchBoardSaga(): Generator {
+  const difficulty = (yield select(selectDifficulty)) as Difficulty;
   // gets a new board
-  const response = (yield call(makeRequest, 'get-sudoku-board')) as ServerBoardResponse;
+  const response = (yield call(makeRequest, 'get-sudoku-board', null, { difficulty })) as ServerBoardResponse;
 
   // gets the solved board using the new board
   const solutionBoard = (yield call(makeRequest, 'check-board', { board: response.board })) as ServerBoardSolverResponse;
@@ -246,4 +249,10 @@ export function* setUserPressed(action: BoardSetUserPressedAction) {
     }
   }
 
+}
+
+export function* loadBoardAndNavigate() {
+  yield call(fetchBoardSaga);
+
+  navigate('/play');
 }

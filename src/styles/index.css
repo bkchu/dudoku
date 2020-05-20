@@ -8,7 +8,7 @@
 @import "tailwindcss/utilities";
 
 body, html {
-  @apply bg-gray-800;
+  @apply bg-gray-800 !important;
 }
 
 :root {

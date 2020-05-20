@@ -1,0 +1,16 @@
+.difficulty-switcher {
+  @apply flex;
+
+  &__button {
+    @apply bg-gray-900;
+    @apply p-5;
+    @apply text-2xl;
+    @apply text-gray-100;
+    @apply transition-colors ease-in duration-75; 
+
+    &--selected {
+      @apply bg-neutral-100;
+      @apply text-gray-900;
+    }
+  }
+}

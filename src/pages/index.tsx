@@ -1,17 +1,29 @@
-import React from "react"
-import GameActions from "../components/GameActions/GameActions"
-import GameBoard from "../components/GameBoard/GameBoard"
+import React, { FC } from "react"
+import { connect } from "react-redux"
+import { Dispatch } from "redux"
+import DifficultySwitcher from "../components/DifficultySwitcher/DifficultySwitcher"
 import Layout from "../components/layout"
-import SEO from "../components/seo"
-import NumberButtons from "../components/NumberButtons/NumberButtons"
+import Seo from "../components/seo"
+import { createBoardLoadBoardAndNavigateAction } from "../governor/board/actions"
+import "./index.css"
 
-const IndexPage = () => (
+interface IndexPageProps {
+  loadBoardAndNavigate: Function
+}
+
+const IndexPage: FC<IndexPageProps> = ({ loadBoardAndNavigate }) => (
   <Layout>
-    <SEO title="Welcome to Dudoku"/>
-    <GameBoard />
-    <NumberButtons />
-    <GameActions />
+    <Seo title="Welcome" />
+    <h1 className="home-page__header">DUEL + SUDOKU = DUDOKU</h1>
+    <DifficultySwitcher></DifficultySwitcher>
+    <a onClick={() => loadBoardAndNavigate()} className="home-page__play-button">
+      Play!
+    </a>
   </Layout>
 )
 
-export default IndexPage
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadBoardAndNavigate: () => dispatch(createBoardLoadBoardAndNavigateAction()),
+})
+
+export default connect(null, mapDispatchToProps)(IndexPage)

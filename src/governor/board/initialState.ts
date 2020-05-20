@@ -1,4 +1,4 @@
-import { Board, Piece } from "../../models/client/board";
+import { Board, Piece, Difficulty } from "../../models/client/board";
 import { ServerBoardValidationStatus } from "../../models/server/board";
 
 const board: Board = Array(81).fill({ number: 0 } as Piece);
@@ -11,6 +11,7 @@ export interface BoardInitialState {
   highlightedNumber: number
   cursorIndex: number
   paintNumber: number
+  difficulty: Difficulty
 }
 
 export const boardInitialState: BoardInitialState = {
@@ -20,6 +21,7 @@ export const boardInitialState: BoardInitialState = {
   solutionBoard: null,
   highlightedNumber: null,
   cursorIndex: null,
-  paintNumber: null
+  paintNumber: null,
+  difficulty: Difficulty.EASY
 };
 

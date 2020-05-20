@@ -1,10 +1,12 @@
 import { Action } from "redux";
 import { Direction } from "../../governor/models/board";
-import { Board } from "../../models/client/board";
+import { Board, Difficulty } from "../../models/client/board";
 import { ServerBoardValidationStatus } from "../../models/server/board";
 
 export enum BoardActions {
   FETCH_BOARD = 'BOARD/FETCH_BOARD',
+  SET_DIFFICULTY = 'BOARD/SET_DIFFICULTY',
+  LOAD_BOARD_AND_NAVIGATE = 'BOARD/LOAD_BOARD_AND_NAVIGATE',
   SET_BOARD = 'BOARD/SET_BOARD',
 
   SELECT_PIECE = 'BOARD/SELECT_PIECE',
@@ -90,6 +92,15 @@ export interface BoardSetUserPressedAction extends Action {
 export interface BoardSetActivePaintNumberAction extends Action {
   type: BoardActions.SET_ACTIVE_PAINT_NUMBER,
   payload: number
+}
+
+export interface BoardLoadBoardAndNavigateAction extends Action {
+  type: BoardActions.LOAD_BOARD_AND_NAVIGATE
+}
+
+export interface BoardSetDifficultyAction extends Action {
+  type: BoardActions.SET_DIFFICULTY,
+  payload: Difficulty
 }
 
 export function createBoardFetchAction(): BoardFetchAction {
@@ -185,5 +196,18 @@ export function createBoardSetActivePaintNumber(number: number): BoardSetActiveP
   return {
     type: BoardActions.SET_ACTIVE_PAINT_NUMBER,
     payload: number
+  }
+}
+
+export function createBoardLoadBoardAndNavigateAction(): BoardLoadBoardAndNavigateAction {
+  return {
+    type: BoardActions.LOAD_BOARD_AND_NAVIGATE
+  }
+}
+
+export function createBoardSetDifficultyAction(difficulty: Difficulty): BoardSetDifficultyAction {
+  return {
+    type: BoardActions.SET_DIFFICULTY,
+    payload: difficulty
   }
 }

@@ -42,7 +42,13 @@ export const boardReducer = (state: BoardInitialState = boardInitialState, actio
         ...state,
         paintNumber: action.payload
       }
-      
+
+    case BoardActions.SET_DIFFICULTY:
+      return {
+        ...state,
+        difficulty: action.payload
+      }
+
     default:
       return state;
   }
