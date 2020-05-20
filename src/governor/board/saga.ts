@@ -257,7 +257,10 @@ export function* loadBoardAndNavigate() {
   yield put(createPencilMarkBoardResetBoardAction());
   yield call(fetchBoardSaga);
   yield put(createBoardResetBoardAction());
-
-  navigate('/play');
+  yield call(navigateTo, '/play');
   yield put(createGameSetLoadingBoardAction(false));
+}
+
+export function* navigateTo(path: string) {
+  navigate(path);
 }
