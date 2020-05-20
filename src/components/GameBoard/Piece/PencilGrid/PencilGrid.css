@@ -4,6 +4,7 @@
   @apply w-full;
   @apply h-full;
   @apply grid;
+  @apply text-center;
 
   z-index: -1;
   padding: calc(var(--side) * 0.003);
