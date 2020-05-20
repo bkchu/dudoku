@@ -141,9 +141,13 @@ export function* checkBoard(): Generator {
   const solvedBoard = (yield select(selectSolutionBoard)) as Board;
 
   const checkedBoard = currentBoard.map((currentPiece, index) => {
-    return {
-      ...currentPiece,
-      isWrong: currentPiece.number != 0 && currentPiece.number != solvedBoard[index].number
+    if (solvedBoard != null) {
+      return {
+        ...currentPiece,
+        isWrong: currentPiece.number != 0 && currentPiece.number != solvedBoard[index].number
+      }
+    } else {
+      return currentPiece
     }
   })
 
