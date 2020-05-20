@@ -11,7 +11,7 @@ export function* pencilMarkBoard(): Generator {
     takeEvery(PencilMarkBoardActions.TOGGLE_PENCIL_MODE, togglePencilMode),
     takeEvery(PencilMarkBoardActions.SET_PENCIL_MARKING, setPencilMarkAtActiveIndex),
     takeEvery(PencilMarkBoardActions.CLEAR_PENCIL_MARKS, clearPencilMarksAtActiveIndex),
-    takeEvery(PencilMarkBoardActions.CLEAR_MATCHING_MARKS, clearMatchingPencilMarks)
+    takeEvery(PencilMarkBoardActions.CLEAR_MATCHING_MARKS, clearMatchingPencilMarks),
   ])
 }
 

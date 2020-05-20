@@ -49,6 +49,17 @@ export const boardReducer = (state: BoardInitialState = boardInitialState, actio
         difficulty: action.payload
       }
 
+    case BoardActions.RESET_BOARD:
+      return {
+        ...state,
+        activePieceIndex: null,
+        validationStatus: null,
+        solutionBoard: null,
+        highlightedNumber: null,
+        cursorIndex: null,
+        paintNumber: null,
+      }
+
     default:
       return state;
   }

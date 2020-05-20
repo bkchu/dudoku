@@ -5,6 +5,7 @@ import { ServerBoardValidationStatus } from "../../models/server/board";
 
 export enum BoardActions {
   FETCH_BOARD = 'BOARD/FETCH_BOARD',
+  RESET_BOARD = 'BOARD/RESET_BOARD',
   SET_DIFFICULTY = 'BOARD/SET_DIFFICULTY',
   LOAD_BOARD_AND_NAVIGATE = 'BOARD/LOAD_BOARD_AND_NAVIGATE',
   SET_BOARD = 'BOARD/SET_BOARD',
@@ -101,6 +102,10 @@ export interface BoardLoadBoardAndNavigateAction extends Action {
 export interface BoardSetDifficultyAction extends Action {
   type: BoardActions.SET_DIFFICULTY,
   payload: Difficulty
+}
+
+export interface BoardResetBoardAction extends Action {
+  type: BoardActions.RESET_BOARD
 }
 
 export function createBoardFetchAction(): BoardFetchAction {
@@ -209,5 +214,11 @@ export function createBoardSetDifficultyAction(difficulty: Difficulty): BoardSet
   return {
     type: BoardActions.SET_DIFFICULTY,
     payload: difficulty
+  }
+}
+
+export function createBoardResetBoardAction(): BoardResetBoardAction {
+  return {
+    type: BoardActions.RESET_BOARD
   }
 }

@@ -3,6 +3,9 @@ import { InitialState } from '../../governor/initialState';
 
 export const selectBoardSlice = (state: InitialState) => state.board;
 export const selectBoard = createSelector(selectBoardSlice, (boardSlice => boardSlice.board));
+export const selectIsGameInProgress = createSelector(selectBoardSlice, (boardSlice => {
+  return boardSlice.board.some(piece => piece.number !== 0);
+}))
 export const selectActivePieceIndex = createSelector(selectBoardSlice, (boardSlice => boardSlice.activePieceIndex));
 export const selectBoardValidationStatus = createSelector(selectBoardSlice, (boardSlice => boardSlice.validationStatus));
 export const selectSolutionBoard = createSelector(selectBoardSlice, (boardSlice => boardSlice.solutionBoard));

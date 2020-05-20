@@ -13,14 +13,16 @@ import "./DifficultySwitcher.css"
 interface DifficultSwitcherProps {
   setDifficulty: Function
   difficulty: Difficulty
+  className?: string
 }
 
 const DifficultSwitcher: FC<DifficultSwitcherProps> = ({
   setDifficulty,
   difficulty,
+  className
 }) => {
   return (
-    <div className="difficulty-switcher">
+    <div className={classnames("difficulty-switcher", className)}>
       <button
         className={classnames("difficulty-switcher__button", {
           "difficulty-switcher__button--selected":

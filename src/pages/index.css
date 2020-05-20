@@ -1,14 +1,48 @@
 .home-page {
+  @apply text-center;
+
   &__header {
-    font-size: 10rem;
+    font-size: 3rem;
+
     @apply font-extrabold;
     @apply text-primary-main;
+    @apply mb-32;
+
+    @screen md {
+      font-size: 5rem;
+    }
+
+    @screen lg {
+      font-size: 7rem;
+    }
+  }
+
+  &__difficulty-switcher {
+    @apply flex justify-center;
+    @apply mx-auto;
+    @apply text-center;
+    @apply w-10/12;
+
+    @screen md {
+      @apply w-1/2;
+    }
+  }
+
+  &__buttons-container {
+    @apply mt-12;
+    @apply flex;
+    @apply flex-col;
   }
 
   &__play-button {
-    font-size: 5rem;
-    @apply font-bold;
-    @apply text-neutral-300;
+    @apply inline-block;
+    /* @apply font-bold; */
+    @apply text-neutral-900;
     @apply cursor-pointer;
+    @apply p-3;
+    @apply rounded-full;
+    @apply w-32;
+    @apply border-primary-main border-2;
+    @apply my-2;
   }
 }

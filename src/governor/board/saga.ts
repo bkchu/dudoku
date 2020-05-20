@@ -1,14 +1,14 @@
 import { navigate } from 'gatsby';
 import { all, call, put, select, takeEvery, takeLatest, takeLeading } from 'redux-saga/effects';
 import { Direction } from '../../governor/models/board';
-import { createPencilMarkBoardClearMatchingMarksAction, createPencilMarkBoardClearPencilMarksAction, createPencilMarkingSetAction, selectIsPencilMode, selectPencilMarkBoard } from '../../governor/pencilMarkBoard';
-import { Board, Piece, Difficulty } from '../../models/client/board';
+import { createPencilMarkBoardClearMatchingMarksAction, createPencilMarkBoardClearPencilMarksAction, createPencilMarkBoardResetBoardAction, createPencilMarkingSetAction, selectIsPencilMode, selectPencilMarkBoard } from '../../governor/pencilMarkBoard';
+import { Board, Difficulty, Piece } from '../../models/client/board';
 import { PencilMarkBoard } from '../../models/client/pencilMarkBoard';
 import { ServerBoardResponse, ServerBoardSolverResponse, ServerBoardValidationResponse } from '../../models/server/board';
 import { makeRequest } from '../../utils/api';
 import { transformClientToServerSudokuBoard, transformServerToClientSudokuBoard } from '../../utils/board';
-import { BoardActions, BoardMoveInDirectionAction, BoardSelectPieceAction, BoardSetPaintNumberAction, BoardSetUserPressedAction, createBoardSelectPieceAction, createBoardSetAction, createBoardSetActivePaintNumber, createBoardSetActivePieceAction, createBoardSetCursorIndexAction, createBoardSetHighlightedNumber, createBoardSetPaintNumberAction, createBoardSetSolutionBoardAction, createBoardSetValidationStatusAction } from './actions';
-import { selectActivePaintNumber, selectActivePiece, selectActivePieceIndex, selectBoard, selectCurrentCursorIndex, selectSolutionBoard, selectDifficulty } from './selectors';
+import { BoardActions, BoardMoveInDirectionAction, BoardSelectPieceAction, BoardSetPaintNumberAction, BoardSetUserPressedAction, createBoardResetBoardAction, createBoardSelectPieceAction, createBoardSetAction, createBoardSetActivePaintNumber, createBoardSetActivePieceAction, createBoardSetCursorIndexAction, createBoardSetHighlightedNumber, createBoardSetPaintNumberAction, createBoardSetSolutionBoardAction, createBoardSetValidationStatusAction } from './actions';
+import { selectActivePaintNumber, selectActivePiece, selectActivePieceIndex, selectBoard, selectCurrentCursorIndex, selectDifficulty, selectSolutionBoard } from './selectors';
 
 
 export function* board(): Generator {
@@ -252,7 +252,9 @@ export function* setUserPressed(action: BoardSetUserPressedAction) {
 }
 
 export function* loadBoardAndNavigate() {
+  yield put(createPencilMarkBoardResetBoardAction());
   yield call(fetchBoardSaga);
+  yield put(createBoardResetBoardAction());
 
   navigate('/play');
 }

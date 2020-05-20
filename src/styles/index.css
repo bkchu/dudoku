@@ -7,10 +7,6 @@
 
 @import "tailwindcss/utilities";
 
-body, html {
-  @apply bg-gray-800 !important;
-}
-
 :root {
   /* theme colors */
   --color-primary-main: #94d1beff;

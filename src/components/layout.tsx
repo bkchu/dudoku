@@ -29,14 +29,28 @@ const Layout = ({ children }) => {
         style={{
           margin: `0 auto`,
           // maxWidth: 960,
-          // padding: `0 1.0875rem 1.45rem`,
+          padding: `0 1.0875rem 1.45rem`,
         }}
       >
         <main>{children}</main>
         <footer>
           © {new Date().getFullYear()}, Built with
           {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.gatsbyjs.org"
+          >
+            Gatsby
+          </a>{" "}
+          by{" "}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.bkchu.dev"
+          >
+            bkchu
+          </a>
         </footer>
       </div>
     </>

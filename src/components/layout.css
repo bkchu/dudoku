@@ -1,0 +1,7 @@
+footer {
+  @apply fixed;
+  @apply bottom-0;
+  @apply right-0;
+  @apply left-0;
+  @apply text-center;
+}
