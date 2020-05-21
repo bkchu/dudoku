@@ -6,6 +6,7 @@
 
     @apply font-extrabold;
     @apply text-primary-main;
+    @apply mt-5;
     @apply mb-32;
 
     @screen md {

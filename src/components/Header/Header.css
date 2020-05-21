@@ -1,6 +1,5 @@
 .header {
   @apply bg-primary-main;
-  @apply mb-5;
 
   &__title-container {
     /* @apply mx-auto; */

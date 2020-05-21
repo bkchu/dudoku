@@ -81,13 +81,13 @@ const GameBoard: FC<GameBoardProps> = ({
   return (
     <>
       <div className={_classNames}>
-        <BoardLines></BoardLines>
+        <BoardLines />
         <ParsedBoard
           board={board}
           activePieceIndex={activePieceIndex}
           highlightedNumber={highlightedNumber}
           pencilMarkBoard={pencilMarkBoard}
-        ></ParsedBoard>
+        />
       </div>
       {validationStatus === ServerBoardValidationStatus.SOLVED && (
         <div className="game-board__success-overlay">Awesome!</div>

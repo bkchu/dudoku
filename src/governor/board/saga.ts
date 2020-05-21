@@ -139,7 +139,6 @@ export function* validateBoard(board: Board): Generator {
 export function* checkBoard(): Generator {
   const currentBoard = (yield select(selectBoard)) as Board;
   const solvedBoard = (yield select(selectSolutionBoard)) as Board;
-
   const checkedBoard = currentBoard.map((currentPiece, index) => {
     if (solvedBoard != null) {
       return {
@@ -259,8 +258,8 @@ export function* setUserPressed(action: BoardSetUserPressedAction) {
 export function* loadBoardAndNavigate() {
   yield put(createGameSetLoadingBoardAction(true))
   yield put(createPencilMarkBoardResetBoardAction());
-  yield call(fetchBoardSaga);
   yield put(createBoardResetBoardAction());
+  yield call(fetchBoardSaga);
   yield call(navigateTo, '/play');
   yield put(createGameSetLoadingBoardAction(false));
 }
