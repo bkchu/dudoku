@@ -1,4 +1,4 @@
-# Dudoku = Duel + Suoku
+# Dudoku = Duel + Sudoku
 
 ---
 ## Local Development
