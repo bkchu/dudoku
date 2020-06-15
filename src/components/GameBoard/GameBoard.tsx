@@ -1,7 +1,4 @@
 import classnames from "classnames"
-import React, { FC, useEffect } from "react"
-import { connect } from "react-redux"
-import { Dispatch } from "redux"
 import {
   createBoardFetchAction,
   createBoardSetUserPressedAction,
@@ -9,16 +6,19 @@ import {
   selectBoard,
   selectBoardValidationStatus,
   selectHighlightedNumber,
-} from "../../governor/board"
-import { InitialState } from "../../governor/initialState"
+} from "governor/board"
+import { InitialState } from "governor/initialState"
 import {
   selectIsPencilMode,
   selectPencilMarkBoard,
-} from "../../governor/pencilMarkBoard"
-import { useKeyPress } from "../../hooks/useKeyPress"
-import { Board } from "../../models/client/board"
-import { PencilMarkBoard } from "../../models/client/pencilMarkBoard"
-import { ServerBoardValidationStatus } from "../../models/server/board"
+} from "governor/pencilMarkBoard"
+import { useKeyPress } from "hooks/useKeyPress"
+import { Board } from "models/client/board"
+import { PencilMarkBoard } from "models/client/pencilMarkBoard"
+import { ServerBoardValidationStatus } from "models/server/board"
+import React, { FC, useEffect } from "react"
+import { connect } from "react-redux"
+import { Dispatch } from "redux"
 import BoardLines from "./BoardLines/BoardLines"
 import "./GameBoard.css"
 import ParsedBoard from "./ParsedBoard/ParsedBoard"

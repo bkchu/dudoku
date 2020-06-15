@@ -1,0 +1,5 @@
+.timer {
+    @apply my-5;
+    @apply text-center;
+    @apply text-3xl;
+}

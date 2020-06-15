@@ -29,4 +29,12 @@
   @screen lg {
     --side: 50vw;
   }
+  
+  @screen xl {
+    --side: 40vw;
+  }
+}
+
+body, html {
+  @apply min-h-screen !important;
 }

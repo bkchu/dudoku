@@ -1,6 +1,6 @@
 import { navigate } from 'gatsby';
 import { all, call, put, select, takeEvery, takeLatest, takeLeading } from 'redux-saga/effects';
-import { createGameSetLoadingBoardAction } from '../../governor/game/actions';
+import { createGameSetLoadingBoardAction, createGameSaveTimerAction, createGameStartTimerAction } from '../../governor/game/actions';
 import { Direction } from '../../governor/models/board';
 import { createPencilMarkBoardClearMatchingMarksAction, createPencilMarkBoardClearPencilMarksAction, createPencilMarkBoardResetBoardAction, createPencilMarkingSetAction, selectIsPencilMode, selectPencilMarkBoard } from '../../governor/pencilMarkBoard';
 import { Board, Difficulty, Piece } from '../../models/client/board';
@@ -262,6 +262,14 @@ export function* loadBoardAndNavigate() {
   yield call(fetchBoardSaga);
   yield call(navigateTo, '/play');
   yield put(createGameSetLoadingBoardAction(false));
+
+  // start timer from 0
+  yield call(startAndResetTimer);
+}
+
+export function* startAndResetTimer() {
+  yield put(createGameSaveTimerAction(0));
+  yield put(createGameStartTimerAction());
 }
 
 export function* navigateTo(path: string) {

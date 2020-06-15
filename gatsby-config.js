@@ -36,6 +36,22 @@ module.exports = {
         pathToConfigModule: `src/utils/typography`,
       },
     },
+    {
+      resolve: "gatsby-plugin-module-resolver",
+      options: {
+        root: "./src",
+        aliases: {
+          components: "./components",
+          governor: "./governor",
+          hooks: "./hooks",
+          images: "./images",
+          models: "./models",
+          pages: "./pages",
+          styles: "./styles",
+          utils: "./utils",
+        },
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
