@@ -32,6 +32,7 @@ const Timer: FC<TimerProps> = ({
     if (currentTime !== 0) {
       setTime(currentTime)
     }
+    setActive();
   }, [])
 
   useEffect(() => {
