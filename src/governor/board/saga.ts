@@ -1,11 +1,11 @@
 import { navigate } from 'gatsby';
 import { all, call, put, select, takeEvery, takeLatest, takeLeading } from 'redux-saga/effects';
-import { createGameSetLoadingBoardAction, createGameSaveTimerAction, createGameStartTimerAction } from '../../governor/game/actions';
+import { createGameSetLoadingBoardAction, createGameSaveTimerAction, createGameStartTimerAction, createGameStopTimerAction } from '../../governor/game/actions';
 import { Direction } from '../../governor/models/board';
 import { createPencilMarkBoardClearMatchingMarksAction, createPencilMarkBoardClearPencilMarksAction, createPencilMarkBoardResetBoardAction, createPencilMarkingSetAction, selectIsPencilMode, selectPencilMarkBoard } from '../../governor/pencilMarkBoard';
 import { Board, Difficulty, Piece } from '../../models/client/board';
 import { PencilMarkBoard } from '../../models/client/pencilMarkBoard';
-import { ServerBoardResponse, ServerBoardSolverResponse, ServerBoardValidationResponse } from '../../models/server/board';
+import { ServerBoardResponse, ServerBoardSolverResponse, ServerBoardValidationResponse, ServerBoardValidationStatus } from '../../models/server/board';
 import { makeRequest } from '../../utils/api';
 import { transformClientToServerSudokuBoard, transformServerToClientSudokuBoard } from '../../utils/board';
 import { BoardActions, BoardMoveInDirectionAction, BoardSelectPieceAction, BoardSetPaintNumberAction, BoardSetUserPressedAction, createBoardResetBoardAction, createBoardSelectPieceAction, createBoardSetAction, createBoardSetActivePaintNumber, createBoardSetActivePieceAction, createBoardSetCursorIndexAction, createBoardSetHighlightedNumber, createBoardSetPaintNumberAction, createBoardSetSolutionBoardAction, createBoardSetValidationStatusAction } from './actions';
@@ -134,6 +134,10 @@ export function* validateBoard(board: Board): Generator {
   const response = (yield call(makeRequest, 'validate-board', { board: transformClientToServerSudokuBoard(board) })) as ServerBoardValidationResponse;
 
   yield put(createBoardSetValidationStatusAction(response.status));
+
+  if (response.status === ServerBoardValidationStatus.SOLVED) {
+    yield put(createGameStopTimerAction())
+  }
 }
 
 export function* checkBoard(): Generator {
