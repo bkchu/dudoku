@@ -45,10 +45,7 @@ const GameBoard: FC<GameBoardProps> = ({
 }) => {
   useEffect(() => {
     // if the board is empty, or if it's not empty and every piece contains a 0.
-    if (
-      board == null ||
-      (board.length != null && board.every(piece => piece.number === 0))
-    ) {
+    if (board?.every(piece => piece.number === 0)) {
       fetchBoard()
     }
   }, [])

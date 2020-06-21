@@ -30,3 +30,4 @@ export enum ServerBoardDifficulty {
   HARD = 'hard',
   RANDOM = 'random'
 }
+

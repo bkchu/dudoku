@@ -27,6 +27,12 @@ export function gameReducer(state: GameInitialState = gameInitialState, action: 
         ...state,
         timer: action.payload
       }
+    
+    case GameActions.PAUSE_GAME:
+      return {
+        ...state,
+        isPaused: !state.isPaused
+      }
 
     default:
       return state;

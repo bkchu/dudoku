@@ -5,6 +5,7 @@ export enum GameActions {
   START_TIMER = 'GAME/START_TIMER',
   STOP_TIMER = 'GAME/STOP_TIMER',
   SAVE_TIMER = 'GAME/SAVE_TIMER',
+  PAUSE_GAME = 'GAME/PAUSE_GAME'
 }
 
 export interface GameSetLoadingBoardAction extends Action {
@@ -23,6 +24,10 @@ export interface GameStopTimerAction extends Action {
 export interface GameSaveTimerAction extends Action {
   type: GameActions.SAVE_TIMER,
   payload: number
+}
+
+export interface GamePauseGameAction extends Action {
+  type: GameActions.PAUSE_GAME
 }
 
 export function createGameSetLoadingBoardAction(isLoading: boolean): GameSetLoadingBoardAction {
@@ -48,5 +53,11 @@ export function createGameSaveTimerAction(time: number): GameSaveTimerAction {
   return {
     type: GameActions.SAVE_TIMER,
     payload: time
+  }
+}
+
+export function createGamePauseGameAction(): GamePauseGameAction {
+  return {
+    type: GameActions.PAUSE_GAME
   }
 }

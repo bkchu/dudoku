@@ -1,3 +1,4 @@
+import { selectBoardValidationStatus } from "governor/board"
 import {
   createGameSaveTimerAction,
   createGameStartTimerAction,
@@ -6,15 +7,18 @@ import {
   selectGameTimer,
 } from "governor/game"
 import { InitialState } from "governor/initialState"
+import { ServerBoardValidationStatus } from "models/server/board"
 import ms from "pretty-ms"
 import React, { FC, useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { Dispatch } from "redux"
+import Pause from "./Pause/Pause"
 import "./Timer.css"
 
 interface TimerProps {
   isTimerActive: boolean
   currentTime: number
+  validationStatus: ServerBoardValidationStatus
   setActive: () => {}
   setInactive: () => {}
   saveTimer: (time: number) => {}
@@ -25,14 +29,16 @@ const Timer: FC<TimerProps> = ({
   setInactive,
   saveTimer,
   currentTime,
+  validationStatus,
 }) => {
   const [time, setTime] = useState(0)
 
   useEffect(() => {
+    setActive()
     if (currentTime !== 0) {
       setTime(currentTime)
+      setInactive()
     }
-    setActive();
   }, [])
 
   useEffect(() => {
@@ -50,7 +56,11 @@ const Timer: FC<TimerProps> = ({
 
   useEffect(() => {
     function setIsActiveBasedOnTabVisibility() {
-      !document.hidden ? setActive() : setInactive()
+      if (validationStatus !== ServerBoardValidationStatus.SOLVED) {
+        !document.hidden ? setActive() : setInactive()
+      } else {
+        setInactive()
+      }
     }
 
     document.addEventListener(
@@ -67,7 +77,10 @@ const Timer: FC<TimerProps> = ({
 
   return (
     <div className="timer">
-      <div className="time">{time !== 0 ? ms(time).replace(/\.\d/, '') : `0s`}</div>
+      <div className="timer__time">
+        {time !== 0 ? ms(time).replace(/\.\d/, "") : `0s`}
+      </div>
+      <Pause />
     </div>
   )
 }
@@ -75,6 +88,7 @@ const Timer: FC<TimerProps> = ({
 const mapStateToProps = (state: InitialState) => ({
   isTimerActive: selectGameIsTimerActive(state),
   currentTime: selectGameTimer(state),
+  validationStatus: selectBoardValidationStatus(state),
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

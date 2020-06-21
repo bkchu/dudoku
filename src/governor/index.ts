@@ -6,6 +6,7 @@ import createSagaMiddleware from "redux-saga";
 import { all } from "redux-saga/effects";
 import { board, boardReducer } from "./board";
 import { gameReducer } from "./game";
+import { game } from "./game/saga";
 import { pencilMarkBoard, pencilMarkBoardReducer } from "./pencilMarkBoard";
 
 const persistConfig = {
@@ -33,6 +34,7 @@ export const createReduxStore = () => {
 export function* rootSaga(): Generator {
   yield all([
     board(),
-    pencilMarkBoard()
+    pencilMarkBoard(),
+    game()
   ])
 }

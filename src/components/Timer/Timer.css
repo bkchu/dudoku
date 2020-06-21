@@ -1,5 +1,15 @@
 .timer {
-    @apply my-5;
-    @apply text-center;
-    @apply text-3xl;
+  @apply my-5;
+  @apply text-center;
+  @apply text-3xl;
+  @apply flex;
+  @apply justify-between;
+  @apply mx-auto;
+
+  width: var(--side);
+
+  &__time {
+    @apply flex;
+    @apply items-center;
+  }
 }
