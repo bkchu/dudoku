@@ -14,7 +14,9 @@
 ## Branches
 
 - `master` - the production branch
+  - deployed @ [https://dudoku.netlify.app](https://dudoku.netlify.app)
 - `develop` - the branch we will build features on and after testing, merge into master
+  - deployed @ [https://develop--dudoku.netlify.app](https://develop--dudoku.netlify.app)
    
 ## Contributing
 
