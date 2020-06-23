@@ -1,5 +1,7 @@
 # Dudoku = Duel + Sudoku
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/0c9ec261-02be-49f3-b905-30c22f7f67fb/deploy-status)](https://app.netlify.com/sites/dudoku/deploys)
+
 ---
 ## Local Development
 
