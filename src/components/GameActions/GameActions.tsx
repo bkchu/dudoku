@@ -78,17 +78,12 @@ const GameActions: FC<GameActionsProps> = ({
     }
   }, [pressedKey])
 
-  const pencilModeButtonOnClick = () => togglePencilMode()
-
   return (
     <div className="game-actions">
       <button className={classes.checkBtn} onClick={checkBoard}>
         Check Board
       </button>
-      <button
-        className={classes.pencilModeBtn}
-        onClick={pencilModeButtonOnClick}
-      >
+      <button className={classes.pencilModeBtn} onClick={() => togglePencilMode()}>
         ✏️ {isPencilMode ? "ON" : "OFF"}
       </button>
     </div>
@@ -101,10 +96,8 @@ const mapStateToProps = (state: InitialState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   checkBoard: () => dispatch(createBoardCheckBoardAction()),
-  togglePencilMode: () =>
-    dispatch(createPencilMarkBoardTogglePencilModeAction()),
-  moveInDirection: (direction: Direction) =>
-    dispatch(createBoardMoveInDirectionAction(direction)),
+  togglePencilMode: () => dispatch(createPencilMarkBoardTogglePencilModeAction()),
+  moveInDirection: (direction: Direction) => dispatch(createBoardMoveInDirectionAction(direction)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameActions)

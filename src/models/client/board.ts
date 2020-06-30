@@ -11,6 +11,8 @@ export interface Piece {
   isWrong: boolean;
 
   isHighlighted: boolean;
+
+  isActive: boolean;
 }
 
 export enum Difficulty {

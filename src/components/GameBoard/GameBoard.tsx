@@ -2,16 +2,11 @@ import classnames from "classnames"
 import {
   createBoardFetchAction,
   createBoardSetUserPressedAction,
-  selectActivePieceIndex,
   selectBoard,
   selectBoardValidationStatus,
-  selectHighlightedNumber,
 } from "governor/board"
 import { InitialState } from "governor/initialState"
-import {
-  selectIsPencilMode,
-  selectPencilMarkBoard,
-} from "governor/pencilMarkBoard"
+import { selectIsPencilMode, selectPencilMarkBoard } from "governor/pencilMarkBoard"
 import { useKeyPress } from "hooks/useKeyPress"
 import { Board } from "models/client/board"
 import { PencilMarkBoard } from "models/client/pencilMarkBoard"
@@ -25,8 +20,6 @@ import ParsedBoard from "./ParsedBoard/ParsedBoard"
 export interface GameBoardProps {
   board: Board
   validationStatus: ServerBoardValidationStatus
-  activePieceIndex: number
-  highlightedNumber: number
   pencilMarkBoard: PencilMarkBoard
   isPencilMode: boolean
 
@@ -37,9 +30,7 @@ export interface GameBoardProps {
 const GameBoard: FC<GameBoardProps> = ({
   board,
   fetchBoard,
-  activePieceIndex,
   validationStatus,
-  highlightedNumber,
   pencilMarkBoard,
   setUserPressed,
 }) => {
@@ -50,19 +41,7 @@ const GameBoard: FC<GameBoardProps> = ({
     }
   }, [])
 
-  const pressedKey = useKeyPress([
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "backspace",
-  ])
+  const pressedKey = useKeyPress(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "backspace"])
 
   useEffect(() => {
     if (pressedKey != null) {
@@ -71,20 +50,14 @@ const GameBoard: FC<GameBoardProps> = ({
   }, [pressedKey])
 
   const _classNames = classnames("game-board", {
-    "game-board--solved":
-      validationStatus === ServerBoardValidationStatus.SOLVED,
+    "game-board--solved": validationStatus === ServerBoardValidationStatus.SOLVED,
   })
 
   return (
     <>
       <div className={_classNames}>
         <BoardLines />
-        <ParsedBoard
-          board={board}
-          activePieceIndex={activePieceIndex}
-          highlightedNumber={highlightedNumber}
-          pencilMarkBoard={pencilMarkBoard}
-        />
+        <ParsedBoard board={board} pencilMarkBoard={pencilMarkBoard} />
       </div>
       {validationStatus === ServerBoardValidationStatus.SOLVED && (
         <div className="game-board__success-overlay">Awesome!</div>
@@ -95,9 +68,7 @@ const GameBoard: FC<GameBoardProps> = ({
 
 const mapStateToProps = (state: InitialState) => ({
   board: selectBoard(state),
-  activePieceIndex: selectActivePieceIndex(state),
   validationStatus: selectBoardValidationStatus(state),
-  highlightedNumber: selectHighlightedNumber(state),
   pencilMarkBoard: selectPencilMarkBoard(state),
   isPencilMode: selectIsPencilMode(state),
 })

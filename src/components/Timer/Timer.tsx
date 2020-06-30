@@ -63,23 +63,14 @@ const Timer: FC<TimerProps> = ({
       }
     }
 
-    document.addEventListener(
-      "visibilitychange",
-      setIsActiveBasedOnTabVisibility
-    )
+    document.addEventListener("visibilitychange", setIsActiveBasedOnTabVisibility)
 
-    return () =>
-      document.removeEventListener(
-        "visibilitychange",
-        setIsActiveBasedOnTabVisibility
-      )
+    return () => document.removeEventListener("visibilitychange", setIsActiveBasedOnTabVisibility)
   }, [])
 
   return (
     <div className="timer">
-      <div className="timer__time">
-        {time !== 0 ? ms(time).replace(/\.\d/, "") : `0s`}
-      </div>
+      <div className="timer__time">{time !== 0 ? ms(time).replace(/\.\d/, "") : `0s`}</div>
       <Pause />
     </div>
   )

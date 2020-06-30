@@ -1,15 +1,12 @@
 import classnames from "classnames"
+import { selectGameIsPaused } from "governor/game"
+import { InitialState } from "governor/initialState"
 import React, { FC } from "react"
 import { connect } from "react-redux"
 import { Dispatch } from "redux"
-import {
-  createBoardSelectPieceAction,
-  createBoardSetHighlightedNumber,
-} from "../../../governor/board"
+import { createBoardSelectPieceAction } from "../../../governor/board"
 import PencilGrid from "./PencilGrid/PencilGrid"
 import "./Piece.css"
-import { InitialState } from "governor/initialState"
-import { selectGameIsPaused } from "governor/game"
 
 export interface PieceProps {
   number: number
@@ -22,7 +19,6 @@ export interface PieceProps {
   isPaused: boolean
 
   onPieceClick: (num?: number) => {}
-  setHighlightedNumber: (num?: number) => {}
 }
 
 const Piece: FC<PieceProps> = ({
@@ -33,7 +29,6 @@ const Piece: FC<PieceProps> = ({
   isWrong,
   isHighlighted,
   onPieceClick,
-  setHighlightedNumber,
   pencilMarks,
   isPaused,
 }) => {
@@ -45,13 +40,6 @@ const Piece: FC<PieceProps> = ({
   })
 
   const onClick = () => {
-    if (isHighlighted) {
-      setHighlightedNumber(null)
-    } else if (!isHighlighted && number !== 0) {
-      setHighlightedNumber(number)
-    } else if (!isHighlighted && number === 0) {
-      setHighlightedNumber(null)
-    }
     onPieceClick(index)
   }
 
@@ -77,8 +65,6 @@ const mapStateToProps = (state: InitialState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onPieceClick: index => dispatch(createBoardSelectPieceAction(index)),
-  setHighlightedNumber: number =>
-    dispatch(createBoardSetHighlightedNumber(number)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Piece)

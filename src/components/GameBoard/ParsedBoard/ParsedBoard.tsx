@@ -6,28 +6,21 @@ import "./ParsedBoard.css"
 
 export interface ParsedBoardProps {
   board: Board
-  activePieceIndex: number
-  highlightedNumber: number
   pencilMarkBoard: PencilMarkBoard
 }
 
-const ParsedBoard: FC<ParsedBoardProps> = ({
-  board,
-  activePieceIndex,
-  highlightedNumber,
-  pencilMarkBoard,
-}) => {
+const ParsedBoard: FC<ParsedBoardProps> = ({ board, pencilMarkBoard }) => {
   return (
     <div className="parsed-board">
-      {board?.map(({ number, index, isActionable, isWrong }, i) => (
+      {board?.map(({ number, index, isActionable, isWrong, isActive, isHighlighted }, i) => (
         <Piece
           number={number}
           key={i}
           index={index}
           isActionable={isActionable}
-          isActive={index === activePieceIndex}
+          isActive={isActive}
           isWrong={isWrong}
-          isHighlighted={highlightedNumber === number || pencilMarkBoard[index]?.includes(highlightedNumber)}
+          isHighlighted={isHighlighted}
           pencilMarks={pencilMarkBoard[index]}
         />
       ))}
