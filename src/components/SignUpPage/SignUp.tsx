@@ -32,8 +32,8 @@ const SignUp: FC = () => {
           setSubmitted(false)
         })
         .catch(err => {
-          alert(err)
           setSubmitted(false)
+          alert(err)
         })
     }
   }
