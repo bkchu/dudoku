@@ -1,9 +1,9 @@
+import Button from "components/Button/Button"
 import { Form, Formik } from "formik"
 import React, { FC, useEffect, useState } from "react"
 import * as Yup from "yup"
 import Field from "../Field/Field"
 import "./SignUp.css"
-import { Link } from "@reach/router"
 
 const userbase = typeof window !== "undefined" ? require("userbase-js").default : null
 
@@ -18,18 +18,24 @@ const SignUp: FC = () => {
   }, [])
 
   const onSubmit = async (values, actions) => {
-    userbase
-      .signUp({
-        username: values.username,
-        password: values.password,
-        rememberMe: "local",
-      })
-      .then(user => {
-        console.log(user)
-        setSubmitted(true)
-        actions.setSubmitting(false)
-      })
-      .catch(err => alert(err))
+    setSubmitted(true)
+    if (!submitted) {
+      userbase
+        .signUp({
+          username: values.username,
+          password: values.password,
+          rememberMe: "local",
+        })
+        .then(user => {
+          console.log(user)
+          actions.setSubmitting(false)
+          setSubmitted(false)
+        })
+        .catch(err => {
+          alert(err)
+          setSubmitted(false)
+        })
+    }
   }
 
   return (
@@ -49,9 +55,7 @@ const SignUp: FC = () => {
             .required("Please confirm your password"),
         })}
       >
-        <Form
-          className="sign-up__form"
-        >
+        <Form className="sign-up__form">
           <input type="hidden" name="form-name" value="contact-us" />
           <div hidden>
             <label>
@@ -63,17 +67,17 @@ const SignUp: FC = () => {
           {/* <h2 className="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 mb-3">
           {submitted ? `We got your message. Thanks!` : `We'd love to hear from you.`}
         </h2> */}
-          <div className={`${submitted && "hidden invisible"}`}>
-            <Field name="username" type="text" label="Username" placeholder="Enter your username" />
-            <Field name="password" type="password" label="Password" />
-            <Field name="passwordConfirmation" type="password" label="Confirm Password" />
-            <button type="submit" className="sign-up__sign-up-btn">
-              Sign Up
-            </button>
-          </div>
+          <Field name="username" type="text" label="Username" placeholder="Enter your username" />
+          <Field name="password" type="password" label="Password" />
+          <Field name="passwordConfirmation" type="password" label="Confirm Password" />
+          <Button className="sign-up__sign-up-btn" type="submit" loading={submitted}>
+            Sign Up
+          </Button>
         </Form>
       </Formik>
-      <Link className="sign-up__login-link" to="/app/login">Login</Link>
+      <Button className="sign-up__login-link" to="/app/login">
+        Login
+      </Button>
     </div>
   )
 }
