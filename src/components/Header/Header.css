@@ -8,6 +8,7 @@
     @apply p-5;
     @apply flex;
     @apply items-center;
+    @apply justify-between;
     /* @apply max-w-6xl; */
   }
 
@@ -18,5 +19,9 @@
 
   &__title-link {
     @apply no-underline;
+  }
+
+  &__login-button {
+    @apply m-0;
   }
 }

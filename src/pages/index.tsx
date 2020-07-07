@@ -30,9 +30,16 @@ const IndexPage: FC<IndexPageProps> = ({
         <DifficultySwitcher />
       </div>
       <div className="home-page__buttons-container">
-        <div>{isGameInProgress && <Button to="/play">Resume</Button>}</div>
+        <div>
+          {isGameInProgress && (
+            <Button className="home-page__btn" to="/play">
+              Resume
+            </Button>
+          )}
+        </div>
         <div>
           <Button
+            className="home-page__btn"
             onClick={() => loadBoardAndNavigate()}
             loading={isBoardLoading}
           >

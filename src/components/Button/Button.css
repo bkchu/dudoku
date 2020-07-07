@@ -22,7 +22,7 @@
   @apply ease-in-out;
   @apply duration-150;
   @apply mt-0;
-  @apply mx-auto;
+  @apply text-center;
 
    &:hover {
       @apply bg-primary-main;

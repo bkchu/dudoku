@@ -1,0 +1,40 @@
+.sign-up {
+  @apply my-5;
+  @apply max-w-sm;
+  @apply mx-auto;
+
+  &__form {
+    @apply mb-0;
+  }
+
+  &__sign-up-btn {
+    @apply w-full;
+    @apply px-4;
+    @apply py-2;
+    @apply text-sm;
+    @apply font-bold;
+    @apply text-white;
+    @apply bg-gray-700;
+    @apply border-b-4;
+    @apply border-gray-800;
+    @apply rounded;
+
+    &:hover {
+      @apply border-gray-700;
+      @apply bg-gray-600;
+    }
+  }
+
+  &__login-link {
+    @apply text-center;
+    @apply inline-block;
+    @apply w-full;
+    @apply mt-5;
+    @apply px-4;
+    @apply py-px;
+    @apply text-sm;
+    @apply font-bold;
+    @apply rounded;
+
+  }
+}

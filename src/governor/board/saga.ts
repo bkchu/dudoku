@@ -264,7 +264,7 @@ export function* loadBoardAndNavigate() {
   yield put(createPencilMarkBoardResetBoardAction());
   yield put(createBoardResetBoardAction());
   yield call(fetchBoardSaga);
-  yield call(navigateTo, '/play');
+  yield call(navigateTo, '/app/play');
   yield put(createGameSetLoadingBoardAction(false));
 
   // start timer from 0
