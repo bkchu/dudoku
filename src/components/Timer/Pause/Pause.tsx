@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import "./Pause.css"
 import { createGamePauseGameAction, selectGameIsPaused } from "governor/game"
 import { InitialState } from "governor/initialState"
+import { FaPauseCircle, FaPlayCircle } from "react-icons/fa"
 
 interface PauseProps {
   pauseGame: () => {}
@@ -13,7 +14,7 @@ interface PauseProps {
 const Pause: FC<PauseProps> = ({ pauseGame, isPaused }) => {
   return (
     <Button className="pause" onClick={pauseGame}>
-      {isPaused ? "Resume" : "Pause"}
+      {isPaused ? <FaPlayCircle /> : <FaPauseCircle />}
     </Button>
   )
 }
