@@ -32,7 +32,7 @@ const IndexPage: FC<IndexPageProps> = ({
       <div className="home-page__buttons-container">
         <div>
           {isGameInProgress && (
-            <Button className="home-page__btn" to="/play">
+            <Button className="home-page__btn" to="/app/play">
               Resume
             </Button>
           )}

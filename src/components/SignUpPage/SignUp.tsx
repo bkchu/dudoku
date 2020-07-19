@@ -1,40 +1,31 @@
 import Button from "components/Button/Button"
 import { Form, Formik } from "formik"
-import React, { FC, useEffect, useState } from "react"
+import React, { FC, useState } from "react"
 import * as Yup from "yup"
 import Field from "../Field/Field"
 import "./SignUp.css"
-
-const userbase = typeof window !== "undefined" ? require("userbase-js").default : null
+import { useAuth } from "hooks/useAuth"
+import { navigate } from "gatsby"
 
 const SignUp: FC = () => {
   const [submitted, setSubmitted] = useState(false)
-
-  useEffect(() => {
-    userbase
-      .init({ appId: process.env.GATSBY_USERBASE_APP_ID as string })
-      .then(session => session.user && console.log(session.user))
-      .catch(error => alert(error))
-  }, [])
+  const { signUp } = useAuth();
 
   const onSubmit = async (values, actions) => {
     setSubmitted(true)
     if (!submitted) {
-      userbase
-        .signUp({
-          username: values.username,
-          password: values.password,
-          rememberMe: "local",
-        })
-        .then(user => {
-          console.log(user)
+      signUp(
+        values.username,
+        values.password,
+        () => {
           actions.setSubmitting(false)
           setSubmitted(false)
-        })
-        .catch(err => {
+          navigate("/app/play")
+        },
+        () => {
           setSubmitted(false)
-          alert(err)
-        })
+        }
+      )
     }
   }
 
