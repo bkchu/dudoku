@@ -16,6 +16,9 @@ exports.handler = async function (event, context, callback) {
     // generates board from API
     const preconvertedBoard = Game.generate().getBoard()
 
+    // returns the solution board
+    const solutionBoard = Game.getSolution();
+
     // convert the board from original API structure into the structure needed by the app
     const board = preconvertedBoard.map(board => board.map(piece => (piece === "" ? 0 : piece)))
 
@@ -25,6 +28,7 @@ exports.handler = async function (event, context, callback) {
       statusCode: 200,
       body: JSON.stringify({
         board,
+        solutionBoard
       }),
     })
   } catch (err) {
