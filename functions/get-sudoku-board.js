@@ -3,9 +3,11 @@ const _ = require("lodash")
 exports.handler = async function (event, context, callback) {
   const { difficulty } = event.queryStringParameters
   const difficulties = {
+    beginner: 71,
     easy: 62,
     medium: 53,
     hard: 44,
+    extreme: 35,
   }
   const hints = difficulties[difficulty]
 

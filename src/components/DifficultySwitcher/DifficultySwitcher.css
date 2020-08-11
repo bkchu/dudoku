@@ -2,7 +2,6 @@
   @apply flex;
   @apply w-full;
   @apply mx-auto;
-  @apply max-w-sm;
 
   &__button {
     @apply w-1/3;

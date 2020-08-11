@@ -26,6 +26,15 @@ const DifficultSwitcher: FC<DifficultSwitcherProps> = ({
       <button
         className={classnames("difficulty-switcher__button", {
           "difficulty-switcher__button--selected":
+            difficulty === Difficulty.BEGINNER,
+        })}
+        onClick={() => setDifficulty(Difficulty.BEGINNER)}
+      >
+        BEGINNER
+      </button>
+      <button
+        className={classnames("difficulty-switcher__button", {
+          "difficulty-switcher__button--selected":
             difficulty === Difficulty.EASY,
         })}
         onClick={() => setDifficulty(Difficulty.EASY)}
@@ -49,6 +58,15 @@ const DifficultSwitcher: FC<DifficultSwitcherProps> = ({
         onClick={() => setDifficulty(Difficulty.HARD)}
       >
         HARD
+      </button>
+      <button
+        className={classnames("difficulty-switcher__button", {
+          "difficulty-switcher__button--selected":
+            difficulty === Difficulty.EXTREME,
+        })}
+        onClick={() => setDifficulty(Difficulty.EXTREME)}
+      >
+        EXTREME
       </button>
     </div>
   )
