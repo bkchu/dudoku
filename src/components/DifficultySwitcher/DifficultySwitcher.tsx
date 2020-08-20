@@ -28,7 +28,7 @@ const DifficultSwitcher: FC<DifficultSwitcherProps> = ({
     Difficulty.HARD,
     Difficulty.EXTREME
   ]
-  var difficultyButtons = difficultyLevels.map(level =>
+  const difficultyButtons = difficultyLevels.map(level =>
     <button 
       className={classnames("difficulty-switcher__button", {
         "difficulty-switcher__button--selected":
