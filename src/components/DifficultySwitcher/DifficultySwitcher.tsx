@@ -21,13 +21,6 @@ const DifficultSwitcher: FC<DifficultSwitcherProps> = ({
   difficulty,
   className
 }) => {
-  const levels = [
-    "BEGINNER",
-    "EASY",
-    "MEDIUM",
-    "HARD",
-    "EXTREME"
-  ]
   const difficultyLevels = [
     Difficulty.BEGINNER,
     Difficulty.EASY,
@@ -35,20 +28,17 @@ const DifficultSwitcher: FC<DifficultSwitcherProps> = ({
     Difficulty.HARD,
     Difficulty.EXTREME
   ]
-  var difficultyButtons = []
-  for (let i = 0; i < difficultyLevels.length; i++) {
-    difficultyButtons.push(
-      <button 
-        className={classnames("difficulty-switcher__button", {
-          "difficulty-switcher__button--selected":
-            difficulty === difficultyLevels[i],
-        })}
-        onClick={() => setDifficulty(difficultyLevels[i])}
-      >
-        {levels[i]}
-      </button>
-    )
-  }
+  var difficultyButtons = difficultyLevels.map(level =>
+    <button 
+      className={classnames("difficulty-switcher__button", {
+        "difficulty-switcher__button--selected":
+          difficulty === level,
+      })}
+      onClick={() => setDifficulty(level)}
+    >
+      {level.toUpperCase()}
+    </button>
+  )
   return (
     <div className={classnames("difficulty-switcher", className)}>
       {difficultyButtons}
