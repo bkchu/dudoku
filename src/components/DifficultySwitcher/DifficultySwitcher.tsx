@@ -21,53 +21,37 @@ const DifficultSwitcher: FC<DifficultSwitcherProps> = ({
   difficulty,
   className
 }) => {
+  const levels = [
+    "BEGINNER",
+    "EASY",
+    "MEDIUM",
+    "HARD",
+    "EXTREME"
+  ]
+  const difficultyLevels = [
+    Difficulty.BEGINNER,
+    Difficulty.EASY,
+    Difficulty.MEDIUM,
+    Difficulty.HARD,
+    Difficulty.EXTREME
+  ]
+  var difficultyButtons = []
+  for (let i = 0; i < difficultyLevels.length; i++) {
+    difficultyButtons.push(
+      <button 
+        className={classnames("difficulty-switcher__button", {
+          "difficulty-switcher__button--selected":
+            difficulty === difficultyLevels[i],
+        })}
+        onClick={() => setDifficulty(difficultyLevels[i])}
+      >
+        {levels[i]}
+      </button>
+    )
+  }
   return (
     <div className={classnames("difficulty-switcher", className)}>
-      <button
-        className={classnames("difficulty-switcher__button", {
-          "difficulty-switcher__button--selected":
-            difficulty === Difficulty.BEGINNER,
-        })}
-        onClick={() => setDifficulty(Difficulty.BEGINNER)}
-      >
-        BEGINNER
-      </button>
-      <button
-        className={classnames("difficulty-switcher__button", {
-          "difficulty-switcher__button--selected":
-            difficulty === Difficulty.EASY,
-        })}
-        onClick={() => setDifficulty(Difficulty.EASY)}
-      >
-        EASY
-      </button>
-      <button
-        className={classnames("difficulty-switcher__button", {
-          "difficulty-switcher__button--selected":
-            difficulty === Difficulty.MEDIUM,
-        })}
-        onClick={() => setDifficulty(Difficulty.MEDIUM)}
-      >
-        MEDIUM
-      </button>
-      <button
-        className={classnames("difficulty-switcher__button", {
-          "difficulty-switcher__button--selected":
-            difficulty === Difficulty.HARD,
-        })}
-        onClick={() => setDifficulty(Difficulty.HARD)}
-      >
-        HARD
-      </button>
-      <button
-        className={classnames("difficulty-switcher__button", {
-          "difficulty-switcher__button--selected":
-            difficulty === Difficulty.EXTREME,
-        })}
-        onClick={() => setDifficulty(Difficulty.EXTREME)}
-      >
-        EXTREME
-      </button>
+      {difficultyButtons}
     </div>
   )
 }

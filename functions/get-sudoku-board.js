@@ -1,13 +1,20 @@
 const _ = require("lodash")
 
+// Random number generator between two numbers
+const getRandomInt = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
 exports.handler = async function (event, context, callback) {
   const { difficulty } = event.queryStringParameters
   const difficulties = {
-    beginner: 71,
-    easy: 62,
-    medium: 53,
-    hard: 44,
-    extreme: 35,
+    beginner: getRandomInt(57, 62),
+    easy: 44,
+    medium: getRandomInt(34, 35),
+    hard: getRandomInt(29, 30),
+    extreme: getRandomInt(23, 27),
   }
   const hints = difficulties[difficulty]
 
