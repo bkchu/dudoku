@@ -14,7 +14,9 @@ export interface Piece {
 }
 
 export enum Difficulty {
+  BEGINNER = 'beginner',
   EASY = 'easy',
   MEDIUM = 'medium',
-  HARD = 'hard'
+  HARD = 'hard',
+  EXTREME = 'extreme'
 }

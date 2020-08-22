@@ -19,9 +19,11 @@ export enum ServerBoardValidationStatus {
 }
 
 export enum ServerBoardDifficulty {
+  BEGINNER = 'beginner',
   EASY = 'easy',
   MEDIUM = 'medium',
   HARD = 'hard',
+  EXTREME = 'extreme',
   RANDOM = 'random'
 }
 
