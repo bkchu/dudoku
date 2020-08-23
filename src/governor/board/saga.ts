@@ -17,16 +17,9 @@ import {
 } from "../../governor/pencilMarkBoard"
 import { Board, Difficulty, Piece } from "../../models/client/board"
 import { PencilMarkBoard } from "../../models/client/pencilMarkBoard"
-import {
-  ServerBoardResponse,
-  ServerBoardValidationResponse,
-  ServerBoardValidationStatus,
-} from "../../models/server/board"
+import { ServerBoardResponse, ServerBoardValidationStatus } from "../../models/server/board"
 import { makeRequest } from "../../utils/api"
-import {
-  transformClientToServerSudokuBoard,
-  transformServerToClientSudokuBoard,
-} from "../../utils/board"
+import { transformServerToClientSudokuBoard } from "../../utils/board"
 import {
   BoardActions,
   BoardMoveInDirectionAction,
@@ -41,6 +34,7 @@ import {
   createBoardSetCursorIndexAction,
   createBoardSetHighlightedNumber,
   createBoardSetPaintNumberAction,
+  createBoardSetSolutionBoardAction,
   createBoardSetValidationStatusAction,
 } from "./actions"
 import {
@@ -67,20 +61,14 @@ export function* board(): Generator {
 
 export function* fetchBoardSaga(): Generator {
   const difficulty = (yield select(selectDifficulty)) as Difficulty
+
   // gets a new board
-  const response = (yield call(makeRequest, "get-sudoku-board", null, {
+  const { board, solutionBoard } = (yield call(makeRequest, "get-sudoku-board", null, {
     difficulty,
   })) as ServerBoardResponse
 
-  // gets the solved board using the new board
-  // const solutionBoard = (yield call(makeRequest, "check-board", {
-  //   board: response.board,
-  // })) as ServerBoardSolverResponse
-
-  yield put(createBoardSetAction(transformServerToClientSudokuBoard(response.board)))
-  // yield put(
-  //   createBoardSetSolutionBoardAction(transformServerToClientSudokuBoard(solutionBoard.solution))
-  // )
+  yield put(createBoardSetAction(transformServerToClientSudokuBoard(board)))
+  yield put(createBoardSetSolutionBoardAction(transformServerToClientSudokuBoard(solutionBoard)))
 }
 
 export function* setNumberInPieceSaga(action: BoardSetPaintNumberAction): Generator {
@@ -176,14 +164,19 @@ export function* handlePieceSelection(action: BoardSelectPieceAction): Generator
   }
 }
 
-export function* validateBoard(board: Board): Generator {
-  const response = (yield call(makeRequest, "validate-board", {
-    board: transformClientToServerSudokuBoard(board),
-  })) as ServerBoardValidationResponse
+export function* validateBoard(currentBoard: Board): Generator {
+  const solutionBoard = (yield select(selectSolutionBoard)) as Board
+  const isSolved = solutionBoard.every(
+    (piece, index) => piece.number === currentBoard[index].number
+  )
 
-  yield put(createBoardSetValidationStatusAction(response.status))
+  yield put(
+    createBoardSetValidationStatusAction(
+      isSolved ? ServerBoardValidationStatus.SOLVED : ServerBoardValidationStatus.UNSOLVED
+    )
+  )
 
-  if (response.status === ServerBoardValidationStatus.SOLVED) {
+  if (isSolved) {
     yield put(createGameStopTimerAction())
   }
 }
@@ -309,7 +302,7 @@ export function* loadBoardAndNavigate() {
   yield put(createPencilMarkBoardResetBoardAction())
   yield put(createBoardResetBoardAction())
   yield call(fetchBoardSaga)
-  yield call(navigateTo, "/app/play")
+  yield call(navigateTo, "/play")
   yield put(createGameSetLoadingBoardAction(false))
 
   // start timer from 0

@@ -4,17 +4,11 @@ export type ServerBoard = Array<number[]>;
 
 export interface ServerBoardResponse {
   board: ServerBoard
+  solutionBoard: ServerBoard
 }
 
 // response for the /validate call
 export interface ServerBoardValidationResponse {
-  status: ServerBoardValidationStatus
-}
-
-// response for the /solve call
-export interface ServerBoardSolverResponse {
-  difficulty: ServerBoardDifficulty
-  solution: ServerBoard
   status: ServerBoardValidationStatus
 }
 
@@ -25,9 +19,11 @@ export enum ServerBoardValidationStatus {
 }
 
 export enum ServerBoardDifficulty {
+  BEGINNER = 'beginner',
   EASY = 'easy',
   MEDIUM = 'medium',
   HARD = 'hard',
+  EXTREME = 'extreme',
   RANDOM = 'random'
 }
 

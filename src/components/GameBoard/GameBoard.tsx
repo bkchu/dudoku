@@ -1,4 +1,3 @@
-import classnames from "classnames"
 import {
   createBoardFetchAction,
   createBoardSetUserPressedAction,
@@ -70,14 +69,9 @@ const GameBoard: FC<GameBoardProps> = ({
     }
   }, [pressedKey])
 
-  const _classNames = classnames("game-board", {
-    "game-board--solved":
-      validationStatus === ServerBoardValidationStatus.SOLVED,
-  })
-
   return (
     <>
-      <div className={_classNames}>
+      <div className="game-board">
         <BoardLines />
         <ParsedBoard
           board={board}
@@ -85,10 +79,10 @@ const GameBoard: FC<GameBoardProps> = ({
           highlightedNumber={highlightedNumber}
           pencilMarkBoard={pencilMarkBoard}
         />
+        {validationStatus === ServerBoardValidationStatus.SOLVED && (
+          <div className="game-board__success-overlay">Awesome!</div>
+        )}
       </div>
-      {validationStatus === ServerBoardValidationStatus.SOLVED && (
-        <div className="game-board__success-overlay">Awesome!</div>
-      )}
     </>
   )
 }
