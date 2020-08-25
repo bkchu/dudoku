@@ -21,7 +21,4 @@ const App = (_: RouteComponentProps) => {
   )
 }
 
-// const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps) =>
-//   props.pageComponent
-
 export default App
