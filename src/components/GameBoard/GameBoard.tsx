@@ -1,3 +1,4 @@
+import Leaderboard from "components/Leaderboard/Leaderboard"
 import {
   createBoardFetchAction,
   createBoardSetUserPressedAction,
@@ -7,10 +8,7 @@ import {
   selectHighlightedNumber,
 } from "governor/board"
 import { InitialState } from "governor/initialState"
-import {
-  selectIsPencilMode,
-  selectPencilMarkBoard,
-} from "governor/pencilMarkBoard"
+import { selectIsPencilMode, selectPencilMarkBoard } from "governor/pencilMarkBoard"
 import { useKeyPress } from "hooks/useKeyPress"
 import { Board } from "models/client/board"
 import { PencilMarkBoard } from "models/client/pencilMarkBoard"
@@ -49,19 +47,7 @@ const GameBoard: FC<GameBoardProps> = ({
     }
   }, [])
 
-  const pressedKey = useKeyPress([
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "backspace",
-  ])
+  const pressedKey = useKeyPress(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "backspace"])
 
   useEffect(() => {
     if (pressedKey != null) {
@@ -80,7 +66,9 @@ const GameBoard: FC<GameBoardProps> = ({
           pencilMarkBoard={pencilMarkBoard}
         />
         {validationStatus === ServerBoardValidationStatus.SOLVED && (
-          <div className="game-board__success-overlay">Awesome!</div>
+          <div className="game-board__success-overlay">
+            <Leaderboard />
+          </div>
         )}
       </div>
     </>

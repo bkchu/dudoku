@@ -1,0 +1,43 @@
+type User {
+  username: String!
+  email: String!
+  password: String!
+  """
+  a user's scores
+  """
+  scores: [Score!] @relation
+}
+
+type Score {
+  time: Int!
+  difficulty: Difficulty!
+  user: User!
+}
+
+enum Difficulty {
+  """
+  Easy
+  """
+  EASY
+  """
+  Beginner
+  """
+  BEGINNER
+  """
+  Medium
+  """
+  MEDIUM
+  """
+  Hard
+  """
+  HARD
+  """
+  Extreme
+  """
+  EXTREME
+}
+
+type Query {
+ allUsers: [User!]
+ allScores: [Score!]
+}
