@@ -1,4 +1,3 @@
-/* code from functions/todos-create.js */
 const faunadb = require("faunadb") /* Import faunaDB sdk */
 
 /* configure faunaDB Client with our secret */
