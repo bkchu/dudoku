@@ -1,7 +1,10 @@
 .difficulty-switcher {
-  @apply flex;
-  @apply w-full;
-  @apply mx-auto;
+  /* @apply flex; */
+  /* @apply justify-center; */
+  /* @apply whitespace-no-wrap; */
+  /* @apply w-full; */
+  /* @apply text-center; */
+  /* @apply max-w-sm; */
 
   &__button {
     @apply w-1/3;

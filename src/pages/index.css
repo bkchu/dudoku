@@ -19,10 +19,12 @@
   }
 
   &__difficulty-switcher {
-    @apply flex justify-center;
+    @apply flex;
+    @apply justify-center;
+    /* @apply flex justify-center; */
     @apply mx-auto;
-    @apply text-center;
-    @apply w-10/12;
+    /* @apply text-center; */
+    /* @apply w-10/12; */
 
     @screen md {
       @apply w-1/2;
