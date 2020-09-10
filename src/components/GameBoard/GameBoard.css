@@ -3,6 +3,7 @@
   @apply h-side;
   @apply my-0;
   @apply mx-auto;
+  @apply z-0;
 
   @apply bg-transparent;
   @apply relative;
@@ -10,17 +11,17 @@
   &__success-overlay {
     @apply absolute;
     @apply top-0;
-    @apply w-full;
-    @apply h-full;
+    @apply w-side;
+    @apply h-side;
+    @apply z-10;
     @apply flex;
     @apply justify-center;
     @apply items-center;
     @apply text-primary-main;
     @apply font-bold;
     @apply text-3xl;
-  }
-
-  &--solved {
-    filter: blur(4px) grayscale(80%) brightness(30%);
+    @apply bg-black;
+    backdrop-filter: blur(4px);
+    @apply bg-opacity-75;
   }
 }

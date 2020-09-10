@@ -1,3 +1,6 @@
 .pause {
+    @apply flex;
+    @apply justify-center;
+    @apply items-center;
     @apply m-0;
 }
