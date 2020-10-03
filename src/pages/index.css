@@ -4,7 +4,7 @@
   &__header {
     font-size: 3rem;
 
-    @apply font-xxbold;
+    @apply font-black;
     @apply text-primary-main;
     @apply mt-5;
     @apply mb-32;

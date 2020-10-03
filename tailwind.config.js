@@ -5,9 +5,6 @@ module.exports = {
       fontSize: {
         xxl: "6.75rem",
       },
-      fontWeight: {
-        xxbold: "900",
-      },
       colors: {
         primary: {
           main: "var(--color-primary-main)",
