@@ -24,12 +24,23 @@
   @screen lg {
     --side: 50vw;
   }
-  
+
   @screen xl {
     --side: 40vw;
   }
 }
 
-body, html {
+body,
+html {
   @apply min-h-screen !important;
+}
+
+@import url("https://rsms.me/inter/inter.css");
+html {
+  font-family: "Inter", sans-serif;
+}
+@supports (font-variation-settings: normal) {
+  html {
+    font-family: "Inter var", sans-serif;
+  }
 }
