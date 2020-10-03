@@ -35,7 +35,7 @@ exports.handler = (event, context, callback) => {
       )
     )
     .then(response => {
-      console.log("success:", response)
+      console.log("[GET_ALL_SCORES - Success]", response)
       return callback(null, {
         statusCode: 200,
         body: JSON.stringify(response),
@@ -43,7 +43,7 @@ exports.handler = (event, context, callback) => {
       /* Success! return the response with statusCode 200 */
     })
     .catch(error => {
-      console.log("error", error)
+      console.log("[GET_ALL_SCORES - Error]", error)
       /* Error! return the error with statusCode 400 */
       return callback(null, {
         statusCode: 400,
