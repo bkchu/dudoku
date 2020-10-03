@@ -1,0 +1,17 @@
+.sign-up {
+  @apply my-5;
+  @apply max-w-sm;
+  @apply mx-auto;
+
+  &__form {
+    @apply mb-0;
+  }
+
+  &__sign-up-btn {
+    @apply w-full;
+  }
+
+  &__login-link {
+    @apply w-full;
+  }
+}
