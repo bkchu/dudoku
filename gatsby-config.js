@@ -31,12 +31,6 @@ module.exports = {
     "gatsby-plugin-typescript-checker",
     `gatsby-plugin-postcss`,
     {
-      resolve: `gatsby-plugin-typography`,
-      options: {
-        pathToConfigModule: `src/utils/typography`,
-      },
-    },
-    {
       resolve: "gatsby-plugin-module-resolver",
       options: {
         root: "./src",
