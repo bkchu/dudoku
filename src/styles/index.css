@@ -1,5 +1,7 @@
-@tailwind base; 
-@tailwind components; 
+@import url("https://rsms.me/inter/inter.css");
+
+@tailwind base;
+@tailwind components;
 @tailwind utilities;
 
 :root {
@@ -35,7 +37,6 @@ html {
   @apply min-h-screen !important;
 }
 
-@import url("https://rsms.me/inter/inter.css");
 html {
   font-family: "Inter", sans-serif;
 }

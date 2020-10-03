@@ -4,7 +4,7 @@
   &__header {
     font-size: 3rem;
 
-    @apply font-extrabold;
+    @apply font-xxbold;
     @apply text-primary-main;
     @apply mt-5;
     @apply mb-32;
@@ -14,7 +14,7 @@
     }
 
     @screen lg {
-      font-size: 7rem;
+      @apply text-xxl;
     }
   }
 
