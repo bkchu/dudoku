@@ -2,10 +2,7 @@ import classnames from "classnames"
 import React, { FC } from "react"
 import { connect } from "react-redux"
 import { Dispatch } from "redux"
-import {
-  createBoardSetDifficultyAction,
-  selectDifficulty,
-} from "../../governor/board"
+import { createBoardSetDifficultyAction, selectDifficulty } from "../../governor/board"
 import { InitialState } from "../../governor/initialState"
 import { Difficulty } from "../../models/client/board"
 import "./DifficultySwitcher.css"
@@ -19,31 +16,27 @@ interface DifficultSwitcherProps {
 const DifficultSwitcher: FC<DifficultSwitcherProps> = ({
   setDifficulty,
   difficulty,
-  className
+  className,
 }) => {
   const difficultyLevels = [
     Difficulty.BEGINNER,
     Difficulty.EASY,
     Difficulty.MEDIUM,
     Difficulty.HARD,
-    Difficulty.EXTREME
+    Difficulty.EXTREME,
   ]
-  const difficultyButtons = difficultyLevels.map(level =>
-    <button 
+  const difficultyButtons = difficultyLevels.map(level => (
+    <button
+      key={level}
       className={classnames("difficulty-switcher__button", {
-        "difficulty-switcher__button--selected":
-          difficulty === level,
+        "difficulty-switcher__button--selected": difficulty === level,
       })}
       onClick={() => setDifficulty(level)}
     >
       {level.toUpperCase()}
     </button>
-  )
-  return (
-    <div className={classnames("difficulty-switcher", className)}>
-      {difficultyButtons}
-    </div>
-  )
+  ))
+  return <div className={classnames("difficulty-switcher", className)}>{difficultyButtons}</div>
 }
 
 export const mapStateToProps = (state: InitialState) => ({
@@ -51,8 +44,7 @@ export const mapStateToProps = (state: InitialState) => ({
 })
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setDifficulty: (difficulty: Difficulty) =>
-    dispatch(createBoardSetDifficultyAction(difficulty)),
+  setDifficulty: (difficulty: Difficulty) => dispatch(createBoardSetDifficultyAction(difficulty)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DifficultSwitcher)
