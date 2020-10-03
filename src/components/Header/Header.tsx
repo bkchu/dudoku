@@ -1,6 +1,6 @@
+import Button from "components/Button/Button"
 import { Link } from "gatsby"
 import React, { FC } from "react"
-
 import "./Header.css"
 
 export interface HeaderProps {
@@ -16,6 +16,9 @@ const Header: FC<HeaderProps> = ({ siteTitle }) => {
             {siteTitle}
           </Link>
         </h1>
+        <Button to="/app/login" className="header__login-button">
+          Login
+        </Button>
       </div>
     </header>
   )
