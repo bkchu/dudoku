@@ -4,17 +4,19 @@
   &__header {
     font-size: 3rem;
 
-    @apply font-extrabold;
-    @apply text-primary-main;
+    @apply font-black;
+    @apply text-neutral-900;
     @apply mt-5;
     @apply mb-32;
+
+    letter-spacing: -0.06em;
 
     @screen md {
       font-size: 5rem;
     }
 
     @screen lg {
-      font-size: 7rem;
+      @apply text-xxl;
     }
   }
 

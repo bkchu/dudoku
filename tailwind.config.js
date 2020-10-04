@@ -1,7 +1,14 @@
 module.exports = {
+  future: {
+    removeDeprecatedGapUtilities: true,
+    purgeLayersByDefault: true,
+  },
   purge: false,
   theme: {
     extend: {
+      fontSize: {
+        xxl: "6.75rem",
+      },
       colors: {
         primary: {
           main: "var(--color-primary-main)",

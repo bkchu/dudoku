@@ -1,46 +1,49 @@
-@tailwind base; 
-@tailwind components; 
+@tailwind base;
+@tailwind components;
 @tailwind utilities;
 
-:root {
-  /* theme colors */
-  --color-primary-main: #94d1beff;
-  --color-neutral-100: #daf0eeff;
-  --color-neutral-300: #9db5b2ff;
-  --color-neutral-900: #3b413cff;
+@layer base {
+  @import url("https://rsms.me/inter/inter.css");
 
-  /* the size of one side of the sudoku board */
-  --side: 100vw;
-  --thickness: 0.005;
+  :root {
+    /* theme colors */
+    --color-primary-main: #94d1beff;
+    --color-neutral-100: #daf0eeff;
+    --color-neutral-300: #9db5b2ff;
+    --color-neutral-900: #3b413cff;
 
-  @screen sm {
+    /* the size of one side of the sudoku board */
     --side: 100vw;
+    --thickness: 0.005;
+
+    @screen sm {
+      --side: 100vw;
+    }
+
+    @screen md {
+      --side: 75vw;
+    }
+
+    @screen lg {
+      --side: 50vw;
+    }
+
+    @screen xl {
+      --side: 40vw;
+    }
   }
 
-  @screen md {
-    --side: 75vw;
-  }
-
-  @screen lg {
-    --side: 50vw;
-  }
-
-  @screen xl {
-    --side: 40vw;
-  }
-}
-
-body,
-html {
-  @apply min-h-screen !important;
-}
-
-@import url("https://rsms.me/inter/inter.css");
-html {
-  font-family: "Inter", sans-serif;
-}
-@supports (font-variation-settings: normal) {
+  body,
   html {
-    font-family: "Inter var", sans-serif;
+    @apply min-h-screen !important;
+  }
+
+  html {
+    font-family: "Inter", sans-serif;
+  }
+  @supports (font-variation-settings: normal) {
+    html {
+      font-family: "Inter var", sans-serif;
+    }
   }
 }
