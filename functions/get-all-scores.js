@@ -1,13 +1,13 @@
 const faunadb = require("faunadb") /* Import faunaDB sdk */
 
-/* configure faunaDB Client with our secret */
-const q = faunadb.query
-const client = new faunadb.Client({
-  secret: process.env.FAUNADB_BOOTSTRAP_KEY,
-})
-
 /* export our lambda function as named "handler" export */
 exports.handler = (event, context, callback) => {
+  /* configure faunaDB Client with our secret */
+  const q = faunadb.query
+  const client = new faunadb.Client({
+    secret: process.env.FAUNADB_BOOTSTRAP_KEY,
+  })
+
   return client
     .query(
       q.Map(

@@ -5,9 +5,11 @@
     font-size: 3rem;
 
     @apply font-black;
-    @apply text-primary-main;
+    @apply text-neutral-900;
     @apply mt-5;
     @apply mb-32;
+
+    letter-spacing: -0.06em;
 
     @screen md {
       font-size: 5rem;
