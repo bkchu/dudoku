@@ -7,7 +7,7 @@ exports.handler = (event, context, callback) => {
   const client = new faunadb.Client({
     secret: process.env.FAUNADB_BOOTSTRAP_KEY,
   })
-
+  
   return client
     .query(
       q.Map(
