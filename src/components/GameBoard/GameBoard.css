@@ -20,8 +20,6 @@
     @apply text-primary-main;
     @apply font-bold;
     @apply text-3xl;
-    backdrop-filter: blur(8px);
-    @apply bg-opacity-75;
   }
 
   &__success-overlay {
@@ -40,4 +38,24 @@
     backdrop-filter: blur(4px);
     @apply bg-opacity-75;
   }
+}
+
+.empty-board {
+  @apply absolute;
+  @apply top-0;
+  @apply bg-gray-800;
+  @apply h-full;
+  @apply w-full;
+  @apply grid;
+  @apply z-10;
+
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  gap: calc(var(--side) * var(--thickness));
+}
+
+.empty-piece {
+  @apply w-full;
+  @apply h-full;
+  @apply bg-gray-900;
 }

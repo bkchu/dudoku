@@ -84,7 +84,15 @@ const GameBoard: FC<GameBoardProps> = ({
           pencilMarkBoard={pencilMarkBoard}
         />
         {isPaused && (
-          <div className="game-board__paused-overlay">Paused</div>
+          <div className="empty-board">
+            <BoardLines />
+            {board?.map(() =>
+              <div className="empty-piece"/>
+            )}
+            <div className="game-board__paused-overlay">
+              PAUSE
+            </div>
+          </div>
         )}
         {validationStatus === ServerBoardValidationStatus.SOLVED && (
           <div className="game-board__success-overlay">Awesome!</div>
