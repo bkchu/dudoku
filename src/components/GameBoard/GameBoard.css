@@ -7,6 +7,22 @@
 
   @apply bg-transparent;
   @apply relative;
+  
+  &__paused-overlay {
+    @apply absolute;
+    @apply top-0;
+    @apply w-side;
+    @apply h-side;
+    @apply z-10;
+    @apply flex;
+    @apply justify-center;
+    @apply items-center;
+    @apply text-primary-main;
+    @apply font-bold;
+    @apply text-3xl;
+    backdrop-filter: blur(8px);
+    @apply bg-opacity-75;
+  }
 
   &__success-overlay {
     @apply absolute;

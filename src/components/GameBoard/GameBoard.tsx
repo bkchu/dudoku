@@ -21,6 +21,8 @@ import { Dispatch } from "redux"
 import BoardLines from "./BoardLines/BoardLines"
 import "./GameBoard.css"
 import ParsedBoard from "./ParsedBoard/ParsedBoard"
+import { selectGameIsPaused } from "governor/game"
+
 export interface GameBoardProps {
   board: Board
   validationStatus: ServerBoardValidationStatus
@@ -28,6 +30,7 @@ export interface GameBoardProps {
   highlightedNumber: number
   pencilMarkBoard: PencilMarkBoard
   isPencilMode: boolean
+  isPaused: boolean
 
   fetchBoard: () => {}
   setUserPressed: Function
@@ -41,6 +44,7 @@ const GameBoard: FC<GameBoardProps> = ({
   highlightedNumber,
   pencilMarkBoard,
   setUserPressed,
+  isPaused,
 }) => {
   useEffect(() => {
     // if the board is empty, or if it's not empty and every piece contains a 0.
@@ -79,6 +83,9 @@ const GameBoard: FC<GameBoardProps> = ({
           highlightedNumber={highlightedNumber}
           pencilMarkBoard={pencilMarkBoard}
         />
+        {isPaused === true && (
+          <div className="game-board__paused-overlay">Paused</div>
+        )}
         {validationStatus === ServerBoardValidationStatus.SOLVED && (
           <div className="game-board__success-overlay">Awesome!</div>
         )}
@@ -94,6 +101,7 @@ const mapStateToProps = (state: InitialState) => ({
   highlightedNumber: selectHighlightedNumber(state),
   pencilMarkBoard: selectPencilMarkBoard(state),
   isPencilMode: selectIsPencilMode(state),
+  isPaused: selectGameIsPaused(state),
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

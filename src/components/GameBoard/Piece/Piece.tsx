@@ -8,8 +8,6 @@ import {
 } from "../../../governor/board"
 import PencilGrid from "./PencilGrid/PencilGrid"
 import "./Piece.css"
-import { InitialState } from "governor/initialState"
-import { selectGameIsPaused } from "governor/game"
 
 export interface PieceProps {
   number: number
@@ -19,7 +17,6 @@ export interface PieceProps {
   isWrong: boolean
   isHighlighted: boolean
   pencilMarks: number[]
-  isPaused: boolean
 
   onPieceClick: (num?: number) => {}
   setHighlightedNumber: (num?: number) => {}
@@ -35,7 +32,6 @@ const Piece: FC<PieceProps> = ({
   onPieceClick,
   setHighlightedNumber,
   pencilMarks,
-  isPaused,
 }) => {
   const _classNames = classnames("piece", {
     "piece--active": isActive,
@@ -65,15 +61,11 @@ const Piece: FC<PieceProps> = ({
             isActive={isActive}
           ></PencilGrid>
         )}
-        {number === 0 ? "" : isPaused ? "" : `${number}`}
+        {number === 0 ? "" : `${number}`}
       </div>
     </>
   )
 }
-
-const mapStateToProps = (state: InitialState) => ({
-  isPaused: selectGameIsPaused(state),
-})
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onPieceClick: index => dispatch(createBoardSelectPieceAction(index)),
@@ -81,4 +73,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(createBoardSetHighlightedNumber(number)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Piece)
+export default connect(mapDispatchToProps)(Piece)
