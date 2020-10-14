@@ -83,7 +83,7 @@ const GameBoard: FC<GameBoardProps> = ({
           highlightedNumber={highlightedNumber}
           pencilMarkBoard={pencilMarkBoard}
         />
-        {isPaused === true && (
+        {isPaused && (
           <div className="game-board__paused-overlay">Paused</div>
         )}
         {validationStatus === ServerBoardValidationStatus.SOLVED && (

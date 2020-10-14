@@ -61,7 +61,7 @@ const Piece: FC<PieceProps> = ({
             isActive={isActive}
           ></PencilGrid>
         )}
-        {number === 0 ? "" : `${number}`}
+        {number === 0 ? "" : number}
       </div>
     </>
   )
@@ -73,4 +73,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(createBoardSetHighlightedNumber(number)),
 })
 
-export default connect(mapDispatchToProps)(Piece)
+export default connect(null, mapDispatchToProps)(Piece)
